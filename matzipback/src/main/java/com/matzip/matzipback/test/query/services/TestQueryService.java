@@ -1,7 +1,8 @@
 package com.matzip.matzipback.test.query.services;
 
-import com.mamully.toyProject.test.command.services.TestDTO;
-import com.mamully.toyProject.test.query.mappers.TestMapper;
+
+import com.matzip.matzipback.test.command.services.TestDTO;
+import com.matzip.matzipback.test.query.mappers.TestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
