@@ -1,7 +1,8 @@
 package com.matzip.matzipback.test.query.controllers;
 
-import com.mamully.toyProject.test.command.services.TestDTO;
-import com.mamully.toyProject.test.query.services.TestQueryService;
+
+import com.matzip.matzipback.test.command.services.TestDTO;
+import com.matzip.matzipback.test.query.services.TestQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
