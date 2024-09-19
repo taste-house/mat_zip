@@ -1,7 +1,8 @@
 package com.matzip.matzipback.test.command.services;
 
-import com.mamully.toyProject.test.command.entities.Test;
-import com.mamully.toyProject.test.command.repositories.TestRepository;
+
+import com.matzip.matzipback.test.command.entities.Test;
+import com.matzip.matzipback.test.command.repositories.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
