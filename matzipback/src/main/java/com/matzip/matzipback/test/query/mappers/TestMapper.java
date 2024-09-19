@@ -1,6 +1,6 @@
 package com.matzip.matzipback.test.query.mappers;
 
-import com.mamully.toyProject.test.command.services.TestDTO;
+import com.matzip.matzipback.test.command.services.TestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
