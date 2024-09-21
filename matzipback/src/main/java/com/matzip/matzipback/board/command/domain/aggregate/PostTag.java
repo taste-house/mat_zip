@@ -1,16 +1,17 @@
-package com.matzip.matzipback.test.command.domain.aggregate;
+package com.matzip.matzipback.board.command.domain.aggregate;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tag")
+@Table(name = "post_tag")
 @NoArgsConstructor
-public class Tag {
+public class PostTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int postTagSeq;
     private int tagSeq;
-    private String tagName;
+    private int postSeq;
 
 }
