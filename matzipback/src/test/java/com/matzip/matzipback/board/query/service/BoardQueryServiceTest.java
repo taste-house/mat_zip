@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +30,28 @@ class BoardQueryServiceTest {
         // then
         assertNotNull(boardCategoryList);
         assertTrue(boardCategoryList.size() > 0);
-        assertThat(boardCategoryList).contains(new BoardCategoryDTO("dummy1"));
+        assertThat(boardCategoryList).contains(new BoardCategoryDTO("dummy1"),
+                new BoardCategoryDTO("dummy2"),
+                new BoardCategoryDTO("dummy3"));
+    }
+
+    @DisplayName("게시판 즐겨찾기 목록 조회")
+    @Test
+    void getBoardFavorCategories() {
+        // given
+        String userSeq = "1";
+        List<BoardCategoryDTO> sampleList = List.of(
+                new BoardCategoryDTO("dummy1"),
+                new BoardCategoryDTO("dummy2"),
+                new BoardCategoryDTO("dummy3"));
+
+        // when
+        List<BoardCategoryDTO> boardCategoryDTOList = boardQueryService.getBoardFavorCategories(userSeq);
+
+        // then
+        assertNotNull(boardCategoryDTOList);
+        assertTrue(boardCategoryDTOList.size() > 0);
+        assertThat(boardCategoryDTOList).isEqualTo(sampleList);
     }
 
 }
