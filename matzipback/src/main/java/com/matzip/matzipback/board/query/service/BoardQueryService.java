@@ -17,4 +17,8 @@ public class BoardQueryService {
     public List<BoardCategoryDTO> getBoardCategories() {
         return boardMapper.getBoardCategories();
     }
+
+    public List<BoardCategoryDTO> getBoardFavorCategories(String userSeq) {
+        return boardMapper.getBoardFavorCategories(Long.parseLong(userSeq));
+    }
 }
