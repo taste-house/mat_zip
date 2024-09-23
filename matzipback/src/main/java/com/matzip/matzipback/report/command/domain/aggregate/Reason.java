@@ -10,7 +10,7 @@ public class Reason {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int reasonCode;
+    private long reasonCode;
 
     private String reasonName;
 
