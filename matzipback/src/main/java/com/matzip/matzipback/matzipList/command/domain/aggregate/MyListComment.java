@@ -16,9 +16,9 @@ public class MyListComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int listCommentSeq;
-    private int listSeq;
-    private int listCommentUserSeq;
+    private Long listCommentSeq;
+    private Long listSeq;
+    private Long listCommentUserSeq;
     private String listCommentContent;
     private String listCommentStatus;
     @CreatedDate

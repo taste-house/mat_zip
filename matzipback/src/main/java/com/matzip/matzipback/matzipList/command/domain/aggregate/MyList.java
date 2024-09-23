@@ -17,8 +17,8 @@ public class MyList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int listSeq;
-    private int listUserSeq;
+    private Long listSeq;
+    private Long listUserSeq;
     private String listTitle;
     private String listContent;
     private String listStatus;
