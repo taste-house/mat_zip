@@ -23,7 +23,7 @@ public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int reportSeq;
+    private long reportSeq;
 
     /*@ManyToOne
     @JoinColumn(name = "reporter_user_seq", referencedColumnName = "userSeq")
@@ -37,9 +37,9 @@ public class Report {
     @JoinColumn(name = "penalty_seq", referencedColumnName = "penaltySeq")
     private Penalty penaltySeq;*/
 
-    private int reporterUserSeq;
-    private int reportedUserSeq;
-    private int penaltySeq;
+    private long reporterUserSeq;
+    private long reportedUserSeq;
+    private long penaltySeq;
 
 //    @OneToMany(mappedBy = "report")
 //    private List<ReportReason> reportReasons = new ArrayList<>();
@@ -51,12 +51,12 @@ public class Report {
     private LocalDateTime reportProceedingTime;
     private String reportProceedingResult;
 
-    private int postSeq;
-    private int postCommentSeq;
-    private int listSeq;
-    private int listCommentSeq;
-    private int messageSeq;
-    private int reviewSeq;
+    private long postSeq;
+    private long postCommentSeq;
+    private long listSeq;
+    private long listCommentSeq;
+    private long messageSeq;
+    private long reviewSeq;
 
 
     /*@ManyToOne
