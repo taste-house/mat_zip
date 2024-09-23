@@ -1,7 +1,7 @@
 package com.matzip.matzipback.board.command.application.controller;
 
-import com.matzip.matzipback.board.command.application.dto.PostCommentResponseDTO;
 import com.matzip.matzipback.board.command.application.dto.RequestPostCommentDTO;
+import com.matzip.matzipback.board.command.application.dto.ResponsePostCommentDTO;
 import com.matzip.matzipback.board.command.application.service.PostCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,8 @@ public class PostCommentController {
 
     // 댓글 등록
     @PostMapping("/postComment")
-    public ResponseEntity<PostCommentResponseDTO> createPostComment(@RequestBody RequestPostCommentDTO requestPostCommentDTO) {
-        PostCommentResponseDTO postComment = postCommentService.createPostComment(requestPostCommentDTO);
+    public ResponseEntity<ResponsePostCommentDTO> createPostComment(@RequestBody RequestPostCommentDTO requestPostCommentDTO) {
+        ResponsePostCommentDTO postComment = postCommentService.createPostComment(requestPostCommentDTO);
 
         return ResponseEntity.ok(postComment);
     }
