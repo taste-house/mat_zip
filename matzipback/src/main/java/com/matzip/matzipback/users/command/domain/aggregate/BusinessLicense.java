@@ -14,9 +14,12 @@ public class BusinessLicense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int businessSeq;
-    @OneToOne
+
+    /*@OneToOne
     @JoinColumn(name = "user_seq", referencedColumnName = "userSeq", unique = true)
-    private Users user;
+    private Users user;*/
+
+    private int userSeq;
     private String businessNumber;
     private String businessName;
     private String businessAddress;

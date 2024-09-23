@@ -25,7 +25,7 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reportSeq;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "reporter_user_seq", referencedColumnName = "userSeq")
     private Users reporterUserSeq; // 신고한 회원
 
@@ -35,7 +35,11 @@ public class Report {
 
     @ManyToOne
     @JoinColumn(name = "penalty_seq", referencedColumnName = "penaltySeq")
-    private Penalty penaltySeq;
+    private Penalty penaltySeq;*/
+
+    private int reporterUserSeq;
+    private int reportedUserSeq;
+    private int penaltySeq;
 
 //    @OneToMany(mappedBy = "report")
 //    private List<ReportReason> reportReasons = new ArrayList<>();
@@ -47,7 +51,15 @@ public class Report {
     private LocalDateTime reportProceedingTime;
     private String reportProceedingResult;
 
-    @ManyToOne
+    private int postSeq;
+    private int postCommentSeq;
+    private int listSeq;
+    private int listCommentSeq;
+    private int messageSeq;
+    private int reviewSeq;
+
+
+    /*@ManyToOne
     @JoinColumn(name = "post_seq")
     private Post postSeq; // 게시글과의 관계
 
@@ -69,6 +81,6 @@ public class Report {
 
     @ManyToOne
     @JoinColumn(name = "review_seq")
-    private Review reviewSeq;
+    private Review reviewSeq;*/
 
 }
