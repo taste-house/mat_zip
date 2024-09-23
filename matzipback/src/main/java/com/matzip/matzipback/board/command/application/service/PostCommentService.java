@@ -25,13 +25,12 @@ public class PostCommentService {
         PostComment postComment = PostComment.create(requestPostCommentDTO, userSeq);
 
         // 댓글 저장
-        Optional<PostComment> optionalSavedPC = postCommentRepository.save(postComment);
+        PostComment savedPostComment = postCommentRepository.save(postComment);
 
         // null 체크 및 처리
-        if (!optionalSavedPC.isPresent()) {
+        if (savedPostComment == null) {
             throw new RuntimeException("댓글 저장에 실패했습니다."); // 예외 처리
         }
-        PostComment savedPostComment = optionalSavedPC.get();
 
         // DTO로 변환하여 반환
         ResponsePostCommentDTO responseDTO = new ResponsePostCommentDTO();
