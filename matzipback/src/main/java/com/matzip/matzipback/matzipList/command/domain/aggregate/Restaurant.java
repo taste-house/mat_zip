@@ -12,7 +12,7 @@ public class Restaurant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int restaurantSeq;
+    private long restaurantSeq;
     private String restaurantTitle;
     private String restaurantAddress;
     private String restaurantPhone;
