@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 public class MyListMatzip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long listMatzipSeq;
-    private long listSeq;
-    private long restaurantSeq;
+    private Long listMatzipSeq;
+    private Long listSeq;
+    private Long restaurantSeq;
     private String listMatzipComment;
 
 }

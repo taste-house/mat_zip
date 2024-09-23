@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 public class ReviewImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long reviewImageSeq;
-    private long reviewSeq;
+    private Long reviewImageSeq;
+    private Long reviewSeq;
     private String reviewImagePath;
 
 }
