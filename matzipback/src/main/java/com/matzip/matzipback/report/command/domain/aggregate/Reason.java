@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "reason")
+@Table(name = "reasons")
 @NoArgsConstructor/*(access = AccessLevel.PROTECTED)*/
 public class Reason {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int reasonCode;
+    private Long  reasonSeq;
 
     private String reasonName;
 

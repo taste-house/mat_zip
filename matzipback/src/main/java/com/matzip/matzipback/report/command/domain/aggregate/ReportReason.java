@@ -10,10 +10,10 @@ public class ReportReason {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int reportReasonSeq;
+    private Long  reportReasonSeq;
 
-    private int reportSeq;
-    private int reasonCode;
+    private Long  reportSeq;
+    private Long  reasonSeq;
 
 
     /*@ManyToOne

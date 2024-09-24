@@ -13,13 +13,13 @@ public class BusinessLicense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int businessSeq;
+    private Long businessSeq;
 
     /*@OneToOne
     @JoinColumn(name = "user_seq", referencedColumnName = "userSeq", unique = true)
     private Users user;*/
 
-    private int userSeq;
+    private Long userSeq;
     private String businessNumber;
     private String businessName;
     private String businessAddress;

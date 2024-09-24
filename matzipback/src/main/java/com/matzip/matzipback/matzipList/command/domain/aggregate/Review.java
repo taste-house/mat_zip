@@ -17,9 +17,9 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int reviewSeq;
-    private int reviewUserSeq;
-    private int restaurantSeq;
+    private Long reviewSeq;
+    private Long reviewUserSeq;
+    private Long restaurantSeq;
     private String reviewContent;
     private String reviewStatus;
     @CreatedDate
