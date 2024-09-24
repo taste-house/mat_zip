@@ -24,7 +24,7 @@ public class PostComment {
     private Long postSeq;
     private Long postCommentUserSeq;
     private String postCommentContent;
-    private String postCommentStatus;
+    private String postCommentStatus = "active";
     @CreatedDate
     private LocalDateTime postCommentCreatedTime;
     @LastModifiedDate
@@ -50,5 +50,8 @@ public class PostComment {
         );
     }
 
-
+    // 요청 받은 댓글 내용을 기존 댓글에서 수정
+    public void updatePostCmt(String postCommentContent) {
+        this.postCommentContent = postCommentContent;
+    }
 }
