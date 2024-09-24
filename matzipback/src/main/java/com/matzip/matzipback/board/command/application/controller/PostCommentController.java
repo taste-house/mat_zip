@@ -17,7 +17,7 @@ public class PostCommentController {
     private final PostCommentService postCommentService;
 
     // 댓글 등록
-    @PostMapping("/postComment")
+    @PostMapping("/postcomment")
     public ResponseEntity<ResPostCmtDTO> createPostComment(@RequestBody ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
         ResPostCmtDTO postComment = postCommentService.createPostComment(reqPostCmtCreateDTO);
 
@@ -25,7 +25,7 @@ public class PostCommentController {
     }
 
     // 댓글 수정
-    @PutMapping("/postComment")
+    @PutMapping("/postcomment")
     public ResponseEntity<ResPostCmtDTO> updatePostComment(@RequestBody ReqPostCmtUpdateDTO reqPostCmtUpdateDTO) {
         ResPostCmtDTO postComment = postCommentService.updatePostComment(reqPostCmtUpdateDTO);
 
@@ -33,7 +33,7 @@ public class PostCommentController {
     }
 
     // 댓글 삭제
-    @DeleteMapping("/postComment/{postCommentSeq}")
+    @DeleteMapping("/postcomment/{postCommentSeq}")
     public ResponseEntity<ResPostCmtDTO> deletePostComment(@RequestBody ReqPostCmtDeleteDTO reqPostCmtDeleteDTO) {
         ResPostCmtDTO postComment = postCommentService.deletePostComment(reqPostCmtDeleteDTO);
 
