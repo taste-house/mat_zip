@@ -1,6 +1,6 @@
 package com.matzip.matzipback.board.command.domain.aggregate;
 
-import com.matzip.matzipback.board.command.application.dto.RequestPostCommentDTO;
+import com.matzip.matzipback.board.command.application.dto.ReqPostCmtCreateDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -41,11 +41,11 @@ public class PostComment {
     }
 
     // DTO -> Entity (생성자 사용을 안하려고 따로 만든 메서드)
-    public static PostComment create(RequestPostCommentDTO requestPostCommentDTO, Long userSeq) {
+    public static PostComment create(ReqPostCmtCreateDTO reqPostCmtCreateDTO, Long userSeq) {
         return new PostComment(
-                requestPostCommentDTO.getPostSeq(),
+                reqPostCmtCreateDTO.getPostSeq(),
                 userSeq,
-                requestPostCommentDTO.getPostCommentContent(),
+                reqPostCmtCreateDTO.getPostCommentContent(),
                 "active"
         );
     }
