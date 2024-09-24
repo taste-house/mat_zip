@@ -23,5 +23,11 @@ public class PostCommentController {
         return ResponseEntity.ok(postComment);
     }
 
+    // 댓글 수정
+    @PutMapping("/postComment")
+    public ResponseEntity<ResPostCmtDTO> updatePostComment(@RequestBody ReqPostCmtUpdateDTO reqPostCmtUpdateDTO) {
+        ResPostCmtDTO postComment = postCommentService.updatePostComment(reqPostCmtUpdateDTO);
 
+        return ResponseEntity.ok(postComment);
+    }
 }
