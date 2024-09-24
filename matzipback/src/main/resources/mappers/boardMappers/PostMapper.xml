@@ -1,0 +1,42 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matzip.matzipback.board.query.mapper.PostMapper">
+
+    <select id="searchPosts" resultType="com.matzip.matzipback.board.query.dto.PostDto">
+        SELECT
+               b.board_category_name
+             , a.post_title
+             , c.user_nickname
+             , IFNULL(a.post_updated_time, a.post_created_time) as postTime
+          FROM post a
+          LEFT JOIN board_category b USING (board_category_seq)
+          LEFT JOIN users c ON (a.post_user_seq = c.user_seq)
+         WHERE post_status = 'active'
+        <if test="postTitle != null">
+            AND a.post_title LIKE CONCAT('%', #{postTitle}, '%')
+        </if>
+        <if test="userNickname != null">
+            AND c.user_nickname = #{userNickname}
+        </if>
+        ORDER BY a.post_seq
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="countPosts" resultType="long">
+        SELECT COUNT(*)
+          FROM post a
+        <if test="userNickname != null">
+            LEFT JOIN users c ON (a.post_user_seq = c.user_seq)
+        </if>
+         WHERE a.post_status = 'active'
+        <if test="postTitle != null">
+            AND a.post_title LIKE CONCAT('%', #{postTitle}, '%')
+        </if>
+        <if test="userNickname != null">
+            AND c.user_nickname = #{userNickname}
+        </if>
+    </select>
+
+</mapper>
