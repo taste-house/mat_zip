@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ResPostCmtCreateDTO {
+public class ResPostCmtDTO {
 
     private Long postSeq;
 }
