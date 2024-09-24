@@ -18,10 +18,7 @@ public class Penalty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long penaltySeq;
 
-    /*@ManyToOne
-    @JoinColumn(name = "penalty_user_seq", referencedColumnName = "userSeq")
-    private Users penaltyUserSeq;*/
-    private long penaltyUserSeq;
+    private Long  penaltyUserSeq;
 
     @CreatedDate
     private LocalDateTime penalty_start_date;
