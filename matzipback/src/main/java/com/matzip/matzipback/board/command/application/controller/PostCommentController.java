@@ -1,6 +1,7 @@
 package com.matzip.matzipback.board.command.application.controller;
 
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtCreateDTO;
+import com.matzip.matzipback.board.command.application.dto.ReqPostCmtDeleteDTO;
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtUpdateDTO;
 import com.matzip.matzipback.board.command.application.dto.ResPostCmtDTO;
 import com.matzip.matzipback.board.command.application.service.PostCommentService;
@@ -30,4 +31,13 @@ public class PostCommentController {
 
         return ResponseEntity.ok(postComment);
     }
+
+    // 댓글 삭제
+    @DeleteMapping("/postComment/{postCommentSeq}")
+    public ResponseEntity<ResPostCmtDTO> deletePostComment(@RequestBody ReqPostCmtDeleteDTO reqPostCmtDeleteDTO) {
+        ResPostCmtDTO postComment = postCommentService.deletePostComment(reqPostCmtDeleteDTO);
+
+        return ResponseEntity.ok(postComment);
+    }
+
 }
