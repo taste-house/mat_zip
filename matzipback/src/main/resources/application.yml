@@ -9,9 +9,9 @@ spring:
   config:
     import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:mariadb://${MARIADB_HOST}:${MARIADB_PORT}/${MARIADB_DATABASE}
-    username: ${swcamp02}
-    password: ${MARIADB_PASSWORD}
+    url: jdbc:mariadb://222.112.28.226:3306/mat_zip
+    username: swcamp02
+    password: sWsW!@#
     driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:
