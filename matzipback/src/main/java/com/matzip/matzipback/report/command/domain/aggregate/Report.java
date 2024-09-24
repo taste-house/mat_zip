@@ -23,40 +23,24 @@ public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long reportSeq;
+    private Long reportSeq;
 
-    /*@ManyToOne
-    @JoinColumn(name = "reporter_user_seq", referencedColumnName = "userSeq")
-    private Users reporterUserSeq; // 신고한 회원
-
-    @ManyToOne
-    @JoinColumn(name = "reported_user_seq", referencedColumnName = "userSeq")
-    private Users reportedUserSeq; // 신고당한 회원
-
-    @ManyToOne
-    @JoinColumn(name = "penalty_seq", referencedColumnName = "penaltySeq")
-    private Penalty penaltySeq;*/
-
-    private long reporterUserSeq;
-    private long reportedUserSeq;
-    private long penaltySeq;
-
-//    @OneToMany(mappedBy = "report")
-//    private List<ReportReason> reportReasons = new ArrayList<>();
+    private Long reporterUser;
+    private Long reportedUserSeq;
+    private Long penaltySeq;
 
     @CreatedDate
     private LocalDateTime reportTime;
     private String reportContent;
-    private String reportProceedingYn;
-    private LocalDateTime reportProceedingTime;
-    private String reportProceedingResult;
+    private LocalDateTime reportFinishedTime;
+    private String reportStatus;
 
-    private long postSeq;
-    private long postCommentSeq;
-    private long listSeq;
-    private long listCommentSeq;
-    private long messageSeq;
-    private long reviewSeq;
+    private Long postSeq;
+    private Long postCommentSeq;
+    private Long listSeq;
+    private Long listCommentSeq;
+    private Long messageSeq;
+    private Long reviewSeq;
 
 
     /*@ManyToOne
