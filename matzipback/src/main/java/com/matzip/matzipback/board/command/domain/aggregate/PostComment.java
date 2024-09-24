@@ -41,11 +41,11 @@ public class PostComment {
     }
 
     // DTO -> Entity (생성자 사용을 안하려고 따로 만든 메서드)
-    public static PostComment create(ReqPostCmtCreateDTO reqPostCmtCreateDTO, Long userSeq) {
+    public static PostComment create(ReqPostCmtCreateDTO reqPostCmtDTO, Long userSeq) {
         return new PostComment(
-                reqPostCmtCreateDTO.getPostSeq(),
+                reqPostCmtDTO.getPostSeq(),
                 userSeq,
-                reqPostCmtCreateDTO.getPostCommentContent(),
+                reqPostCmtDTO.getPostCommentContent(),
                 "active"
         );
     }
