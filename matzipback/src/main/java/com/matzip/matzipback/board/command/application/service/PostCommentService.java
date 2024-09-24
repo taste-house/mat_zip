@@ -68,6 +68,9 @@ public class PostCommentService {
 
         // DB내 작성된 댓글 수정
         postComment.updatePostCmt(reqPostCmtUpdateDTO.getPostCommentContent());
+        // 수정 값이 자동으로 업데이트 시에 @LastModifiedDate가 적용
+
+//        postCommentRepository.save(postComment);    // save 호출 시 @LastModifiedDate가 적용
 
         // 응답 DTO로 반환
         return new ResPostCmtDTO(postComment.getPostSeq());
