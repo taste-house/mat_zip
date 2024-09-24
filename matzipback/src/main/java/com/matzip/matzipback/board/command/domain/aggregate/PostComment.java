@@ -1,6 +1,6 @@
 package com.matzip.matzipback.board.command.domain.aggregate;
 
-import com.matzip.matzipback.board.command.application.dto.RequestPostCommentDTO;
+import com.matzip.matzipback.board.command.application.dto.ReqPostCmtCreateDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -40,15 +40,25 @@ public class PostComment {
         this.postCommentStatus = postCommentStatus;
     }
 
+    @PrePersist
+    public void prePersist() {
+        if(postCommentStatus == null) {
+            postCommentStatus = "active";
+        }
+    }
+
     // DTO -> Entity (생성자 사용을 안하려고 따로 만든 메서드)
-    public static PostComment create(RequestPostCommentDTO requestPostCommentDTO, Long userSeq) {
+    public static PostComment create(ReqPostCmtCreateDTO reqPostCmtDTO, Long userSeq) {
         return new PostComment(
-                requestPostCommentDTO.getPostSeq(),
+                reqPostCmtDTO.getPostSeq(),
                 userSeq,
-                requestPostCommentDTO.getPostCommentContent(),
+                reqPostCmtDTO.getPostCommentContent(),
                 "active"
         );
     }
 
-
+    // 요청 받은 댓글 내용을 기존 댓글에서 수정
+    public void updatePostCmt(String postCommentContent) {
+        this.postCommentContent = postCommentContent;
+    }
 }
