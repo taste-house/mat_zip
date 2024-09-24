@@ -1,16 +1,17 @@
 package com.matzip.matzipback.board.command.domain.aggregate;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tag")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int tagSeq;
+    private Long tagSeq;
     private String tagName;
 
 }

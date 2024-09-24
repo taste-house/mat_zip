@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "post_comment")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLDelete(sql = "UPDATE post_comment SET post_comment_status = 'inactive', post_comment_deleted_time = LOCALTIME WHERE post_comment_seq = ?")
+@SQLDelete(sql = "UPDATE post_comment SET post_comment_status = 'delete', post_comment_deleted_time = LOCALTIME WHERE post_comment_seq = ?")
 public class PostComment {
 
     @Id
