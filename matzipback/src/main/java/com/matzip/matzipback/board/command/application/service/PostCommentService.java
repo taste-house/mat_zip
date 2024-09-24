@@ -1,5 +1,6 @@
 package com.matzip.matzipback.board.command.application.service;
 
+import com.matzip.matzipback.board.command.application.dto.ReqPostCmtDeleteDTO;
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtUpdateDTO;
 import com.matzip.matzipback.board.command.application.dto.ResPostCmtDTO;
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtCreateDTO;
@@ -65,13 +66,28 @@ public class PostCommentService {
 //            throw new RuntimeException("삭제된 댓글입니다.");
 //        }
 
+        // DB내 작성된 댓글 수정
         postComment.updatePostCmt(reqPostCmtUpdateDTO.getPostCommentContent());
 
+        // 응답 DTO로 반환
         return new ResPostCmtDTO(postComment.getPostSeq());
     }
 
+    // 댓글 삭제(소프트 삭제)
+    @Transactional
+    public ResPostCmtDTO deletePostComment(ReqPostCmtDeleteDTO reqPostCmtDeleteDTO) {
 
+        // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
+        Long userSeq = 1L;
 
+        Long postCommentSeq = reqPostCmtDeleteDTO.getPostCommentSeq();
 
+        // 스프링 jpa를 이용해서 영속성 컨텍스트로 해당 댓글 가져오기
+        PostComment postComment = postCommentInfraRepository.findById(postCommentSeq)
+                .orElseThrow(NoSuchElementException::new);
 
+        postCommentInfraRepository.delete(postComment);
+
+        return new ResPostCmtDTO(postComment.getPostSeq());
+    }
 }
