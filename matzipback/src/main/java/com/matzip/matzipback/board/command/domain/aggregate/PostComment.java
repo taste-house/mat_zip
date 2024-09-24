@@ -24,7 +24,7 @@ public class PostComment {
     private Long postSeq;
     private Long postCommentUserSeq;
     private String postCommentContent;
-    private String postCommentStatus = "active";
+    private String postCommentStatus;
     @CreatedDate
     private LocalDateTime postCommentCreatedTime;
     @LastModifiedDate
@@ -38,6 +38,13 @@ public class PostComment {
         this.postCommentUserSeq = postCommentUserSeq;
         this.postCommentContent = postCommentContent;
         this.postCommentStatus = postCommentStatus;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if(postCommentStatus == null) {
+            postCommentStatus = "active";
+        }
     }
 
     // DTO -> Entity (생성자 사용을 안하려고 따로 만든 메서드)
