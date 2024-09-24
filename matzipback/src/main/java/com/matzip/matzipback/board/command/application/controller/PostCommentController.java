@@ -30,4 +30,13 @@ public class PostCommentController {
 
         return ResponseEntity.ok(postComment);
     }
+
+    // 댓글 삭제
+    @DeleteMapping("/postComment/{postCommentSeq}")
+    public ResponseEntity<ResPostCmtDTO> deletePostComment(@RequestBody ReqPostCmtDeleteDTO reqPostCmtDeleteDTO) {
+        ResPostCmtDTO postComment = postCommentService.deletePostComment(reqPostCmtDeleteDTO);
+
+        return ResponseEntity.ok(postComment);
+    }
+
 }
