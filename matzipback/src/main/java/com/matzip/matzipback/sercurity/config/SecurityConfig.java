@@ -42,7 +42,11 @@ public class SecurityConfig {
                     // 회원가입 Post 는 인증 필요 없음
                     auths.requestMatchers(
                             new AntPathRequestMatcher("/api/v1/auth/register"),
-                            new AntPathRequestMatcher("/api/v1/**")
+                            new AntPathRequestMatcher("/api/v1/**"),
+                            new AntPathRequestMatcher("/"),
+                            new AntPathRequestMatcher("/swagger-ui/index.html"),
+                            new AntPathRequestMatcher("/swagger-ui/**"),
+                            new AntPathRequestMatcher("/v3/api-docs/**")
                             ).permitAll()
                             .anyRequest().authenticated();
                 })
