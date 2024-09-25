@@ -1,0 +1,15 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matzip.matzipback.like.query.mapper.LikeQueryMapper">
+
+    <select id="findLikeByUserSeqAndPostCommentSeq" resultType="long">
+        SELECT like_seq
+          FROM like
+         WHERE post_comment_seq = #{postCommentSeq}
+           AND like_user_seq = #{likeUserSeq}
+
+    </select>
+
+</mapper>
