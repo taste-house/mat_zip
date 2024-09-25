@@ -29,9 +29,16 @@ public class CustomUserUtils {
     }
 
     // 현재 인증된 사용자의 username 반환
-    public static String getCurrentUserEmail() {
+    public static Long getCurrentUserSeq() {
         return getCurrentUserDetails()
-                .map(UserDetails::getUsername) // 유저 이메일 빼오기
-                .orElse(null);
+                .map(UserDetails::getUsername) // 유저 이메일 가져오기
+                .map(username -> {
+                    try {
+                        return Long.parseLong(username); // Long으로 변환
+                    } catch (NumberFormatException e) {
+                        return null; // 변환 실패 시 null 반환
+                    }
+                })
+                .orElse(null); // UserDetails가 없을 경우 null 반환
     }
 }
