@@ -25,8 +25,19 @@ public class PostQueryController {
             @RequestParam(required = false) String postTitle,      // 검색조건1: 게시글 제목
             @RequestParam(required = false) String userNickname    // 검색조건2: 게시글 작성자 닉네임
     ) {
-
         PostListResponse response = postQueryService.searchPosts(page, size, postTitle, userNickname);
+
+        return ResponseEntity.ok(response);
+    }
+
+    /* 2. 게시판 카테고리 별 게시글 목록 조회 */
+    @GetMapping("/post/{boardCategorySeq}")
+    public ResponseEntity<PostListResponse> getPostsByCategory(
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "10") Integer size,
+            @RequestParam Long boardCategorySeq
+    ) {
+        PostListResponse response = postQueryService.getPostsByCategory(page, size, boardCategorySeq);
 
         return ResponseEntity.ok(response);
     }

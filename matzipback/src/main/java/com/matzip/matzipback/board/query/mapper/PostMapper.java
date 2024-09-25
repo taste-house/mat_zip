@@ -10,5 +10,9 @@ public interface PostMapper {
 
     List<PostDto> searchPosts(int offset, Integer size, String postTitle, String userNickname);
 
-    long countPosts(String postTitle, String userNickname);
+    long countPostsBySearch(String postTitle, String userNickname);
+
+    List<PostDto> getPostsByCategory(int offset, Integer size, Long boardCategorySeq);
+
+    long countPostsByCategory(Long boardCategorySeq);
 }
