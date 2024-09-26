@@ -1,6 +1,7 @@
 package com.matzip.matzipback.matzipList.query.mapper;
 
 import com.matzip.matzipback.matzipList.query.dto.ListSearchAllDTO;
+import com.matzip.matzipback.matzipList.query.dto.ListSearchUserDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -10,8 +11,5 @@ public interface ListQueryMapper {
 
     List<ListSearchAllDTO> getListBox(long listUserSeq);
 
-    int getCountList(long listUserSeq); // 각 사용자의 리스트 개수 구하기
-
-
-
+    List<ListSearchUserDTO> getUserListBox(Long listUserSeq);
 }
