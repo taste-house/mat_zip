@@ -25,7 +25,6 @@ public class PostLikeService {
 
         // 좋아요를 하지 않은 게시물에 대한 경우
         if (foundPostLike == null) {
-            userActivityDomainService.updateUserActivityPoint(5); // 활동 점수 추가
             Like newPostLike = Like.create(likeUserSeq, postSeq); // 좋아요 저장
             return postLikeDomainService.save(newPostLike);
         }
