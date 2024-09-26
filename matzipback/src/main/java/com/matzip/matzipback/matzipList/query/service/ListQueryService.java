@@ -1,4 +1,25 @@
 package com.matzip.matzipback.matzipList.query.service;
 
+import com.matzip.matzipback.matzipList.query.dto.ListCategoryDTO;
+import com.matzip.matzipback.matzipList.query.dto.ListSearchAllDTO;
+import com.matzip.matzipback.matzipList.query.mapper.ListQueryMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
 public class ListQueryService {
+
+    private final ListQueryMapper listQueryMapper;
+
+    public List<ListSearchAllDTO> getListBox(Long listUserSeq) {
+        return listQueryMapper.getListBox(listUserSeq);
+    }
+
+
+
+
+
 }
