@@ -37,7 +37,7 @@ public class PostCmtQueryService {
                 .comments(comments)
                 .currentPage(page)
                 .totalPages((int) Math.ceil((double)totalPostComments / size))
-                .totalPosts(totalPostComments)
+                .totalPostComments(totalPostComments)
                 .build();
     }
 
