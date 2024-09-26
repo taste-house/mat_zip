@@ -17,7 +17,7 @@ public class PostQueryController {
     private final PostQueryService postQueryService;
 
     /* 1. 검색조건(게시글 제목, 게시글 작성자 닉네임)에 맞는 게시글 목록 조회 */
-    @GetMapping("/post/search")
+    @GetMapping("/posts/search")
     public ResponseEntity<PostListResponse> searchPosts(
             // paging 처리
             @RequestParam(defaultValue = "1") Integer page,
@@ -31,7 +31,7 @@ public class PostQueryController {
     }
 
     /* 2. 게시판 카테고리 별 게시글 목록 조회 */
-    @GetMapping("/post/{boardCategorySeq}")
+    @GetMapping("/category/{boardCategorySeq}/posts")
     public ResponseEntity<PostListResponse> getPostsByCategory(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
