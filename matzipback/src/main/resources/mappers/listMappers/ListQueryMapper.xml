@@ -20,7 +20,7 @@
             lists
          WHERE
              list_user_seq = #{listUserSeq}
-             AND list_status = 'active'
+
         ORDER BY
             list_level ASC
     </select>

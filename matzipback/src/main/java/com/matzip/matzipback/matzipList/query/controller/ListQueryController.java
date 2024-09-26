@@ -18,7 +18,7 @@ public class ListQueryController {
 
     private final ListQueryService listQueryService;
 
-    // 다른 유저의 리스트 서랍 조회(리스트 상태가 active인 것 만 조회)
+    // 유저 본인의 리스트 서랍 조회(모든 리스트 상태 조회)
     @GetMapping("/listBox/{listUserSeq}")
     public ResponseEntity<List<ListSearchAllDTO>> getListBox() {
         Long listUserSeq = CustomUserUtils.getCurrentUserSeq();
