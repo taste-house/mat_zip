@@ -14,12 +14,13 @@
 
     <select  id="getListBox" resultType="com.matzip.matzipback.matzipList.query.dto.ListSearchAllDTO">
         SELECT
-            list_title AS listTitle,
-            list_level AS listLevel
+            list_title,
+            list_level
           FROM
             lists
          WHERE
              list_user_seq = #{listUserSeq}
+             AND list_status = 'active'
         ORDER BY
             list_level ASC
     </select>
