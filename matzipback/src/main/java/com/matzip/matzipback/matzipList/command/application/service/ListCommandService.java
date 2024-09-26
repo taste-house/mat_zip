@@ -26,7 +26,7 @@ public class ListCommandService {
         // 테스트용 코드 생성 (권한이 없는 유저 시퀀스)
         long listUserSeq = 3L;
 
-        int listLevel = Math.toIntExact(listQueryMapper.getCountList(listUserSeq));
+        int listLevel = listQueryMapper.getCountList(listUserSeq);
 
         MyList newList = ListMapper.toEntity(listRequest, listUserSeq, listLevel);
 
