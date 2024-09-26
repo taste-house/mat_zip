@@ -20,7 +20,11 @@ public class ListCommandService {
     @Transactional
     public Long createList(CreateListRequest listRequest) {
 
-        Long listUserSeq = CustomUserUtils.getCurrentUserSeq();
+        // 로그인한 사람의 유저 시퀀스를 가져오는 기능(권한이 들어있는 유저 시퀀스)
+//        Long listUserSeq = CustomUserUtils.getCurrentUserSeq();
+
+        // 테스트용 코드 생성 (권한이 없는 유저 시퀀스)
+        long listUserSeq = 3L;
 
         int listLevel = listQueryMapper.getCountList(listUserSeq);
 
