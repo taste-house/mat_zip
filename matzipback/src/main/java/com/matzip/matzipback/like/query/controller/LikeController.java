@@ -22,9 +22,9 @@ public class LikeController {
     private final LikeQueryService likeQueryService;
 
     // 좋아요한 게시글 조회
-    @GetMapping("/{userSeq}/liked-posts")
-    public ResponseEntity<LikedPostResMessageDTO> likedPosts(@PathVariable("userSeq") Long userSeq) {
-        List<LikedPostDTO> myLikedPost = likeQueryService.findMyLikedPost(userSeq);
+    @GetMapping("/liked-posts")
+    public ResponseEntity<LikedPostResMessageDTO> likedPosts() {
+        List<LikedPostDTO> myLikedPost = likeQueryService.findMyLikedPost();
 
         return ResponseEntity.status(HttpStatus.OK).body(new LikedPostResMessageDTO(200, ResponseMessage.FOUND.getMessage(), myLikedPost));
     }

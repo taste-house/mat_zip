@@ -1,5 +1,6 @@
 package com.matzip.matzipback.like.query.service;
 
+import com.matzip.matzipback.common.util.CustomUserUtils;
 import com.matzip.matzipback.like.query.dto.LikedPostDTO;
 import com.matzip.matzipback.like.query.mapper.LikeQueryMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class LikeQueryService {
         return likeQueryMapper.findLikeByUserSeqAndPostCommentSeq(userSeq, postCommentSeq);
     }
 
-    public List<LikedPostDTO> findMyLikedPost(Long userSeq) {
-
+    public List<LikedPostDTO> findMyLikedPost() {
+        long userSeq = CustomUserUtils.getCurrentUserSeq();
         return likeQueryMapper.findMyLikedPost(userSeq);
     }
 }
