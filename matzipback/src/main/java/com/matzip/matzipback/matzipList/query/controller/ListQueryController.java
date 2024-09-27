@@ -1,7 +1,9 @@
 package com.matzip.matzipback.matzipList.query.controller;
 
 import com.matzip.matzipback.common.util.CustomUserUtils;
+
 import com.matzip.matzipback.matzipList.query.dto.ListContentDTO;
+
 import com.matzip.matzipback.matzipList.query.dto.ListSearchAllDTO;
 import com.matzip.matzipback.matzipList.query.dto.ListSearchUserDTO;
 import com.matzip.matzipback.matzipList.query.service.ListQueryService;
@@ -36,4 +38,5 @@ public class ListQueryController {
     public ResponseEntity<List<ListContentDTO>> getListContents(@PathVariable("listSeq") Long listSeq) {
         return ResponseEntity.ok().body(listQueryService.getListContests(listSeq));
     }
+
 }
