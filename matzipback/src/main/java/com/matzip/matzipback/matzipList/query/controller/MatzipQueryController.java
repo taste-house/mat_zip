@@ -15,7 +15,7 @@ public class MatzipQueryController {
 
     private final MatzipQueryService matzipQueryService;
 
-    @GetMapping("list/{listSeq}/restaurants")
+    @GetMapping("list/{listSeq}/matzip")
     public ResponseEntity<List<MatzipSearchDTO>> getMatzip(
             @PathVariable Long listSeq,
             @RequestParam(value = "matzipTitle", required = false) String matzipTitle){
