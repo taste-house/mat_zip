@@ -29,7 +29,31 @@
                AND list_status = 'active'
         ORDER BY
                list_level ASC
+    </select>
 
+    <select id="getListContests" resultType="com.matzip.matzipback.matzipList.query.dto.ListContentDTO">
+        SELECT
+               l.list_title,
+               l.list_content,
+               l.list_created_time,
+               l.list_updated_time,
+               r.restaurant_title,
+               m.list_matzip_comment,
+               r.restaurant_address,
+               r.restaurant_phone,
+               r.restaurant_star,
+               COUNT(k.like_seq) AS like_count
+          FROM
+               lists l
+          LEFT JOIN list_matzip m ON l.list_seq = m.list_seq
+          LEFT JOIN restaurant r ON m.restaurant_seq = r.restaurant_seq
+          LEFT JOIN `like` k ON l.list_seq = k.list_seq
+         WHERE
+               l.list_seq = 4 -- list_seq 값을 직접 넣어보세요
+         GROUP BY
+               l.list_seq, r.restaurant_seq, m.list_matzip_seq
+         ORDER BY
+               l.list_title ASC;
     </select>
 
 </mapper>
