@@ -3,6 +3,7 @@ package com.matzip.matzipback.users.command.domain.service;
 import com.matzip.matzipback.users.command.domain.aggregate.Follow;
 import com.matzip.matzipback.users.command.domain.aggregate.FollowId;
 import com.matzip.matzipback.users.command.domain.repository.UsersFollowRepository;
+import com.matzip.matzipback.users.command.dto.FollowDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,9 @@ public class UsersFollowDomainService {
     public Follow save(Follow newFollow) {
 
         return usersFollowRepository.save(newFollow);
+    }
+
+    public boolean isSameFollowingAndFollowed(FollowDTO followDTO, long followingUserSeq) {
+        return followingUserSeq == followDTO.getFollowedUserSeq();
     }
 }
