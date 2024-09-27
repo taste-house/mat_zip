@@ -48,20 +48,16 @@ public class PostComment {
         if(postCommentStatus == null) {
             postCommentStatus = "active";
         }
-
-//        if (postCommentCreatedTime == null) {
-//            postCommentCreatedTime = LocalDateTime.now();
-//        }
     }
 
     // DTO -> Entity (생성자 사용을 안하려고 따로 만든 메서드)
-    public static PostComment create(ReqPostCmtCreateDTO reqPostCmtDTO, Long userSeq) {
-        return new PostComment(
-                reqPostCmtDTO.getPostSeq(),
-                userSeq,
-                reqPostCmtDTO.getPostCommentContent()
-        );
-    }
+//    public static PostComment create(ReqPostCmtCreateDTO reqPostCmtDTO, Long userSeq) {
+//        return new PostComment(
+//                reqPostCmtDTO.getPostSeq(),
+//                userSeq,
+//                reqPostCmtDTO.getPostCommentContent()
+//        );
+//    }
 
     // 요청 받은 댓글 내용을 기존 댓글에서 수정
     public void updatePostCmt(String postCommentContent) {
