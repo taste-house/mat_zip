@@ -20,7 +20,7 @@ public class PostLikeController {
 
     @PostMapping("/post/like")
     public ResponseEntity<PostLikeResMessageDTO> savePostLike(@RequestBody PostLikeReqDTO postLikeReqDTO) {
-        Like resultLike = postLikeService.savePostLike(postLikeReqDTO.getPostSeq());
+        Like resultLike = postLikeService.savePostLike(postLikeReqDTO);
 
         if (resultLike != null) {
             // 좋아요 등록
