@@ -49,7 +49,7 @@
           LEFT JOIN restaurant r ON m.restaurant_seq = r.restaurant_seq
           LEFT JOIN `like` k ON l.list_seq = k.list_seq
          WHERE
-               l.list_seq = 4 -- list_seq 값을 직접 넣어보세요
+               l.list_seq = #{listSeq}
          GROUP BY
                l.list_seq, r.restaurant_seq, m.list_matzip_seq
          ORDER BY
