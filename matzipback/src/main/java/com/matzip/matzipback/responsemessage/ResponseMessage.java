@@ -14,7 +14,8 @@ public enum ResponseMessage {
     NOT_FOUND("요청한 리소스를 찾을 수 없습니다."),
     FOUND("요청한 리소스를 찾았습니다."),
     FOLLOW_SUCCESS("팔로우 성공"),
-    FOLLOW_DELETE("팔로우 취소");
+    FOLLOW_DELETE("팔로우 취소"),
+    WRONG_REQUEST("잘못된 요청");
 
     private final String message;
 
