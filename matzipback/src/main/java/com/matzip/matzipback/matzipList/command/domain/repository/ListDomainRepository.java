@@ -14,4 +14,6 @@ public interface ListDomainRepository {
 
     MyList save(MyList myList);
 
+    long countByListUserSeq(Long listUserSeq);
+
 }
