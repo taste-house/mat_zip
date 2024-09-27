@@ -7,6 +7,7 @@ import com.matzip.matzipback.board.command.domain.aggregate.PostComment;
 import com.matzip.matzipback.board.command.domain.repository.PostCommentRepository;
 import com.matzip.matzipback.board.command.infrastructure.repository.PostCommentInfraRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ public class PostCommentService {
 
     private final PostCommentRepository postCommentRepository;
     private final PostCommentInfraRepository postCommentInfraRepository;
+    private final ModelMapper modelMapper;
 
     // 댓글 작성
     @Transactional
@@ -26,17 +28,20 @@ public class PostCommentService {
         // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
         Long userSeq = 1L;
 
-        PostComment postComment = PostComment.create(reqPostCmtCreateDTO, userSeq);
+        // DTO -> Entity 매퍼를 사용하여 생성되도록 수정 (Entity 불변성 유지)
+//        PostComment postComment = PostComment.create(reqPostCmtCreateDTO, userSeq);
+        reqPostCmtCreateDTO.setPostCommentUserSeq(userSeq);
+        PostComment postComment = modelMapper.map(reqPostCmtCreateDTO, PostComment.class);
 
-        // 댓글 저장
-        PostComment savedPostComment = postCommentRepository.save(postComment);
-
+        // 유효성 검사 (댓글 내용이 작성되어있어야 한다.)
         // null 체크 및 처리
-        if (savedPostComment == null) {
+        if (postComment.getPostCommentContent() == null || postComment.getPostCommentContent().isEmpty()) {
             throw new RuntimeException("댓글 저장에 실패했습니다."); // 예외 처리
         }
 
-        // DTO로 변환하여 반환
+        PostComment savedPostComment = postCommentRepository.save(postComment); // 댓글 저장 후 Entity 반환
+
+        // Entity -> 응답 DTO 변환
         ResPostCmtDTO responseDTO = new ResPostCmtDTO();
         responseDTO.setPostSeq(savedPostComment.getPostSeq());
 
