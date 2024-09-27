@@ -61,13 +61,11 @@ public class PostCommentService {
         PostComment postComment = postCommentInfraRepository.findById(postCommentSeq)
                 .orElseThrow(NoSuchElementException::new);
 
-        // 댓글 Status가 inactive일 경우 예외 처리
-//        String postCommentStatus = postComment.getPostCommentStatus();
-//        if (postCommentStatus.equals("inactive")) {
-//            throw new RuntimeException("삭제된 댓글입니다.");
-//        }
+        // DB내 작성된 댓글 수정 (수정 전 입력 값과 동일하면 안된다.)
+        if (postComment.getPostCommentContent().equals(reqPostCmtUpdateDTO.getPostCommentContent())) {
+            throw new RuntimeException("댓글 수정에 실패했습니다."); // 예외 처리
+        }
 
-        // DB내 작성된 댓글 수정
         postComment.updatePostCmt(reqPostCmtUpdateDTO.getPostCommentContent());
         // 수정 값이 자동으로 업데이트 시에 @LastModifiedDate가 적용
 
