@@ -1,8 +1,10 @@
 package com.matzip.matzipback.users.command.application.service;
 
 import com.matzip.matzipback.users.command.application.utility.UUIDGenerator;
+import com.matzip.matzipback.users.command.domain.aggregate.UserActivity;
 import com.matzip.matzipback.users.command.domain.aggregate.Users;
 import com.matzip.matzipback.users.command.domain.repository.UsersDomainRepository;
+import com.matzip.matzipback.users.command.domain.service.UserActivityDomainService;
 import com.matzip.matzipback.users.command.dto.CreateUserRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +21,12 @@ public class UsersCommandService {
 
     private final UsersDomainRepository usersDomainRepository;
     private final ModelMapper modelMapper;
+  
     private final BCryptPasswordEncoder passwordEncoder; // 비밀번호 암호화
     private final EmailService emailService; // 이메일 인증 확인을 위한 서비스
     private final UUIDGenerator uuidGenerator; // 임의 닉네임 자동생성을 위한 유틸리티
+    private final UserActivityDomainService userActivityDomainService;
+
 
     public void createUser(CreateUserRequest newUser) {
         log.info("========create user========");
@@ -60,10 +65,13 @@ public class UsersCommandService {
 
         // Users 엔티티를 데이터베이스에 저장
         usersDomainRepository.save(users);
+
         log.info("========User 객체 저장 완료 - UserSeq: {}========", users.getUserSeq());
 
         // 유저 생성 완료 후 인증 상태 제거
         emailService.clearEmailVerificationStatus(newUser.getUserEmail());
+
+        userActivityDomainService.saveUserActivity(UserActivity.create(users.getUserSeq()));
     }
 
     private String createUniqueNickname(){

@@ -5,10 +5,7 @@ import com.matzip.matzipback.matzipList.command.application.dto.CreateListReques
 import com.matzip.matzipback.matzipList.command.application.service.ListCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -27,4 +24,12 @@ public class ListCommandController {
 
         return ResponseEntity.created(URI.create("/api/v1/list" + listSeq)).build();
     }
+
+    @DeleteMapping("/list/{listSeq}")
+    public ResponseEntity<Void> deleteList(@PathVariable Long listSeq){
+        listCommandService.deleteList(listSeq);
+        return ResponseEntity.noContent().build();
+
+    }
+
 }
