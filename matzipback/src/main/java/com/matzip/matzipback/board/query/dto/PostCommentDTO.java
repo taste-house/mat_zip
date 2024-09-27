@@ -12,4 +12,5 @@ public class PostCommentDTO {
     private String userNickname;
     private String postCommentContent;
     private LocalDateTime lastUpdateTime; // 마지막 수정 시간
+
 }
