@@ -28,4 +28,12 @@ public class UsersFollowQueryController {
 
         return ResponseEntity.ok(new FollowQueryResMessageDTO(HttpStatus.OK.value(), ResponseMessage.FOUND.getMessage(), followList));
     }
+
+    // 나를 팔로우한 유저 조회 기능
+    @GetMapping("/follower")
+    public ResponseEntity<FollowQueryResMessageDTO> searchFollowers(@RequestParam("page") int page) {
+        List<FollowingUsersDTO> followerList = usersFollowQueryService.searchFollowerUsers(page);
+
+        return ResponseEntity.ok(new FollowQueryResMessageDTO(HttpStatus.OK.value(), ResponseMessage.FOUND.getMessage(), followerList));
+    }
 }
