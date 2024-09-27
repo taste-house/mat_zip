@@ -23,13 +23,13 @@ public class UsersFollowController {
     // 팔로우가 되어 있으면 팔로우 취소됨
     @PostMapping
     public ResponseEntity<FollowResMessageDTO> doFollow(@RequestBody FollowDTO followDTO) {
-        boolean result = usersFollowService.doFollow(followDTO);
+        int result = usersFollowService.doFollow(followDTO);
 
-        // 팔로우 성공
-        if (result) {
+        if (result == 0) { // 잘못된 요청
+            return ResponseEntity.ok(new FollowResMessageDTO(HttpStatus.OK.value(), ResponseMessage.WRONG_REQUEST.getMessage()));
+        } else if (result == 1) { // 팔로우 성공
             return ResponseEntity.ok(new FollowResMessageDTO(HttpStatus.OK.value(), ResponseMessage.FOLLOW_SUCCESS.getMessage()));
         }
-
         // 팔로우 취소
         return ResponseEntity.ok(new FollowResMessageDTO(HttpStatus.OK.value(), ResponseMessage.FOLLOW_DELETE.getMessage()));
     }
