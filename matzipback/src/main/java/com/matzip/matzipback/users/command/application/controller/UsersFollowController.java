@@ -27,7 +27,7 @@ public class UsersFollowController {
 
         if (result == 0) { // 잘못된 요청
             return ResponseEntity.ok(new FollowResMessageDTO(HttpStatus.OK.value(), ResponseMessage.WRONG_REQUEST.getMessage()));
-        } else if (result == 1) { // 팔로우 성공
+        } else if (result == 2) { // 팔로우 성공
             return ResponseEntity.ok(new FollowResMessageDTO(HttpStatus.OK.value(), ResponseMessage.FOLLOW_SUCCESS.getMessage()));
         }
         // 팔로우 취소
