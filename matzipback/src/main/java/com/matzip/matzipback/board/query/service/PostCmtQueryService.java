@@ -24,12 +24,6 @@ public class PostCmtQueryService {
         // 회원이 작성한 게시글 댓글 조회
         List<PostCommentDTO> comments = postCmtMapper.getPostCmtsByUserSeq(offset, size, userSeq);
 
-        for (PostCommentDTO comment : comments) {
-            if (comment.getPostCommentUpdatedTime() == null) {
-                comment.setPostCommentUpdatedTime(comment.getPostCommentCreatedTime());
-            }
-        }
-
         // 회원이 작성한 총 댓글 갯수
         long totalPostComments = postCmtMapper.countPostCmtsByUserSeq(userSeq);
 
