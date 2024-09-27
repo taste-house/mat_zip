@@ -11,6 +11,6 @@ public class PostCommentDTO {
     private Long postCommentSeq;
     private String userNickname;
     private String postCommentContent;
-    private LocalDateTime postCommentCreatedTime; //작성 시간
-    private LocalDateTime postCommentUpdatedTime; //최종 수정 시간
+    private LocalDateTime lastUpdateTime; // 마지막 수정 시간
+
 }

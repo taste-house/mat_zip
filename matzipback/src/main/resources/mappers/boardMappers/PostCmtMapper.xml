@@ -4,14 +4,13 @@
 
 <mapper namespace="com.matzip.matzipback.board.query.mapper.PostCmtMapper">
 
-    <select id="getPostCmtsByUserSeq" resultType="com.matzip.matzipback.board.query.dto.PostCommentDto">
+    <select id="getPostCmtsByUserSeq" resultType="com.matzip.matzipback.board.query.dto.PostCommentDTO">
         SELECT
             p.post_seq
-           ,p.post_title
-           ,c.post_comment_content
-           ,u.user_nickname
-           ,c.post_comment_created_time
-           ,c.post_comment_updated_time
+          , p.post_title
+          , c.post_comment_content
+          , u.user_nickname
+          , IFNULL(c.post_comment_updated_time, c.post_comment_created_time) as lastUpdateTime
           FROM post_comment c
           JOIN users u ON c.post_comment_user_seq = u.user_seq
           JOIN post p ON c.post_seq = p.post_seq

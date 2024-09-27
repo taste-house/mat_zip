@@ -1,11 +1,9 @@
 package com.matzip.matzipback.matzipList.command.application.service;
 
-import com.matzip.matzipback.common.util.CustomUserUtils;
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyList;
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListRequest;
 import com.matzip.matzipback.matzipList.command.domain.repository.ListDomainRepository;
 import com.matzip.matzipback.matzipList.command.mapper.ListMapper;
-import com.matzip.matzipback.matzipList.query.mapper.ListQueryMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +15,7 @@ import java.util.List;
 public class ListCommandService {
 
         private final ListDomainRepository listDomainRepository;
+
 
     @Transactional
     public Long createList(CreateListRequest listRequest) {
@@ -37,5 +36,11 @@ public class ListCommandService {
         MyList myList = listDomainRepository.save(newList);
 
         return myList.getListSeq();
+    }
+
+    @Transactional
+    public void deleteList(Long listSeq) {
+
+        listDomainRepository.deleteById(listSeq);
     }
 }
