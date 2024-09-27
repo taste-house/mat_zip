@@ -4,7 +4,7 @@
 
 <mapper namespace="com.matzip.matzipback.board.query.mapper.PostCmtMapper">
 
-    <select id="getPostCmtsByUserSeq" resultType="com.matzip.matzipback.board.query.dto.PostCommentDto">
+    <select id="getPostCmtsByUserSeq" resultType="com.matzip.matzipback.board.query.dto.PostCommentDTO">
         SELECT
             p.post_seq
           , p.post_title
