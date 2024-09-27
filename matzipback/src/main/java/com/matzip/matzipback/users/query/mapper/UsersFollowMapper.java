@@ -15,4 +15,12 @@ public interface UsersFollowMapper {
             @Param("size") int size);
 
     long countFollowing(long followingUserSeq);
+
+    List<FollowingUsersDTO> searchFollowerUsersByUserSeqAndPage(
+            @Param("followedUserSeq") long followedUserSeq,
+            @Param("offset") int offset,
+            @Param("size") int size
+    );
+
+    long countFollower(long followedUserSeq);
 }
