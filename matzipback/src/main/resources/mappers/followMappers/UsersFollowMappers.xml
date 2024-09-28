@@ -23,7 +23,8 @@
     </select>
 
     <select id="searchFollowerUsersByUserSeqAndPage" resultType="com.matzip.matzipback.users.query.dto.FollowingUsersDTO">
-        SELECT u.user_nickname
+        SELECT u.user_seq
+             , u.user_nickname
           FROM users u
                  JOIN follow f ON u.user_seq = f.following_user_seq
          WHERE f.followed_user_seq = #{followedUserSeq}
