@@ -1,5 +1,6 @@
 package com.matzip.matzipback.restaurant.query.service;
 
+import com.matzip.matzipback.restaurant.query.dto.RestaurantDetailResponse;
 import com.matzip.matzipback.restaurant.query.dto.RestaurantDto;
 import com.matzip.matzipback.restaurant.query.dto.RestaurantListResponse;
 import com.matzip.matzipback.restaurant.query.mapper.RestaurantMapper;
@@ -29,5 +30,16 @@ public class RestaurantQueryService {
                 .totalPages((int) Math.ceil((double) totalItems / size))
                 .totalItems(totalItems)
                 .build();
+    }
+
+    @Transactional(readOnly = true)
+    public RestaurantDetailResponse getRestaurant(Long restaurantSeq) {
+        RestaurantDto restaurant = restaurantMapper.selectRestaurantBySeq(restaurantSeq);
+
+        if (restaurant == null) {
+            throw new RuntimeException("해당 코드를 가진 음식점을 찾지 못했습니다. 코드: " + restaurantSeq);
+        }
+
+        return new RestaurantDetailResponse(restaurant);
     }
 }

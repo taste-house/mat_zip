@@ -44,4 +44,17 @@
             AND restaurant_phone LIKE CONCAT('%', #{restaurantPhone}, '%')
         </if>
     </select>
+
+    <select id="selectRestaurantBySeq" resultType="com.matzip.matzipback.restaurant.query.dto.RestaurantDto">
+        SELECT
+            restaurant_seq,
+            restaurant_title,
+            restaurant_address,
+            restaurant_phone,
+            restaurant_star
+        FROM
+            restaurant
+        WHERE
+            restaurant_seq = #{restaurantSeq}
+    </select>
 </mapper>

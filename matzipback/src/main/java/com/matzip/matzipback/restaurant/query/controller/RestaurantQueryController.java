@@ -1,13 +1,11 @@
 package com.matzip.matzipback.restaurant.query.controller;
 
+import com.matzip.matzipback.restaurant.query.dto.RestaurantDetailResponse;
 import com.matzip.matzipback.restaurant.query.dto.RestaurantListResponse;
 import com.matzip.matzipback.restaurant.query.service.RestaurantQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +24,14 @@ public class RestaurantQueryController {
             @RequestParam(required = false) String phone) {
 
         RestaurantListResponse response = restaurantQueryService.getRestaurants(page, size, title, address, phone);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/restaurant/{restaurantSeq}")
+    public ResponseEntity<RestaurantDetailResponse> getRestaurants(@PathVariable Long restaurantSeq) {
+
+        RestaurantDetailResponse response = restaurantQueryService.getRestaurant(restaurantSeq);
 
         return ResponseEntity.ok(response);
     }

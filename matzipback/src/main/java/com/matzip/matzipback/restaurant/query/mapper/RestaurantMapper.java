@@ -21,4 +21,7 @@ public interface RestaurantMapper {
             @Param("restaurantTitle") String restaurantTitle,
             @Param("restaurantAddress") String restaurantAddress,
             @Param("restaurantPhone") String restaurantPhone);
+
+    // 단일 음식점 조회
+    RestaurantDto selectRestaurantBySeq(Long restaurantSeq);
 }
