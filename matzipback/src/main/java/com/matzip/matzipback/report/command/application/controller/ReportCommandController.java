@@ -2,6 +2,8 @@ package com.matzip.matzipback.report.command.application.controller;
 
 import com.matzip.matzipback.report.command.application.service.ReportCommandService;
 import com.matzip.matzipback.report.command.domain.aggregate.Report;
+import com.matzip.matzipback.report.command.dto.PostCmtReportReqDTO;
+import com.matzip.matzipback.report.command.dto.PostCmtReportResMessageDTO;
 import com.matzip.matzipback.report.command.dto.PostReportReqDTO;
 import com.matzip.matzipback.report.command.dto.PostReportResMessageDTO;
 import com.matzip.matzipback.responsemessage.ResponseMessage;
@@ -27,5 +29,17 @@ public class ReportCommandController {
 
         // 신고 실패 -> 중복 신고는 막음
         return ResponseEntity.status(HttpStatus.OK).body(new PostReportResMessageDTO(204, ResponseMessage.SAVE_FAIL.getMessage(), -1L));
+    }
+
+    @PostMapping("/postcomment/report")
+    public ResponseEntity<PostCmtReportResMessageDTO> createPostCmtReport(@RequestBody PostCmtReportReqDTO postCmtReportDTO) {
+        Report savedPostCmtReport = reportCommandService.savePostCmtReport(postCmtReportDTO);
+
+        if (savedPostCmtReport != null) { // 신고 성공
+            return ResponseEntity.status(HttpStatus.CREATED).body(new PostCmtReportResMessageDTO(201, ResponseMessage.SAVE_SUCCESS.getMessage(), savedPostCmtReport.getPostSeq()));
+        }
+
+        // 신고 실패 -> 중복 신고는 막음
+        return ResponseEntity.status(HttpStatus.OK).body(new PostCmtReportResMessageDTO(204, ResponseMessage.SAVE_FAIL.getMessage(), -1L));
     }
 }

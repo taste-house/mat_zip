@@ -58,7 +58,7 @@ public class PostCommentService {
         Long postCommentSeq = reqPostCmtUpdateDTO.getPostCommentSeq();
 
         // 스프링 jpa를 이용해서 영속성 컨텍스트로 해당 댓글 가져오기
-        PostComment postComment = postCommentInfraRepository.findById(postCommentSeq)
+        PostComment postComment = postCommentRepository.findById(postCommentSeq)
                 .orElseThrow(NoSuchElementException::new);
 
         // DB내 작성된 댓글 수정 (수정 전 입력 값과 동일하면 안된다.)
@@ -83,7 +83,7 @@ public class PostCommentService {
         Long userSeq = 1L;
 
         // 스프링 jpa를 이용해서 영속성 컨텍스트로 해당 댓글 가져오기
-        PostComment postComment = postCommentInfraRepository.findById(postCommentSeq)
+        PostComment postComment = postCommentRepository.findById(postCommentSeq)
                 .orElseThrow(NoSuchElementException::new);
 
         postCommentInfraRepository.delete(postComment);
