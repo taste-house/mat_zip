@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matzip.matzipback.matzipList.query.mapper.MatzipQueryMapper">
+
+    <select  id="getMatzip" resultType="com.matzip.matzipback.matzipList.query.dto.MatzipSearchDTO">
+        SELECT
+               r.restaurant_title ,
+               r.restaurant_address ,
+               r.restaurant_phone ,
+               r.restaurant_star
+          FROM
+               list_matzip m
+          LEFT JOIN lists l ON m.list_seq = l.list_seq
+          LEFT JOIN restaurant r ON m.restaurant_seq = r.restaurant_seq
+         WHERE l.list_seq = #{listSeq} AND
+               (r.restaurant_title LIKE CONCAT('%' #{matzipTitle} '%') OR #{matzipTitle} IS NULL)
+         ORDER BY
+               l.list_title ASC;
+    </select>
+
+</mapper>

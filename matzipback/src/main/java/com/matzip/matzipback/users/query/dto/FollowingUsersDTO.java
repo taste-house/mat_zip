@@ -7,5 +7,6 @@ import lombok.Setter;
 @Setter
 public class FollowingUsersDTO {
 
+    private long userSeq;
     private String userNickName;
 }
