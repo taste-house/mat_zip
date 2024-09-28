@@ -1,15 +1,17 @@
-package com.matzip.matzipback.matzipList.command.domain.aggregate;
+package com.matzip.matzipback.restaurant.command.aggregate;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "restaurant")
-@NoArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long restaurantSeq;
