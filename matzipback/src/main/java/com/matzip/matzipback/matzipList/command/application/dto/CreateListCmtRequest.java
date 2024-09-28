@@ -11,7 +11,5 @@ public class CreateListCmtRequest {
     @NotBlank
     private final Long listSeq;
     @NotBlank
-    private final Long listCommentUserSeq;
-    @NotBlank
     private final String listCommentContent;
 }

@@ -4,10 +4,10 @@ import com.matzip.matzipback.matzipList.command.application.dto.CreateListCmtReq
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyListComment;
 
 public class ListCmtMapper {
-    public static MyListComment toEntity(CreateListCmtRequest listCmtRequest) {
+    public static MyListComment toEntity(CreateListCmtRequest listCmtRequest, Long listCommentUserSeq) {
         return MyListComment.create(
                 listCmtRequest.getListSeq(),
-                listCmtRequest.getListCommentUserSeq(),
+                listCommentUserSeq,
                 listCmtRequest.getListCommentContent()
         );
     }
