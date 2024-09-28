@@ -7,4 +7,5 @@ import java.util.List;
 public interface UserActiveLevelRepository {
     List<ActiveLevel> findAll();
 
+    ActiveLevel save(ActiveLevel newActiveLevel);
 }
