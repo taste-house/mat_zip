@@ -35,24 +35,22 @@ public class UsersFollowQueryService {
         return usersFollowMapper.searchFollowUsersByUserSeqAndPage(followingUserSeq, offset, size);
     }
 
-    public List<FollowingUsersDTO> searchFollowerUsers(int page) {
+    public List<FollowingUsersDTO> searchFollowerUsers(long userSeq, long page) {
 
-        //long followedUserSeq = CustomUserUtils.getCurrentUserSeq();
-        long followedUserSeq = 3L;
 
         if (page <= 0) {
             page = 1;
         }
 
-        int offset = (page - 1) * 10;
+        long offset = (page - 1) * 10;
         int size = 10;
 
-        long count = usersFollowMapper.countFollower(followedUserSeq);
+        long count = usersFollowMapper.countFollower(userSeq);
 
         if (offset > count) {
             page = (int) count / 10 + 1;
             offset = (page - 1) * 10;
         }
-        return usersFollowMapper.searchFollowerUsersByUserSeqAndPage(followedUserSeq, offset, size);
+        return usersFollowMapper.searchFollowerUsersByUserSeqAndPage(userSeq, offset, size);
     }
 }

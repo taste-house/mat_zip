@@ -18,7 +18,7 @@ public interface UsersFollowMapper {
 
     List<FollowingUsersDTO> searchFollowerUsersByUserSeqAndPage(
             @Param("followedUserSeq") long followedUserSeq,
-            @Param("offset") int offset,
+            @Param("offset") long offset,
             @Param("size") int size
     );
 
