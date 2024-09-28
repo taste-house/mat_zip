@@ -13,7 +13,7 @@ public class PostCmtLikeController {
     private final PostCmtLikeService postCmtLikeService;
 
     // 게시글 댓글 좋아요
-    @PostMapping("/{postSeq}/postcomment/{postcommentSeq}/like")
+    @PostMapping("/{postSeq}/postcomment/{postCommentSeq}/like")
     public ResponseEntity<Long> toggleLike(
             @PathVariable Long postSeq,
             @PathVariable Long postCommentSeq
