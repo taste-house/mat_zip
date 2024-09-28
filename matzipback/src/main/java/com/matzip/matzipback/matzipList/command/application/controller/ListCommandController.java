@@ -16,7 +16,7 @@ public class ListCommandController {
 
     private final ListCommandService listCommandService;
 
-    //리스트 등록
+    // 리스트 등록
     @PostMapping("/list")
     public ResponseEntity<Void> createList(@RequestBody CreateListRequest listRequest){
 
@@ -24,7 +24,7 @@ public class ListCommandController {
 
         return ResponseEntity.created(URI.create("/api/v1/list" + listSeq)).build();
     }
-
+    // 리스트 삭제
     @DeleteMapping("/list/{listSeq}")
     public ResponseEntity<Void> deleteList(@PathVariable Long listSeq){
         listCommandService.deleteList(listSeq);
