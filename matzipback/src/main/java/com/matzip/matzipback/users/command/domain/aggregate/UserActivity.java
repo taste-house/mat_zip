@@ -17,7 +17,7 @@ public class UserActivity {
     @Id
     private Long activityUserSeq;
     private Long activeLevelSeq;
-    private Long activityPoint;
+    private Integer activityPoint;
     private String influencerYn;
 
     private UserActivity(Long activityUserSeq) {
@@ -33,10 +33,14 @@ public class UserActivity {
         this.activityPoint = activityPoint + point;
     }
 
+    public void changeLevel(long level) {
+        this.activeLevelSeq = level;
+    }
+
     @PrePersist
     public void prePersist() {
         if (this.influencerYn == null) this.influencerYn = "N";
-        if (this.activityPoint == null) this.activityPoint = 0L;
+        if (this.activityPoint == null) this.activityPoint = 0;
         if (this.activeLevelSeq == null) this.activeLevelSeq = 1L;
     }
 }
