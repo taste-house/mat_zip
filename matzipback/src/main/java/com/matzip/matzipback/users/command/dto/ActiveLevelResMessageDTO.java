@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CreateActiveLevelResMessageDTO {
+public class ActiveLevelResMessageDTO {
 
     private int code;
     private String message;
