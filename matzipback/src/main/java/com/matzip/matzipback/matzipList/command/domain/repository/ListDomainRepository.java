@@ -20,4 +20,5 @@ public interface ListDomainRepository {
     void deleteById(Long listSeq);
 
     Optional<MyList> findById(Long listSeq);
+
 }
