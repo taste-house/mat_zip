@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.matzip.matzipback.review.query.mapper.ReviewMapper">
     <!-- 리뷰 검색 및 조회 -->
-    <select id="selectReviews" resultType="com.matzip.matzipback.review.query.dto.ReviewDto">
+    <select id="selectReviews" resultType="com.matzip.matzipback.review.query.dto.ReviewListDto">
         SELECT
             review.review_seq,
             review.review_user_seq,
@@ -50,6 +50,27 @@
         <if test="restaurantTitle != null">
             AND restaurant.restaurant_title LIKE CONCAT('%', #{restaurantTitle}, '%')
         </if>
+    </select>
+
+    <!-- 리뷰 상세 조회 -->
+    <select id="selectReview" resultType="com.matzip.matzipback.review.query.dto.ReviewDetailResponse">
+        SELECT
+            review.review_seq,
+            review.review_user_seq,
+            users.user_nickname,
+            restaurant.restaurant_seq,
+            restaurant.restaurant_title,
+            review.review_content,
+            review.review_created_time,
+            review.review_updated_time,
+            review.review_star
+        FROM review
+            JOIN users ON (review.review_user_seq = users.user_seq)
+            JOIN restaurant USING (restaurant_seq)
+        WHERE
+            review.review_status = 'active'
+        AND
+            review.review_seq = #{reviewSeq}
     </select>
 
 </mapper>

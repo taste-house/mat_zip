@@ -7,8 +7,8 @@ import java.util.List;
 
 // 리뷰 조회 결과 반환 형식
 @Getter @Builder
-public class ReviewResponse {
-    private List<ReviewDto> reviews;
+public class ReviewListResponse {
+    private List<ReviewListDto> reviews;
     private int currentPage;
     private int totalPages;
     private long totalItems;
