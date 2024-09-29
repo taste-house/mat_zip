@@ -39,6 +39,7 @@ public class ListCommandController {
         Long listSeq = listCommandService.updateList(updateListRequset);
 
         return ResponseEntity.ok().location(URI.create("/api/v1/list" + listSeq)).build();
+
     }
 
 }
