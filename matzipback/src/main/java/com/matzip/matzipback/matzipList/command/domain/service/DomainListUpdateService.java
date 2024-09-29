@@ -31,5 +31,6 @@ public class DomainListUpdateService {
         listDomainRepository.save(existList);
 
         return existList.getListSeq();
+
     }
 }
