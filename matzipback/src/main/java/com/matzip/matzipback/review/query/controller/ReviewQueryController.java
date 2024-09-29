@@ -1,6 +1,7 @@
 package com.matzip.matzipback.review.query.controller;
 
 import com.matzip.matzipback.review.query.dto.ReviewDetailResponse;
+import com.matzip.matzipback.review.query.dto.ReviewImageResponse;
 import com.matzip.matzipback.review.query.dto.ReviewListResponse;
 import com.matzip.matzipback.review.query.service.ReviewQueryService;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +29,20 @@ public class ReviewQueryController {
         return ResponseEntity.ok(response);
     }
 
+    // 리뷰 상세 조히
     @GetMapping("/review/{reviewSeq}")
     public ResponseEntity<ReviewDetailResponse> getReview(@PathVariable Long reviewSeq) {
 
         ReviewDetailResponse response = reviewQueryService.getReview(reviewSeq);
+
+        return ResponseEntity.ok(response);
+    }
+
+    // 리뷰 이미지 로드
+    @GetMapping("/review/{reviewSeq}/image")
+    public ResponseEntity<ReviewImageResponse> getReviewImages(@PathVariable Long reviewSeq) {
+
+        ReviewImageResponse response = reviewQueryService.getReviewImages(reviewSeq);
 
         return ResponseEntity.ok(response);
     }

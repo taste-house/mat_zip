@@ -29,6 +29,7 @@
         <if test="restaurantTitle != null">
             AND restaurant.restaurant_title LIKE CONCAT('%', #{restaurantTitle}, '%')
         </if>
+        GROUP BY review.review_seq
         ORDER BY review.review_created_time DESC
         LIMIT #{limit} OFFSET #{offset}
     </select>
@@ -73,4 +74,15 @@
             review.review_seq = #{reviewSeq}
     </select>
 
+    <!-- 리뷰 이미지 로드 -->
+    <select id="selectReviewImages" resultType="com.matzip.matzipback.review.query.dto.ReviewImageDto">
+        SELECT
+            review_image_path
+        FROM review
+            JOIN review_image USING (review_seq)
+        WHERE
+            review.review_status = 'active'
+        AND
+            review.review_seq = #{reviewSeq}
+    </select>
 </mapper>

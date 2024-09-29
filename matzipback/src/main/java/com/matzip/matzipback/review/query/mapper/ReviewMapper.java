@@ -2,6 +2,7 @@ package com.matzip.matzipback.review.query.mapper;
 
 import com.matzip.matzipback.review.query.dto.ReviewDetailResponse;
 import com.matzip.matzipback.review.query.dto.ReviewListDto;
+import com.matzip.matzipback.review.query.dto.ReviewImageDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,5 +24,8 @@ public interface ReviewMapper {
             @Param("restaurantTitle") String restaurantTitle);
 
     ReviewDetailResponse selectReview(
+            @Param("reviewSeq") Long reviewSeq);
+
+    List<ReviewImageDto> selectReviewImages(
             @Param("reviewSeq") Long reviewSeq);
 }

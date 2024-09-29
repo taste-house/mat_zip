@@ -1,8 +1,6 @@
 package com.matzip.matzipback.review.query.service;
 
-import com.matzip.matzipback.review.query.dto.ReviewDetailResponse;
-import com.matzip.matzipback.review.query.dto.ReviewListDto;
-import com.matzip.matzipback.review.query.dto.ReviewListResponse;
+import com.matzip.matzipback.review.query.dto.*;
 import com.matzip.matzipback.review.query.mapper.ReviewMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,5 +40,13 @@ public class ReviewQueryService {
     public ReviewDetailResponse getReview(Long reviewSeq) {
 
         return reviewMapper.selectReview(reviewSeq);
+    }
+
+    // 리뷰 이미지 로드
+    public ReviewImageResponse getReviewImages(Long reviewSeq) {
+        ReviewImageResponse reviewImages = new ReviewImageResponse();
+        reviewImages.setReviewImages(reviewMapper.selectReviewImages(reviewSeq));
+
+        return reviewImages;
     }
 }
