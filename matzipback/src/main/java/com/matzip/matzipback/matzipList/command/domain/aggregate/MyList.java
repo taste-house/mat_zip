@@ -3,6 +3,7 @@ package com.matzip.matzipback.matzipList.command.domain.aggregate;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @Getter
+@Setter
 @SQLDelete(sql = "UPDATE lists SET list_status = 'delete', list_deleted_time = NOW() WHERE list_seq = ?")
 public class MyList {
     
@@ -52,4 +54,5 @@ public class MyList {
     public static MyList create(Long listUserSeq, String listTitle, String listContent, int listLevel) {
         return new MyList(listUserSeq, listTitle, listContent, listLevel);
     }
+
 }
