@@ -1,8 +1,11 @@
 package com.matzip.matzipback.matzipList.command.application.service;
 
+import com.matzip.matzipback.common.util.CustomUserUtils;
+import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequset;
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyList;
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListRequest;
 import com.matzip.matzipback.matzipList.command.domain.repository.ListDomainRepository;
+import com.matzip.matzipback.matzipList.command.domain.service.DomainListUpdateService;
 import com.matzip.matzipback.matzipList.command.mapper.ListMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,7 @@ import java.util.List;
 public class ListCommandService {
 
         private final ListDomainRepository listDomainRepository;
+        private final DomainListUpdateService domainListUpdateService;
 
 
     @Transactional
@@ -42,5 +46,16 @@ public class ListCommandService {
     public void deleteList(Long listSeq) {
 
         listDomainRepository.deleteById(listSeq);
+    }
+    @Transactional
+    public Long updateList(UpdateListRequset updateListRequset) {
+
+        //로그인한 사람의 유저 시퀀스를 가져오는 기능(권한이 들어있는 유저 시퀀스)
+//        Long listUserSeq = CustomUserUtils.getCurrentUserSeq();
+
+        // 테스트용 코드 생성
+        long listUserSeq = 4L;
+
+        return domainListUpdateService.updateList(updateListRequset, listUserSeq);
     }
 }
