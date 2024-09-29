@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateActiveLevelRequestDTO {
+public class CreateActiveLevelReqDTO {
     
     private String activeLevelName;
     private int activeLevelStandard;
