@@ -1,12 +1,10 @@
 package com.matzip.matzipback.users.command.domain.aggregate;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -15,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "users")
 @NoArgsConstructor/*(access = AccessLevel.PROTECTED)*/
 @EntityListeners(AuditingEntityListener.class)  //@CreatedDate 사용위해
-@SQLDelete(sql = "UPDATE users SET user_status = 'delete', user_delete_date = NOW() WHERE user_seq = ?")
+@SQLDelete(sql = "UPDATE users SET user_status = 'inactive', user_delete_date = NOW() WHERE user_seq = ?")
 @Getter
 public class Users {
 
@@ -50,11 +48,26 @@ public class Users {
         if (businessVerifiedYn == null) businessVerifiedYn = "N"; // 사업자인증여부
     }
 
+    // 비밀번호 암호화
     public void encryptPassword(String password) {
         this.userPassword = password;
     }
 
+    // 닉네임 변경
     public void updateNickname(String nickname) {
-        this.userNickname = nickname;
+        if (nickname != null && !nickname.trim().isEmpty()) {
+            this.userNickname = nickname;
+        }
     }
+
+    // 휴대폰 번호 변경
+    public void updatePhone(String phoneNumber) {
+        this.userPhone = phoneNumber;
+    }
+
+    // 사업자 인증 상태 변경
+    public void updateBusinessStatus(boolean isVerified) {
+        this.businessVerifiedYn = isVerified ? "Y" : "N";
+    }
+
 }
