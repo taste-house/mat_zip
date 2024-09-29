@@ -4,10 +4,7 @@ import com.matzip.matzipback.board.query.dto.PostListResponse;
 import com.matzip.matzipback.board.query.service.PostQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +32,7 @@ public class PostQueryController {
     public ResponseEntity<PostListResponse> getPostsByCategory(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
-            @RequestParam Long boardCategorySeq
+            @PathVariable Long boardCategorySeq
     ) {
         PostListResponse response = postQueryService.getPostsByCategory(page, size, boardCategorySeq);
 
