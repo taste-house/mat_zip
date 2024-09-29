@@ -55,4 +55,5 @@ public class MyList {
         return new MyList(listUserSeq, listTitle, listContent, listLevel);
     }
 
+
 }
