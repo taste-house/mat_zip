@@ -15,4 +15,9 @@ public class PostTag {
     private Long tagSeq;
     private Long postSeq;
 
+    // 생성자 추가
+    public PostTag(Long tagSeq, Long postSeq) {
+        this.tagSeq = tagSeq;
+        this.postSeq = postSeq;
+    }
 }
