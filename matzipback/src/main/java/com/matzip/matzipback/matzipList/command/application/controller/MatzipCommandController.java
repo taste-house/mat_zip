@@ -2,6 +2,7 @@ package com.matzip.matzipback.matzipList.command.application.controller;
 
 
 import com.matzip.matzipback.matzipList.command.application.dto.CreateMatzipRequest;
+import com.matzip.matzipback.matzipList.command.application.dto.DeleteMatzipRequset;
 import com.matzip.matzipback.matzipList.command.application.service.MatzipCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,17 @@ public class MatzipCommandController {
         Long listMatzipSeq = matzipCommandService.createMatzip(matzipRequest);
 
         return ResponseEntity.created(URI.create("/api/v1/list/matzip" + listMatzipSeq)).build();
+    }
+
+    // 맛집 수정
+
+    // 맛집 삭제
+    @DeleteMapping("/list/matzip/")
+    public ResponseEntity<Void> deleteMatzip(@RequestBody DeleteMatzipRequset deleteMatzipRequset){
+
+        matzipCommandService.deleteMatzip(deleteMatzipRequset);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
