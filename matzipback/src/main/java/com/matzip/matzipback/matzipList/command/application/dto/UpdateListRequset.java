@@ -13,4 +13,5 @@ public class UpdateListRequset {
     private String listTitle;
     private String listContent;
     private Integer listLevel;
+
 }
