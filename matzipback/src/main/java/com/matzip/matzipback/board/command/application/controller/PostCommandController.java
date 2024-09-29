@@ -1,6 +1,6 @@
 package com.matzip.matzipback.board.command.application.controller;
 
-import com.matzip.matzipback.board.command.application.dto.CreatePostAndTagReqDTO;
+import com.matzip.matzipback.board.command.application.dto.PostAndTagRequestDTO;
 import com.matzip.matzipback.board.command.application.service.PostCommandService;
 import lombok.RequiredArgsConstructor;
 //import com.google.gson.JsonObject;
@@ -8,13 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,11 +19,10 @@ public class PostCommandController {
     private final PostCommandService postCommandService;
 
     /* 1. 게시글 등록, 이미지 업로드, 이미지 삭제 */
-
     // 게시글 기본 정보 + 태그 등록
     @PostMapping("/post")
     public ResponseEntity<Void> registPost(
-            @RequestBody CreatePostAndTagReqDTO newPost    // 게시글 정보 + 태그 정보
+            @RequestBody PostAndTagRequestDTO newPost    // 게시글 정보 + 태그 정보
     ){
 
         // 게시글 등록
@@ -84,8 +78,23 @@ public class PostCommandController {
     }
     */
 
-
     /* 2. 게시글 수정 */
+    @PutMapping("/post/{postSeq}")
+    public ResponseEntity<Void> updatePost(
+            @PathVariable Long postSeq,
+            @RequestBody PostAndTagRequestDTO updatedPost
+    ) {
+
+        postCommandService.updatePost(postSeq, updatedPost);
+
+        // redirect URI 생성
+        String redirectURI = "/api/v1/post/" + postSeq;
+
+        // 수정된 게시글 고유번호(postSeq) 반환
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .location(URI.create(redirectURI))
+                .build();
+    }
 
     /* 3. 게시글 삭제 */
     @DeleteMapping("/post/{postSeq}")
