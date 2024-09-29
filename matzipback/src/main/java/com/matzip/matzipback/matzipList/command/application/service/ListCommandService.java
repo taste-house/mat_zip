@@ -57,5 +57,6 @@ public class ListCommandService {
         long listUserSeq = 4L;
 
         return domainListUpdateService.updateList(updateListRequset, listUserSeq);
+
     }
 }
