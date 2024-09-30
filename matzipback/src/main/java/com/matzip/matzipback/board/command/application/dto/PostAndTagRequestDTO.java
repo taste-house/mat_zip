@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class PostAndTagRequestDTO {
+    private Long postSeq;
     private String postTitle;       // 게시글 제목
     private Long postUserSeq;       // 게시물 작성자
     private String postContent;     // 게시글 본문
