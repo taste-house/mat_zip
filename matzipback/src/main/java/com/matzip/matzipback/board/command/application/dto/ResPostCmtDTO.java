@@ -11,5 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ResPostCmtDTO {
 
+    private int code;
+    private String message;
     private Long postSeq;
 }
