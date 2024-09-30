@@ -2,8 +2,9 @@ package com.matzip.matzipback.matzipList.command.application.controller;
 
 
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListRequest;
-import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequset;
+import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequest;
 import com.matzip.matzipback.matzipList.command.application.service.ListCommandService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,16 +28,16 @@ public class ListCommandController {
     }
     // 리스트 삭제
     @DeleteMapping("/list/{listSeq}")
-    public ResponseEntity<Void> deleteList(@PathVariable Long listSeq){
+    public ResponseEntity<Void> deleteList(@Valid @PathVariable Long listSeq){
         listCommandService.deleteList(listSeq);
         return ResponseEntity.noContent().build();
     }
 
     // 리스트 수정
     @PutMapping("/list")
-    public ResponseEntity<Void> updateList(@RequestBody UpdateListRequset updateListRequset){
+    public ResponseEntity<Void> updateList(@RequestBody UpdateListRequest updateListRequest){
 
-        Long listSeq = listCommandService.updateList(updateListRequset);
+        Long listSeq = listCommandService.updateList(updateListRequest);
 
         return ResponseEntity.ok().location(URI.create("/api/v1/list" + listSeq)).build();
 
