@@ -107,7 +107,7 @@
             </if>
             <!-- 인기회원 여부 필터링 -->
             <if test="influencerYn != null and influencerYn != ''">
-                AND u.influencer_yn = #{influencerYn}
+                AND ua.influencer_yn = #{influencerYn}
             </if>
         </where>
         ORDER BY
@@ -161,7 +161,7 @@
                 AND u.business_verified_yn = #{businessVerifiedYn}
             </if>
             <if test="influencerYn != null and influencerYn != ''">
-                AND u.influencer_yn = #{influencerYn}
+                AND ua.influencer_yn = #{influencerYn}
             </if>
         </where>
     </select>
