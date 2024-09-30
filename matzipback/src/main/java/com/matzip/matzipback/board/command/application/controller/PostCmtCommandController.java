@@ -5,7 +5,6 @@ import com.matzip.matzipback.board.command.application.dto.ReqPostCmtUpdateDTO;
 import com.matzip.matzipback.board.command.application.dto.ResPostCmtDTO;
 import com.matzip.matzipback.board.command.application.service.PostCommentService;
 import com.matzip.matzipback.board.command.domain.aggregate.PostComment;
-import com.matzip.matzipback.report.command.dto.PostCmtReportResMessageDTO;
 import com.matzip.matzipback.responsemessage.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,12 +36,12 @@ public class PostCmtCommandController {
     public ResponseEntity<ResPostCmtDTO> updatePostComment(@RequestBody ReqPostCmtUpdateDTO reqPostCmtUpdateDTO) {
         PostComment postComment = postCommentService.updatePostComment(reqPostCmtUpdateDTO);
 
-        if (postComment.getPostCommentSeq() != null) {  // 수정 성공
+        if (postComment != null) {  // 수정 성공
             return ResponseEntity.status(HttpStatus.CREATED).body(new ResPostCmtDTO(201, ResponseMessage.SAVE_SUCCESS.getMessage(), postComment.getPostSeq()));
         }
 
         // 수정 실패
-        return ResponseEntity.status(HttpStatus.OK).body(new ResPostCmtDTO(204, ResponseMessage.SAVE_FAIL.getMessage(), postComment.getPostSeq()));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResPostCmtDTO(204, ResponseMessage.SAVE_FAIL.getMessage(), reqPostCmtUpdateDTO.getPostSeq()));
     }
 
     // 댓글 삭제
