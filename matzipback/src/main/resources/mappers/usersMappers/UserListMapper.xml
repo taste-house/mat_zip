@@ -113,19 +113,31 @@
         ORDER BY
         <choose>
             <when test="orderBy == 'regDateDesc'">
-                u.user_reg_date DESC
+                u.user_reg_date DESC, ua.activity_point DESC  <!-- 가입일 먼저 내림차순, 포인트 내림차순 -->
             </when>
             <when test="orderBy == 'regDateAsc'">
-                u.user_reg_date ASC
+                u.user_reg_date ASC, ua.activity_point DESC  <!-- 가입일 먼저 오름차순, 포인트 내림차순 -->
             </when>
             <when test="orderBy == 'pointDesc'">
-                ua.activity_point DESC
+                ua.activity_point DESC, u.user_reg_date DESC  <!-- 포인트 먼저 내림차순, 가입일 내림차순 -->
             </when>
             <when test="orderBy == 'pointAsc'">
-                ua.activity_point ASC
+                ua.activity_point ASC, u.user_reg_date DESC  <!-- 포인트 먼저 오름차순, 가입일 내림차순 -->
+            </when>
+            <when test="orderBy == 'regDateAscPointAsc'">
+                u.user_reg_date ASC, ua.activity_point Asc  <!-- 가입일 오름차순, 포인트 오름차순 -->
+            </when>
+            <when test="orderBy == 'regDateDescPointAsc'">
+                u.user_reg_date DESC, ua.activity_point Asc  <!-- 가입일 내림차순, 포인트 오름차순 -->
+            </when>
+            <when test="orderBy == 'pointAscRegDateAsc'">
+                ua.activity_point ASC, u.user_reg_date Asc   <!-- 포인트 오름차순, 가입일 오름차순 -->
+            </when>
+            <when test="orderBy == 'pointDescRegDateAsc'">
+                ua.activity_point Desc, u.user_reg_date Asc   <!-- 포인트 내림차순, 가입일 오름차순 -->
             </when>
             <otherwise>
-                u.user_reg_date DESC <!-- 기본 정렬: 최신순 -->
+                u.user_reg_date DESC, ua.activity_point DESC  <!-- 기본값: 가입일 내림차순, 포인트 내림차순 -->
             </otherwise>
         </choose>
         LIMIT #{size} OFFSET #{offset}  <!-- 페이징을 위한 코드 -->
