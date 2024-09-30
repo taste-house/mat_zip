@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class DeleteMatzipRequset {
+public class DeleteMatzipRequest {
 
     @NotBlank
     private Long listMatzipSeq;
