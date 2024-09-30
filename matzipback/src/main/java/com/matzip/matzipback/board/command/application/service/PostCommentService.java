@@ -77,7 +77,7 @@ public class PostCommentService {
 
     // 댓글 삭제(소프트 삭제)
     @Transactional
-    public Long deletePostComment(Long postCommentSeq) {
+    public PostComment deletePostComment(Long postCommentSeq) {
 
         // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
         Long userSeq = 1L;
@@ -88,6 +88,6 @@ public class PostCommentService {
 
         postCommentInfraRepository.delete(postComment);
 
-        return postComment.getPostSeq();
+        return postComment;
     }
 }
