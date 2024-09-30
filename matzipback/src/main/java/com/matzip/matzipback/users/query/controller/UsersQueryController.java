@@ -21,14 +21,15 @@ public class UsersQueryController {
 
     private final UsersInfoService usersInfoService;
 
-    @GetMapping("/auth/register")
-    public ResponseEntity<Map<String, String>> getSignUp() {
-        log.info("회원가입 화면으로 이동");
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "회원가입 화면으로 이동");
-        response.put("url", "/register"); // 프론트엔드 회원가입 화면의 경로
-        return ResponseEntity.ok(response); // JSON 응답
-    }
+    // 로그인 검증 구현 시 되살릴 예정(프론트에서 직접 회원가입 창으로 이동가능하기때문)
+//    @GetMapping("/auth/register")
+//    public ResponseEntity<Map<String, String>> getSignUp() {
+//        log.info("회원가입 화면으로 이동");
+//        Map<String, String> response = new HashMap<>();
+//        response.put("message", "회원가입 화면으로 이동");
+//        response.put("url", "/register"); // 프론트엔드 회원가입 화면의 경로
+//        return ResponseEntity.ok(response); // JSON 응답
+//    }
 
 //    @GetMapping("/auth/login")
 //    public String getLogin(){
