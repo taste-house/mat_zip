@@ -17,6 +17,8 @@ public interface ListDomainRepository {
 
     long countByListUserSeq(Long listUserSeq);
 
-
     void deleteById(Long listSeq);
+
+    Optional<MyList> findById(Long listSeq);
+
 }
