@@ -35,9 +35,14 @@ public class PostCmtCommandController {
     // 댓글 수정
     @PutMapping("/postcomment")
     public ResponseEntity<ResPostCmtDTO> updatePostComment(@RequestBody ReqPostCmtUpdateDTO reqPostCmtUpdateDTO) {
-        ResPostCmtDTO postComment = postCommentService.updatePostComment(reqPostCmtUpdateDTO);
+        PostComment postComment = postCommentService.updatePostComment(reqPostCmtUpdateDTO);
 
-        return ResponseEntity.ok(postComment);
+        if (postComment.getPostCommentSeq() != null) {  // 수정 성공
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ResPostCmtDTO(201, ResponseMessage.SAVE_SUCCESS.getMessage(), postComment.getPostSeq()));
+        }
+
+        // 수정 실패
+        return ResponseEntity.status(HttpStatus.OK).body(new ResPostCmtDTO(204, ResponseMessage.SAVE_FAIL.getMessage(), postComment.getPostSeq()));
     }
 
     // 댓글 삭제
