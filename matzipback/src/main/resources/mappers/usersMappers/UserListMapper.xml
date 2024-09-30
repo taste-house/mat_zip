@@ -96,6 +96,10 @@
         <where>
             <!-- 관리자 계정 제외 -->
             u.user_auth = 'user'
+            <if test="userStatus != null and userStatus != ''">
+                And u.user_status = #{userStatus}
+            </if>
+
             <!-- 소셜회원 여부 필터링 -->
             <if test="socialYn != null and socialYn != ''">
                 u.user_social_yn = #{socialYn}
@@ -157,6 +161,10 @@
         LEFT JOIN penalty p ON u.user_seq = p.penalty_user_seq
         <where>
             u.user_auth = 'user'
+            <if test="userStatus != null and userStatus != ''">
+                And u.user_status = #{userStatus}
+            </if>
+
             <if test="socialYn != null and socialYn != ''">
                 u.user_social_yn = #{socialYn}
                 <if test="socialYn == 'Y' and socialSite != null and socialSite != ''">
@@ -221,6 +229,9 @@
         <where>
             <!-- 관리자 계정 제외 -->
             u.user_auth = 'user'
+            <if test="userStatus != null and userStatus != ''">
+                And u.user_status = #{userStatus}
+            </if>
 
             <!-- 검색 조건 추가 -->
             <if test="searchWord != null and searchWord != ''">
@@ -315,6 +326,9 @@
         <where>
             <!-- 관리자 계정 제외 -->
             u.user_auth = 'user'
+            <if test="userStatus != null and userStatus != ''">
+                And u.user_status = #{userStatus}
+            </if>
 
             <!-- 검색 조건 추가 -->
             <if test="searchWord != null and searchWord != ''">
