@@ -43,7 +43,7 @@ public class PostCommentService {
 
     // 댓글 수정
     @Transactional
-    public ResPostCmtDTO updatePostComment(ReqPostCmtUpdateDTO reqPostCmtUpdateDTO) {
+    public PostComment updatePostComment(ReqPostCmtUpdateDTO reqPostCmtUpdateDTO) {
 
         // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
         Long userSeq = 1L;
@@ -59,13 +59,11 @@ public class PostCommentService {
             throw new RuntimeException("댓글 수정에 실패했습니다."); // 예외 처리
         }
 
-        postComment.updatePostCmt(reqPostCmtUpdateDTO.getPostCommentContent());
-        // 수정 값이 자동으로 업데이트 시에 @LastModifiedDate가 적용
+        // postCommentRepository.save(postComment);    // save 호출 시 @LastModifiedDate 가 적용
 
-//        postCommentRepository.save(postComment);    // save 호출 시 @LastModifiedDate가 적용
+        // 수정 값이 자동으로 업데이트 시에 @LastModifiedDate 가 적용
+        return postComment.updatePostCmt(reqPostCmtUpdateDTO.getPostCommentContent());
 
-        // 응답 DTO로 반환
-        return new ResPostCmtDTO(postComment.getPostSeq());
     }
 
     // 댓글 삭제(소프트 삭제)
