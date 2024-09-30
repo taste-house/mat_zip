@@ -129,7 +129,8 @@
                 a.post_comment_seq
               , c.user_nickname
               , a.post_comment_content
-              , a.post_comment_updated_time
+              , a.post_comment_created_time as createdTime
+              , a.post_comment_updated_time as lastUpdateTime
           FROM post_comment a
          RIGHT JOIN post b USING (post_seq)
           LEFT JOIN users c ON (a.post_comment_user_seq = c.user_seq)
