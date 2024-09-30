@@ -1,10 +1,12 @@
 package com.matzip.matzipback.users.query.controller;
 
+import com.matzip.matzipback.users.command.domain.aggregate.Users;
 import com.matzip.matzipback.users.query.dto.userInfo.AllUserInfoResponseDTO;
 import com.matzip.matzipback.users.query.service.UsersInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,14 +66,24 @@ public class UsersQueryController {
             @RequestParam(value = "businessVerifiedYn", required = false) String businessVerifiedYn,
             @RequestParam(value = "influencerYn", required = false) String influencerYn,
             @RequestParam(value = "userStatus", required = false) String userStatus,
-            @RequestParam(value = "userAuth", required = false) String userAuth,
+//            @RequestParam(value = "userAuth", required = false) String userAuth,
             @RequestParam(value = "orderBy", defaultValue = "regDateDesc") String orderBy,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
-            @RequestParam(value = "size", defaultValue = "10") Integer size) {
+            @RequestParam(value = "size", defaultValue = "10") Integer size,
+            @AuthenticationPrincipal Users user // 로그인한 사용자의 정보를 가져옴
+    ) {
         //defaultValue : 기본값 설정, required = false : 파라미터 선택적(필수아님)
         log.info("GET /api/v1/users/search - 회원 검색 조회 요청");
-        AllUserInfoResponseDTO users = usersInfoService.getSearchUserList(searchType, searchWord, socialYn, socialSite,
-                businessVerifiedYn, influencerYn, userStatus, userAuth, orderBy, page, size);
+
+        String userAuth = user.getUserAuth();
+        AllUserInfoResponseDTO users;
+        if(userAuth.equals("user")) {   // 일반회원
+            users =  usersInfoService.getSearchUserList(searchType, searchWord, socialYn, socialSite, businessVerifiedYn, influencerYn, "actice", orderBy, page, size);
+        } else {    // 관리자
+            users =  usersInfoService.getSearchUserList(searchType, searchWord, socialYn, socialSite, businessVerifiedYn, influencerYn, null, orderBy, page, size);
+        }
+
+//        AllUserInfoResponseDTO users = usersInfoService.getSearchUserList(searchType, searchWord, socialYn, socialSite, businessVerifiedYn, influencerYn, userStatus, userAuth, orderBy, page, size);
         log.info("회원 검색 조회 완료. 현재 페이지: {}, 전체 페이지 수: {}, 검색결과 유저 수: {}, 검색타입 : {}, 검색어 : {}",
                 users.getCurrentPage(), users.getTotalPages(), users.getTotalUsers(), searchType, searchWord);
 
