@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class UpdateListRequset {
+public class UpdateListRequest {
     private Long listSeq;
     private Long listUserSeq;
     private String listTitle;
