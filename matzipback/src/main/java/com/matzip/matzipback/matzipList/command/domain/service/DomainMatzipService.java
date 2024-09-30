@@ -19,13 +19,9 @@ public class DomainMatzipService {
 
     public Long updateMatzip(UpdateMatzipRequest updateMatzipRequest) {
 
-        Long listSeq = updateMatzipRequest.getListSeq();
         Long listMatzipSeq = updateMatzipRequest.getListMatzipSeq();
 
-        MyListMatzip existList = matzipDomainRepository.findById(listSeq)
-                .orElseThrow(() -> new IllegalArgumentException("해당 리스트가 존재하지 않습니다. : " + listSeq));
-        MyListMatzip existMatzip = matzipDomainRepository.findById(listMatzipSeq)
-                .orElseThrow(() -> new IllegalArgumentException("해당 맛집은 존재하지 않습니다. : " + listMatzipSeq));
+        MyListMatzip existMatzip = matzipDomainRepository.findById(listMatzipSeq).orElseThrow();
 
         modelMapper.map(updateMatzipRequest, existMatzip);
         existMatzip.setListSeq(listMatzipSeq);
