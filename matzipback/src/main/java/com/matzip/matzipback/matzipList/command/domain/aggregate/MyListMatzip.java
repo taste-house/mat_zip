@@ -3,12 +3,14 @@ package com.matzip.matzipback.matzipList.command.domain.aggregate;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Table(name = "list_matzip")
 @NoArgsConstructor
 @Getter
+@Setter
 public class MyListMatzip {
 
     @Id
