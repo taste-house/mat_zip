@@ -1,6 +1,6 @@
 package com.matzip.matzipback.matzipList.command.domain.service;
 
-import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequset;
+import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequest;
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyList;
 import com.matzip.matzipback.matzipList.command.domain.repository.ListDomainRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,18 +15,18 @@ public class DomainListUpdateService {
     private final ListDomainRepository listDomainRepository;
 
 
-    public long updateList(UpdateListRequset updateListRequset, long listUserSeq) {
+    public long updateList(UpdateListRequest updateListRequest, long listUserSeq) {
 
-        Long listSeq = updateListRequset.getListSeq();
+        Long listSeq = updateListRequest.getListSeq();
 
         MyList existList = listDomainRepository.findById(listSeq)
                 .orElseThrow(() -> new IllegalArgumentException("해당 리스트가 존재하지 않습니다." + listSeq));
 
-        modelMapper.map(updateListRequset, existList);
+        modelMapper.map(updateListRequest, existList);
         existList.setListUserSeq(listUserSeq);
-        existList.setListContent(updateListRequset.getListContent());
-        existList.setListTitle(updateListRequset.getListTitle());
-        existList.setListLevel(updateListRequset.getListLevel());
+        existList.setListContent(updateListRequest.getListContent());
+        existList.setListTitle(updateListRequest.getListTitle());
+        existList.setListLevel(updateListRequest.getListLevel());
 
         listDomainRepository.save(existList);
 
