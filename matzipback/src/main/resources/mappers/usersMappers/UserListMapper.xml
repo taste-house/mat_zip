@@ -12,6 +12,7 @@
         <result property = "businessVerifiedYn" column = "business_verified_yn"/>
         <result property = "penaltyYn" column = "penalty_yn"/>
         <result property = "userStatus" column = "user_status"/>
+        <result property = "userAuth" column = "user_auth"/>
         <result property = "userRegDate" column = "user_reg_date"/>
         <result property = "userDeleteDate" column = "user_delete_date"/>
 
@@ -49,6 +50,7 @@
 <!--        <result property="businessStatus" column="business_verification_status"/>-->
 <!--    </resultMap>-->
 
+    <!-- 회원 전체조회 : 관리자 -->
     <select id="getAllUserInfo" resultMap="UsersResultMap">
         SELECT u.user_seq
              , u.user_email
@@ -80,6 +82,7 @@
              ]]>
                 END AS penalty_end_date
              , u.user_status
+             , u.user_auth
              , u.user_reg_date
              , u.user_delete_date
              , ua.activity_point
@@ -97,7 +100,7 @@
             <if test="socialYn != null and socialYn != ''">
                 u.user_social_yn = #{socialYn}
                 <!-- 소셜회원인 경우에는 socialSite 보이게 조건 추가 -->
-                <if test="socialSite != null and socialSite != ''">
+                <if test="socialYn == 'Y' and socialSite != null and socialSite != ''">
                     AND u.user_social_site = #{socialSite}
                 </if>
             </if>
@@ -109,40 +112,43 @@
             <if test="influencerYn != null and influencerYn != ''">
                 AND ua.influencer_yn = #{influencerYn}
             </if>
+            <!-- 가입상태 필터링 -->
+            <if test="userStatus != null and userStatus != ''">
+                AND u.user_status = #{userStatus}
+            </if>
         </where>
         ORDER BY
+        ua.influencer_yn DESC  <!-- 기본 정렬: 인기 회원 여부 순 Y -> N -->
+
+        <!-- 추가 정렬 조건 -->
         <choose>
+            <!-- 등급 순 정렬 -->
+            <when test="orderBy == 'gradeDESC'">
+                , ua.activity_point DESC
+            </when>
+            <when test="orderBy == 'gradeASC'">
+                , ua.activity_point ASC
+            </when>
+
+            <!-- 닉네임 순 정렬 -->
+            <when test="orderBy == 'nicknameASC'">
+                , u.user_nickname ASC
+            </when>
+            <when test="orderBy == 'nicknameDESC'">
+                , u.user_nickname DESC
+            </when>
+
             <when test="orderBy == 'regDateDesc'">
-                u.user_reg_date DESC, ua.activity_point DESC  <!-- 가입일 먼저 내림차순, 포인트 내림차순 -->
+                , u.user_reg_date DESC
             </when>
             <when test="orderBy == 'regDateAsc'">
-                u.user_reg_date ASC, ua.activity_point DESC  <!-- 가입일 먼저 오름차순, 포인트 내림차순 -->
+                , u.user_reg_date ASC
             </when>
-            <when test="orderBy == 'pointDesc'">
-                ua.activity_point DESC, u.user_reg_date DESC  <!-- 포인트 먼저 내림차순, 가입일 내림차순 -->
-            </when>
-            <when test="orderBy == 'pointAsc'">
-                ua.activity_point ASC, u.user_reg_date DESC  <!-- 포인트 먼저 오름차순, 가입일 내림차순 -->
-            </when>
-            <when test="orderBy == 'regDateAscPointAsc'">
-                u.user_reg_date ASC, ua.activity_point Asc  <!-- 가입일 오름차순, 포인트 오름차순 -->
-            </when>
-            <when test="orderBy == 'regDateDescPointAsc'">
-                u.user_reg_date DESC, ua.activity_point Asc  <!-- 가입일 내림차순, 포인트 오름차순 -->
-            </when>
-            <when test="orderBy == 'pointAscRegDateAsc'">
-                ua.activity_point ASC, u.user_reg_date Asc   <!-- 포인트 오름차순, 가입일 오름차순 -->
-            </when>
-            <when test="orderBy == 'pointDescRegDateAsc'">
-                ua.activity_point Desc, u.user_reg_date Asc   <!-- 포인트 내림차순, 가입일 오름차순 -->
-            </when>
-            <otherwise>
-                u.user_reg_date DESC, ua.activity_point DESC  <!-- 기본값: 가입일 내림차순, 포인트 내림차순 -->
-            </otherwise>
         </choose>
         LIMIT #{size} OFFSET #{offset}  <!-- 페이징을 위한 코드 -->
     </select>
 
+    <!-- 회원 전체조회 총 회원수 -->
     <select id="getTotalUserCount" resultType="long">
         SELECT COUNT(*)
         FROM users u
@@ -153,7 +159,7 @@
             u.user_auth = 'user'
             <if test="socialYn != null and socialYn != ''">
                 u.user_social_yn = #{socialYn}
-                <if test="socialSite != null and socialSite != ''">
+                <if test="socialYn == 'Y' and socialSite != null and socialSite != ''">
                     AND u.user_social_site = #{socialSite}
                 </if>
             </if>
@@ -162,6 +168,203 @@
             </if>
             <if test="influencerYn != null and influencerYn != ''">
                 AND ua.influencer_yn = #{influencerYn}
+            </if>
+            <if test="userStatus != null and userStatus != ''">
+                AND u.user_status = #{userStatus}
+            </if>
+        </where>
+    </select>
+
+    <!-- 회원 검색 : 관리자, 회원 / 화면에서 보여줄 정보를 나눌 것임 -->
+    <select id="searchUserInfo" resultMap="UsersResultMap">
+        SELECT u.user_seq
+             , u.user_email
+             , u.user_nickname
+             , u.user_social_yn
+             , u.user_social_site
+             , u.business_verified_yn
+             , CASE
+            <![CDATA[
+               WHEN u.penalty_yn = 'Y'
+                AND p.penalty_start_date <= NOW()
+                AND p.penalty_end_date >= NOW()
+               THEN 'Y'
+               ELSE 'N'
+                END AS penalty_yn
+             , CASE
+               WHEN u.penalty_yn = 'Y'
+                AND p.penalty_start_date <= NOW()
+                AND p.penalty_end_date >= NOW()
+               THEN p.penalty_start_date
+               ELSE NULL
+                END AS penalty_start_date
+             , CASE
+               WHEN u.penalty_yn = 'Y'
+                AND p.penalty_start_date <= NOW()
+                AND p.penalty_end_date >= NOW()
+               THEN p.penalty_end_date
+               ELSE NULL
+             ]]>
+                END AS penalty_end_date
+            , u.user_status
+            , u.user_auth
+            , u.user_reg_date
+            , u.user_delete_date
+            , ua.activity_point
+            , al.active_level_name
+            , al.active_level_standard
+            , ua.influencer_yn
+        FROM users u
+        LEFT JOIN user_activity ua ON u.user_seq = ua.activity_user_seq
+        LEFT JOIN active_level al ON ua.active_level_seq = al.active_level_seq
+        LEFT JOIN penalty p ON u.user_seq = p.penalty_user_seq
+        <where>
+            <!-- 관리자 계정 제외 -->
+            u.user_auth = 'user'
+
+            <!-- 검색 조건 추가 -->
+            <if test="searchWord != null and searchWord != ''">
+                <choose>
+                    <!-- 관리자는 이메일 또는 닉네임 검색 가능 -->
+                    <when test="userAuth == 'admin'">
+                        <choose>
+                            <!-- 이메일로 검색 -->
+                            <when test="searchType == 'email'">
+                                AND u.user_email LIKE CONCAT('%', #{searchWord}, '%')
+                            </when>
+                            <!-- 닉네임으로 검색 -->
+                            <when test="searchType == 'nickname'">
+                                AND u.user_nickname LIKE CONCAT('%', #{searchWord}, '%')
+                            </when>
+                        </choose>
+                    </when>
+
+                    <!-- 일반 사용자는 닉네임으로만 검색 가능 -->
+                    <when test="userAuth == 'user'">
+                        AND u.user_nickname LIKE CONCAT('%', #{searchWord}, '%')
+                    </when>
+                </choose>
+            </if>
+
+            <if test="userAuth == 'user'">
+                AND u.user_status = 'active'  <!-- 일반 사용자일 때는 탈퇴 회원 제외 -->
+            </if>
+            <if test="userAuth == 'admin'">
+                <!-- 관리자일 때만 탈퇴 회원도 조회, 필터링은 관리자만 가능 -->
+                <!-- 소셜회원 여부 필터링 -->
+                <if test="socialYn == 'Y' and socialYn != null and socialYn != ''">
+                    u.user_social_yn = #{socialYn}
+                    <!-- 소셜회원인 경우에는 socialSite 보이게 조건 추가 -->
+                    <if test="socialSite != null and socialSite != ''">
+                        AND u.user_social_site = #{socialSite}
+                    </if>
+                </if>
+                <!-- 사업자 인증여부 필터링 -->
+                <if test="businessVerifiedYn != null and businessVerifiedYn != ''">
+                    AND u.business_verified_yn = #{businessVerifiedYn}
+                </if>
+                <!-- 인기회원 여부 필터링 -->
+                <if test="influencerYn != null and influencerYn != ''">
+                    AND ua.influencer_yn = #{influencerYn}
+                </if>
+                <!-- 가입상태 필터링 -->
+                <if test="userStatus != null and userStatus != ''">
+                    AND u.user_status = #{userStatus}
+                </if>
+            </if>
+        </where>
+        ORDER BY
+        ua.influencer_yn DESC  <!-- 기본 정렬: 인기 회원 여부 순 Y -> N -->
+
+        <!-- 추가 정렬 조건 -->
+        <choose>
+            <!-- 등급 순 정렬 -->
+            <when test="orderBy == 'gradeDESC'">
+                , ua.activity_point DESC
+            </when>
+            <when test="orderBy == 'gradeASC'">
+                , ua.activity_point ASC
+            </when>
+
+            <!-- 닉네임 순 정렬 -->
+            <when test="orderBy == 'nicknameASC'">
+                , u.user_nickname ASC
+            </when>
+            <when test="orderBy == 'nicknameDESC'">
+                , u.user_nickname DESC
+            </when>
+
+            <!-- 관리자만 가입일 순 정렬 가능 -->
+            <when test="userAuth == 'admin' and orderBy == 'regDateDesc'">
+                , u.user_reg_date DESC
+            </when>
+            <when test="userAuth == 'admin' and orderBy == 'regDateAsc'">
+                , u.user_reg_date ASC
+            </when>
+        </choose>
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <!-- 회원 검색 결과 회원 수 -->
+    <select id="getSearchUserCount" resultType="long">
+        SELECT COUNT(*)
+        FROM users u
+        LEFT JOIN user_activity ua ON u.user_seq = ua.activity_user_seq
+        LEFT JOIN active_level al ON ua.active_level_seq = al.active_level_seq
+        LEFT JOIN penalty p ON u.user_seq = p.penalty_user_seq
+        <where>
+            <!-- 관리자 계정 제외 -->
+            u.user_auth = 'user'
+
+            <!-- 검색 조건 추가 -->
+            <if test="searchWord != null and searchWord != ''">
+                <choose>
+                    <!-- 관리자는 이메일 또는 닉네임 검색 가능 -->
+                    <when test="userAuth == 'admin'">
+                        <choose>
+                            <!-- 이메일로 검색 -->
+                            <when test="searchType == 'email'">
+                                AND u.user_email LIKE CONCAT('%', #{searchWord}, '%')
+                            </when>
+                            <!-- 닉네임으로 검색 -->
+                            <when test="searchType == 'nickname'">
+                                AND u.user_nickname LIKE CONCAT('%', #{searchWord}, '%')
+                            </when>
+                        </choose>
+                    </when>
+
+                    <!-- 일반 사용자는 닉네임으로만 검색 가능 -->
+                    <when test="userAuth == 'user'">
+                        AND u.user_nickname LIKE CONCAT('%', #{searchWord}, '%')
+                    </when>
+                </choose>
+            </if>
+
+            <if test="userAuth == 'user'">
+                AND u.user_status = 'active'  <!-- 일반 사용자일 때는 탈퇴 회원 제외 -->
+            </if>
+            <if test="userAuth == 'admin'">
+                <!-- 관리자일 때만 탈퇴 회원도 조회, 필터링은 관리자만 가능 -->
+                <!-- 소셜회원 여부 필터링 -->
+                <if test="socialYn == 'Y' and socialYn != null and socialYn != ''">
+                    u.user_social_yn = #{socialYn}
+                    <!-- 소셜회원인 경우에는 socialSite 보이게 조건 추가 -->
+                    <if test="socialSite != null and socialSite != ''">
+                        AND u.user_social_site = #{socialSite}
+                    </if>
+                </if>
+                <!-- 사업자 인증여부 필터링 -->
+                <if test="businessVerifiedYn != null and businessVerifiedYn != ''">
+                    AND u.business_verified_yn = #{businessVerifiedYn}
+                </if>
+                <!-- 인기회원 여부 필터링 -->
+                <if test="influencerYn != null and influencerYn != ''">
+                    AND ua.influencer_yn = #{influencerYn}
+                </if>
+                <!-- 가입상태 필터링 -->
+                <if test="userStatus != null and userStatus != ''">
+                    AND u.user_status = #{userStatus}
+                </if>
             </if>
         </where>
     </select>
