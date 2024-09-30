@@ -35,7 +35,7 @@ public class ListCommandController {
 
     // 리스트 수정
     @PutMapping("/list")
-    public ResponseEntity<Void> updateList(@RequestBody UpdateListRequest updateListRequest){
+    public ResponseEntity<Void> updateList(@Valid @RequestBody UpdateListRequest updateListRequest){
 
         Long listSeq = listCommandService.updateList(updateListRequest);
 
