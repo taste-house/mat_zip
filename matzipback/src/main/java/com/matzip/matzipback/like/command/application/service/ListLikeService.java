@@ -17,7 +17,7 @@ public class ListLikeService {
     private final ModelMapper modelMapper;
 
     @Transactional
-    public Like saveListLike(ListLikeReqDTO listLikeRequest) {
+    public Like saveAndDeleteListLike(ListLikeReqDTO listLikeRequest) {
 
 
         // 인가받은 유저 seq 받아오기
