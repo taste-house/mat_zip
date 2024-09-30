@@ -9,7 +9,8 @@
                b.board_category_name
              , a.post_title
              , c.user_nickname
-             , IFNULL(a.post_updated_time, a.post_created_time) as postTime
+             , a.post_created_time
+             , a.post_updated_time
           FROM post a
           LEFT JOIN board_category b USING (board_category_seq)
           LEFT JOIN users c ON (a.post_user_seq = c.user_seq)
