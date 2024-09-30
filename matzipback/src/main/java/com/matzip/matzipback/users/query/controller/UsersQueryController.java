@@ -38,17 +38,41 @@ public class UsersQueryController {
 
     @GetMapping("/users/list")
     public ResponseEntity<AllUserInfoResponseDTO> getAllUserList(@RequestParam(value = "socialYn", required = false) String socialYn,
+                                                                 @RequestParam(value = "socialSite", required = false) String socialSite,
                                                                  @RequestParam(value = "businessVerifiedYn", required = false) String businessVerifiedYn,
                                                                  @RequestParam(value = "influencerYn", required = false) String influencerYn,
+                                                                 @RequestParam(value = "userStatus", required = false) String userStatus,
                                                                  @RequestParam(value = "orderBy", defaultValue = "regDateDesc") String orderBy,
                                                                  @RequestParam(value = "page", defaultValue = "1") Integer page,
                                                                  @RequestParam(value = "size", defaultValue = "10") Integer size) {
                                                                 //defaultValue : 기본값 설정, required = false : 파라미터 선택적(필수아님)
         log.info("GET /api/v1/users/list - 전체 회원 정보 조회 요청");
-        AllUserInfoResponseDTO users = usersInfoService.getAllUserList(socialYn, businessVerifiedYn, influencerYn, orderBy, page, size);
+        AllUserInfoResponseDTO users = usersInfoService.getAllUserList(socialYn, socialSite, businessVerifiedYn, influencerYn, userStatus, orderBy, page, size);
         log.info("전체 회원 정보 조회 완료. 현재 페이지: {}, 전체 페이지 수: {}, 총 유저 수: {}",
-
                 users.getCurrentPage(), users.getTotalPages(), users.getTotalUsers());
+
+        return ResponseEntity.ok(users);    // 결과 DTO를 ResponseEntity에 반환
+    }
+
+    @GetMapping("/users/search")
+    public ResponseEntity<AllUserInfoResponseDTO> getSearchUserList(
+            @RequestParam(value = "searchType", required = false) String searchType,
+            @RequestParam(value = "searchWord", required = false) String searchWord,
+            @RequestParam(value = "socialYn", required = false) String socialYn,
+            @RequestParam(value = "socialSite", required = false) String socialSite,
+            @RequestParam(value = "businessVerifiedYn", required = false) String businessVerifiedYn,
+            @RequestParam(value = "influencerYn", required = false) String influencerYn,
+            @RequestParam(value = "userStatus", required = false) String userStatus,
+            @RequestParam(value = "userAuth", required = false) String userAuth,
+            @RequestParam(value = "orderBy", defaultValue = "regDateDesc") String orderBy,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        //defaultValue : 기본값 설정, required = false : 파라미터 선택적(필수아님)
+        log.info("GET /api/v1/users/search - 회원 검색 조회 요청");
+        AllUserInfoResponseDTO users = usersInfoService.getSearchUserList(searchType, searchWord, socialYn, socialSite,
+                businessVerifiedYn, influencerYn, userStatus, userAuth, orderBy, page, size);
+        log.info("회원 검색 조회 완료. 현재 페이지: {}, 전체 페이지 수: {}, 검색결과 유저 수: {}, 검색타입 : {}, 검색어 : {}",
+                users.getCurrentPage(), users.getTotalPages(), users.getTotalUsers(), searchType, searchWord);
 
         return ResponseEntity.ok(users);    // 결과 DTO를 ResponseEntity에 반환
     }
