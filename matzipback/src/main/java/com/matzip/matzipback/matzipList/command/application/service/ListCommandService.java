@@ -1,5 +1,6 @@
 package com.matzip.matzipback.matzipList.command.application.service;
 
+import com.matzip.matzipback.matzipList.command.application.dto.DeleteListRequest;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequest;
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyList;
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListRequest;
@@ -7,6 +8,7 @@ import com.matzip.matzipback.matzipList.command.domain.repository.ListDomainRepo
 import com.matzip.matzipback.matzipList.command.domain.service.DomainListUpdateService;
 import com.matzip.matzipback.matzipList.command.mapper.ListMapper;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ public class ListCommandService {
         private final ListDomainRepository listDomainRepository;
         private final DomainListUpdateService domainListUpdateService;
 
-
+    // 리스트 등록
     @Transactional
     public Long createList(CreateListRequest listRequest) {
 
@@ -39,11 +41,7 @@ public class ListCommandService {
         return myList.getListSeq();
     }
 
-    @Transactional
-    public void deleteList(Long listSeq) {
-
-        listDomainRepository.deleteById(listSeq);
-    }
+    //리스트 수정
     @Transactional
     public Long updateList(UpdateListRequest updateListRequest) {
 
@@ -55,5 +53,11 @@ public class ListCommandService {
 
         return domainListUpdateService.updateList(updateListRequest, listUserSeq);
 
+    }
+
+    // 리스트 삭제
+    @Transactional
+    public void deleteList(DeleteListRequest listRequest) {
+        listDomainRepository.deleteById(listRequest.getListSeq());
     }
 }
