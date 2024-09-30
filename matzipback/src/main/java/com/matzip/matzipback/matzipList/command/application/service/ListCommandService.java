@@ -1,7 +1,6 @@
 package com.matzip.matzipback.matzipList.command.application.service;
 
-import com.matzip.matzipback.common.util.CustomUserUtils;
-import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequset;
+import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequest;
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyList;
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListRequest;
 import com.matzip.matzipback.matzipList.command.domain.repository.ListDomainRepository;
@@ -10,8 +9,6 @@ import com.matzip.matzipback.matzipList.command.mapper.ListMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +45,7 @@ public class ListCommandService {
         listDomainRepository.deleteById(listSeq);
     }
     @Transactional
-    public Long updateList(UpdateListRequset updateListRequset) {
+    public Long updateList(UpdateListRequest updateListRequest) {
 
         //로그인한 사람의 유저 시퀀스를 가져오는 기능(권한이 들어있는 유저 시퀀스)
 //        Long listUserSeq = CustomUserUtils.getCurrentUserSeq();
@@ -56,7 +53,7 @@ public class ListCommandService {
         // 테스트용 코드 생성
         long listUserSeq = 4L;
 
-        return domainListUpdateService.updateList(updateListRequset, listUserSeq);
+        return domainListUpdateService.updateList(updateListRequest, listUserSeq);
 
     }
 }
