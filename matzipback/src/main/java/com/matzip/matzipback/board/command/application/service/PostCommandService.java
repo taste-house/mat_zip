@@ -54,15 +54,29 @@ public class PostCommandService {
         Post post = postRepository.findById(postSeq)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found with postSeq: " + postSeq));
 
-        /* 수정을 위해 엔티티 정보 변경 */
-        post.updatePostDetails(
+        // 찾아온 Entity -> DTO
+        PostAndTagRequestDTO tempPost = modelMapper.map(post, PostAndTagRequestDTO.class);
+        // DTO Setter Method를 활용하여 수정사항 반영
+        tempPost.setPostSeq(postSeq);
+        tempPost.setPostUserSeq(post.getPostUserSeq());
+        tempPost.setPostTitle(updatedPost.getPostTitle());
+        tempPost.setPostContent(updatedPost.getPostContent());
+        tempPost.setBoardCategorySeq(updatedPost.getBoardCategorySeq());
+        tempPost.setListSeq(updatedPost.getListSeq());
+        tempPost.setRestaurantSeq(updatedPost.getRestaurantSeq());
+
+        // 수정한 DTO -> Entity
+        modelMapper.map(tempPost, post);
+
+        /* 수정을 위해 엔티티 정보 변경(Entity 내 메소드 정의 최소화를 위해 주석처리) */
+/*        post.updatePostDetails(
                 updatedPost.getPostTitle(),
                 updatedPost.getPostContent(),
                 updatedPost.getBoardCategorySeq(),
                 updatedPost.getListSeq(),
                 updatedPost.getRestaurantSeq()
         );
-
+*/
         // 수정 요청에 들어온 태그 리스트 저장
         if (updatedPost.getTagSeq() != null) {
 
