@@ -5,10 +5,7 @@ import com.matzip.matzipback.matzipList.command.application.dto.DeleteListCmtReq
 import com.matzip.matzipback.matzipList.command.application.service.ListCmtCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -20,7 +17,7 @@ public class ListCmtCommandController {
     private final ListCmtCommandService listCmtCommandService;
 
     // 리스트 댓글 등록
-    @RequestMapping("/list/comment")
+    @PostMapping("/list/comment")
     public ResponseEntity<Void> createListCmt(@RequestBody CreateListCmtRequest listCmtRequest){
 
         Long listCmtSeq = listCmtCommandService.createListCmt(listCmtRequest);
