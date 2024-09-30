@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ListLikeMessageReqDto {
+public class ListLikeMessageReqDTO {
 
     private int code;
     private String message;
