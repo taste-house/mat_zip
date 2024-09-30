@@ -23,8 +23,7 @@ public class PostCommentService {
 
     // 댓글 작성
     @Transactional
-    public ResPostCmtDTO createPostComment(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
-
+    public PostComment createPostComment(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
         // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
         Long userSeq = 1L;
 
@@ -39,13 +38,7 @@ public class PostCommentService {
             throw new RuntimeException("댓글 저장에 실패했습니다."); // 예외 처리
         }
 
-        PostComment savedPostComment = postCommentRepository.save(postComment); // 댓글 저장 후 Entity 반환
-
-        // Entity -> 응답 DTO 변환
-        ResPostCmtDTO responseDTO = new ResPostCmtDTO();
-        responseDTO.setPostSeq(savedPostComment.getPostSeq());
-
-        return responseDTO;
+        return postCommentRepository.save(postComment); // 댓글 저장 후 Entity 반환
     }
 
     // 댓글 수정
