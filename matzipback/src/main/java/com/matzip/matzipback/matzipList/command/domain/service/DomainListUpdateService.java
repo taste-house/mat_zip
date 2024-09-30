@@ -23,10 +23,9 @@ public class DomainListUpdateService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 리스트가 존재하지 않습니다." + listSeq));
 
         modelMapper.map(updateListRequest, existList);
-        existList.setListUserSeq(listUserSeq);
-        existList.setListContent(updateListRequest.getListContent());
-        existList.setListTitle(updateListRequest.getListTitle());
-        existList.setListLevel(updateListRequest.getListLevel());
+        existList.updateListTitle(updateListRequest.getListTitle());
+        existList.updateListContent(updateListRequest.getListContent());
+
 
         listDomainRepository.save(existList);
 
