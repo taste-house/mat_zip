@@ -2,6 +2,7 @@ package com.matzip.matzipback.matzipList.command.application.controller;
 
 
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListRequest;
+import com.matzip.matzipback.matzipList.command.application.dto.DeleteListRequest;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequest;
 import com.matzip.matzipback.matzipList.command.application.service.ListCommandService;
 import jakarta.validation.Valid;
@@ -27,9 +28,9 @@ public class ListCommandController {
         return ResponseEntity.created(URI.create("/api/v1/list" + listSeq)).build();
     }
     // 리스트 삭제
-    @DeleteMapping("/list/{listSeq}")
-    public ResponseEntity<Void> deleteList(@Valid @PathVariable Long listSeq){
-        listCommandService.deleteList(listSeq);
+    @DeleteMapping("/list")
+    public ResponseEntity<Void> deleteList(@Valid @RequestBody DeleteListRequest listRequest){
+        listCommandService.deleteList(listRequest);
         return ResponseEntity.noContent().build();
     }
 
