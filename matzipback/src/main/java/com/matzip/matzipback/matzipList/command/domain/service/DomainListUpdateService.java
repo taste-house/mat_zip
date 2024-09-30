@@ -20,13 +20,12 @@ public class DomainListUpdateService {
         Long listSeq = updateListRequset.getListSeq();
 
         MyList existList = listDomainRepository.findById(listSeq)
-                .orElseThrow(() -> new IllegalArgumentException("해당 리스트가 존재하지 않습니다." + listSeq));
+                .orElseThrow();
 
         modelMapper.map(updateListRequset, existList);
-        existList.setListUserSeq(listUserSeq);
-        existList.setListContent(updateListRequset.getListContent());
-        existList.setListTitle(updateListRequset.getListTitle());
-        existList.setListLevel(updateListRequset.getListLevel());
+        existList.updateListTitle(updateListRequset.getListTitle());
+        existList.updateListContent(updateListRequset.getListContent());
+
 
         listDomainRepository.save(existList);
 
