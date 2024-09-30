@@ -35,7 +35,8 @@ public class PostCommentService {
         // 유효성 검사 (댓글 내용이 작성되어있어야 한다.)
         // null 체크 및 처리
         if (postComment.getPostCommentContent() == null || postComment.getPostCommentContent().isEmpty()) {
-            throw new RuntimeException("댓글 저장에 실패했습니다."); // 예외 처리
+//            throw new RuntimeException("댓글 저장에 실패했습니다."); // 예외 처리
+            return postComment;
         }
 
         return postCommentRepository.save(postComment); // 댓글 저장 후 Entity 반환
@@ -55,8 +56,9 @@ public class PostCommentService {
                 .orElseThrow(NoSuchElementException::new);
 
         // DB내 작성된 댓글 수정 (수정 전 입력 값과 동일하면 안된다.)
-        if (postComment.getPostCommentContent().equals(reqPostCmtUpdateDTO.getPostCommentContent())) {
-            throw new RuntimeException("댓글 수정에 실패했습니다."); // 예외 처리
+        if (postComment.getPostCommentContent().equals(reqPostCmtUpdateDTO.getPostCommentContent()) || reqPostCmtUpdateDTO.getPostCommentContent().isEmpty()) {
+//            throw new RuntimeException("댓글 수정에 실패했습니다."); // 예외 처리
+            return null;
         }
 
         // postCommentRepository.save(postComment);    // save 호출 시 @LastModifiedDate 가 적용
