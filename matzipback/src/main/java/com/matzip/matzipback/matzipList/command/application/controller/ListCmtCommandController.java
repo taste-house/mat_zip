@@ -1,7 +1,7 @@
 package com.matzip.matzipback.matzipList.command.application.controller;
 
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListCmtRequest;
-import com.matzip.matzipback.matzipList.command.application.dto.DeleteListCmtRequset;
+import com.matzip.matzipback.matzipList.command.application.dto.DeleteListCmtRequest;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateListCmtRequest;
 import com.matzip.matzipback.matzipList.command.application.service.ListCmtCommandService;
 import jakarta.validation.Valid;
@@ -29,9 +29,9 @@ public class ListCmtCommandController {
 
     // 리스트 댓글 삭제
     @DeleteMapping("/list/comment")
-    public ResponseEntity<Void> deleteListCmt(@Valid @RequestBody DeleteListCmtRequset deleteListCmtRequset){
+    public ResponseEntity<Void> deleteListCmt(@Valid @RequestBody DeleteListCmtRequest deleteListCmtRequest){
 
-        listCmtCommandService.deleteListCmt(deleteListCmtRequset);
+        listCmtCommandService.deleteListCmt(deleteListCmtRequest);
 
         return ResponseEntity.noContent().build();
     }
