@@ -44,11 +44,4 @@ public class Post {
         postUpdatedTime = null; // 명시적으로 null 설정
     }
 
-    public void updatePostDetails(String postTitle, String postContent, Long boardCategorySeq, Long listSeq, Long restaurantSeq) {
-        this.postTitle = postTitle;
-        this.postContent = postContent;
-        this.boardCategorySeq = boardCategorySeq;
-        this.listSeq = listSeq;
-        this.restaurantSeq = restaurantSeq;
-    }
 }
