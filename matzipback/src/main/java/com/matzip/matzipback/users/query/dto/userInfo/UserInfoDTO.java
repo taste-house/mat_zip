@@ -18,6 +18,7 @@ public class UserInfoDTO {
     private String businessVerifiedYn;
     private String penaltyYn;
     private String userStatus;
+    private String userAuth;
     private LocalDateTime userRegDate;
     private LocalDateTime userDeleteDate;
 
