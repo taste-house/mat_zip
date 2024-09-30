@@ -1,5 +1,6 @@
 package com.matzip.matzipback.report.command.domain.aggregate;
 
+import com.matzip.matzipback.report.command.dto.ListReportReqDTO;
 import com.matzip.matzipback.report.command.dto.PostCmtReportReqDTO;
 import com.matzip.matzipback.report.command.dto.PostReportReqDTO;
 import jakarta.persistence.*;
@@ -59,12 +60,23 @@ public class Report {
         this.reportContent = postCmtReportReqDTO.getReportContent();
     }
 
+    private Report(Long reporterUserSeq, Long reportedUserSeq, ListReportReqDTO listReportReqDTO) {
+        this.reporterUserSeq = reporterUserSeq;
+        this.reportedUserSeq = reportedUserSeq;
+        this.listSeq = listReportReqDTO.getListSeq();
+        this.reportContent = listReportReqDTO.getReportContent();
+    }
+
     public static Report getReportSeq(Long reporterUserSeq, Long reportedUserSeq, PostReportReqDTO postReportReqDTO) {
         return new Report(reporterUserSeq, reportedUserSeq, postReportReqDTO);
     }
 
     public static Report getCmtReportSeq(Long reporterUserSeq, Long reportedUserSeq, PostCmtReportReqDTO postCmtReportReqDTO) {
         return new Report(reporterUserSeq, reportedUserSeq, postCmtReportReqDTO);
+    }
+
+    public static Report getListReportSeq(Long reporterUserSeq, Long reportedUserSeq, ListReportReqDTO listReportReqDTO) {
+        return new Report(reporterUserSeq, reportedUserSeq, listReportReqDTO);
     }
 
     /*@ManyToOne
