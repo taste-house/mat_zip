@@ -5,6 +5,7 @@ import com.matzip.matzipback.matzipList.command.application.dto.CreateMatzipRequ
 import com.matzip.matzipback.matzipList.command.application.dto.DeleteMatzipRequset;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateMatzipRequest;
 import com.matzip.matzipback.matzipList.command.application.service.MatzipCommandService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class MatzipCommandController {
 
     // 맛집 수정
     @PutMapping("/list/matzip/")
-    public ResponseEntity<Void> updateMatzip(@RequestBody UpdateMatzipRequest updateMatzipRequest) {
+    public ResponseEntity<Void> updateMatzip(@Valid @RequestBody UpdateMatzipRequest updateMatzipRequest) {
 
         Long listSeq = matzipCommandService.updateMatzip(updateMatzipRequest);
 
@@ -38,7 +39,7 @@ public class MatzipCommandController {
 
     // 맛집 삭제
     @DeleteMapping("/list/matzip/")
-    public ResponseEntity<Void> deleteMatzip(@RequestBody DeleteMatzipRequset deleteMatzipRequset){
+    public ResponseEntity<Void> deleteMatzip(@Valid @RequestBody DeleteMatzipRequset deleteMatzipRequset){
 
         matzipCommandService.deleteMatzip(deleteMatzipRequset);
 
