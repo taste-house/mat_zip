@@ -24,9 +24,10 @@ public class DomainMatzipService {
         MyListMatzip existMatzip = matzipDomainRepository.findById(listMatzipSeq).orElseThrow();
 
         modelMapper.map(updateMatzipRequest, existMatzip);
-        existMatzip.setListSeq(listMatzipSeq);
-        existMatzip.setListMatzipSeq(listMatzipSeq);
-        existMatzip.setListMatzipComment(updateMatzipRequest.getListMatzipComment());
+        existMatzip.updateListSeq(updateMatzipRequest.getListSeq());
+        existMatzip.updateListMatzipSeq(updateMatzipRequest.getListMatzipSeq());
+        existMatzip.updateRestaurantSeq(updateMatzipRequest.getRestaurantSeq());
+        existMatzip.updateListMatzipComment(updateMatzipRequest.getListMatzipComment());
 
         return existMatzip.getListMatzipSeq();
 
