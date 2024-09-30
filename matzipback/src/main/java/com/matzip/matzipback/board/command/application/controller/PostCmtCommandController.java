@@ -22,9 +22,14 @@ public class PostCmtCommandController {
     // 댓글 등록
     @PostMapping("/postcomment")
     public ResponseEntity<ResPostCmtDTO> createPostComment(@RequestBody ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
-        ResPostCmtDTO postComment = postCommentService.createPostComment(reqPostCmtCreateDTO);
+        PostComment postComment = postCommentService.createPostComment(reqPostCmtCreateDTO);
 
-        return ResponseEntity.ok(postComment);
+        if (postComment.getPostCommentSeq() != null) {  // 등록 성공
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ResPostCmtDTO(201, ResponseMessage.SAVE_SUCCESS.getMessage(), postComment.getPostSeq()));
+        }
+
+        // 등록 실패
+        return ResponseEntity.status(HttpStatus.OK).body(new ResPostCmtDTO(204, ResponseMessage.SAVE_FAIL.getMessage(), postComment.getPostSeq()));
     }
 
     // 댓글 수정
