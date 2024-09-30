@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class DeleteListCmtRequset {
+public class DeleteListCmtRequest {
     private Long listSeq;
     @NotNull
     private Long listCommentSeq;
