@@ -1,6 +1,6 @@
 package com.matzip.matzipback.report.command.application.controller;
 
-import com.matzip.matzipback.report.command.application.service.ReportCommandService;
+import com.matzip.matzipback.report.command.application.service.ReportPostService;
 import com.matzip.matzipback.report.command.domain.aggregate.Report;
 import com.matzip.matzipback.report.command.dto.PostCmtReportReqDTO;
 import com.matzip.matzipback.report.command.dto.PostCmtReportResMessageDTO;
@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class ReportCommandController {
+public class ReportPostController {
 
-    private final ReportCommandService reportCommandService;
+    private final ReportPostService reportPostService;
 
     @PostMapping("/post/report")
     public ResponseEntity<PostReportResMessageDTO> createPostReport(@RequestBody PostReportReqDTO postReportReqDTO) {
-        Report savedPostReport = reportCommandService.savePostReport(postReportReqDTO);
+        Report savedPostReport = reportPostService.savePostReport(postReportReqDTO);
 
         if (savedPostReport != null) { // 신고 성공
             return ResponseEntity.status(HttpStatus.CREATED).body(new PostReportResMessageDTO(201, ResponseMessage.SAVE_SUCCESS.getMessage(), savedPostReport.getPostSeq()));
@@ -33,7 +33,7 @@ public class ReportCommandController {
 
     @PostMapping("/postcomment/report")
     public ResponseEntity<PostCmtReportResMessageDTO> createPostCmtReport(@RequestBody PostCmtReportReqDTO postCmtReportDTO) {
-        Report savedPostCmtReport = reportCommandService.savePostCmtReport(postCmtReportDTO);
+        Report savedPostCmtReport = reportPostService.savePostCmtReport(postCmtReportDTO);
 
         if (savedPostCmtReport != null) { // 신고 성공
             return ResponseEntity.status(HttpStatus.CREATED).body(new PostCmtReportResMessageDTO(201, ResponseMessage.SAVE_SUCCESS.getMessage(), savedPostCmtReport.getPostSeq()));
