@@ -22,5 +22,18 @@
          ORDER BY message_date DESC
     </select>
 
+    <select id="searchMessageDetail" resultType="com.matzip.matzipback.users.query.dto.MessageDetailResDTO">
+        SELECT message_send_user_seq
+             , message_receive_user_seq
+             , u1.user_nickname as send_user_nickname
+             , u2.user_nickname as receive_user_
+          FROM messages m
+          JOIN users u1 ON m.message_send_user_seq = u1.user_seq
+          JOIN users u2 ON m.message_receive_user_seq = u2.user_seq
+
+
+
+    </select>
+
 
 </mapper>

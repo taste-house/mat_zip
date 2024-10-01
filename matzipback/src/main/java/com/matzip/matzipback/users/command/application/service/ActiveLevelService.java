@@ -1,6 +1,5 @@
 package com.matzip.matzipback.users.command.application.service;
 
-
 import com.matzip.matzipback.users.command.domain.aggregate.ActiveLevel;
 import com.matzip.matzipback.users.command.domain.service.ActiveLevelDomainService;
 import com.matzip.matzipback.users.command.dto.ActiveLevelResDTO;
@@ -24,6 +23,5 @@ public class ActiveLevelService {
     @Transactional
     public ActiveLevelResDTO updateActiveLevel(UpdateActiveLevelReqDTO updateActiveLevelReqDTO) {
         return activeLevelDomainService.updateLevelDomainService(updateActiveLevelReqDTO);
-
     }
 }
