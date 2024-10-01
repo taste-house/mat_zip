@@ -8,4 +8,6 @@ public interface PostCommentRepository {
     PostComment save(PostComment postComment);
 
     Optional<PostComment> findById(Long postCommentSeq);
+
+    void deleteById(Long postCommentSeq);
 }

@@ -16,4 +16,8 @@ public class PostCommentDomainService {
         return postCommentRepository.findById(postCommentSeq).orElse(null);
     }
 
+    // postCommentSeq 로 deletebById
+    public void deletePostCmtById(Long postCommentSeq) {
+        postCommentRepository.deleteById(postCommentSeq);
+    }
 }
