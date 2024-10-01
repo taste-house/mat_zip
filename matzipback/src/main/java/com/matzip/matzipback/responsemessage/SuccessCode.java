@@ -12,6 +12,6 @@ public enum SuccessCode {
     BASIC_UPDATE_SUCCESS(HttpStatus.NO_CONTENT, "수정 성공했습니다."),
     BASIC_DELETE_SUCCESS(HttpStatus.NO_CONTENT, "삭제 성공했습니다.");
 
-    private final HttpStatus statusCode;
+    private final HttpStatus httpStatus;
     private final String message;
 }

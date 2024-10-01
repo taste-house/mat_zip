@@ -12,9 +12,9 @@ public class SuccessResMessage {
     private String success;
     private String message;
 
-    public SuccessResMessage(ErrorCode errorCode) {
-        this.statusCode = errorCode.getHttpStatus().value();
-        this.success = errorCode.getHttpStatus().name();
-        this.message = errorCode.getMessage();
+    public SuccessResMessage(SuccessCode successCode) {
+        this.statusCode = successCode.getHttpStatus().value();
+        this.success = successCode.getHttpStatus().name();
+        this.message = successCode.getMessage();
     }
 }
