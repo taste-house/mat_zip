@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface PostCommentRepository {
 
-    void save(PostComment postComment);
+    PostComment save(PostComment postComment);
 
     Optional<PostComment> findById(Long postCommentSeq);
 
