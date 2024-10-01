@@ -31,7 +31,7 @@ public interface UsersInfoMapper {
                                      @Param("businessVerifiedYn") String businessVerifiedYn,
                                      @Param("influencerYn") String influencerYn,
                                      @Param("userStatus") String userStatus,
-//                                     @Param("userAuth") String userAuth,
+                                     @Param("userAuth") String userAuth,
                                      @Param("orderBy") String orderBy,
                                      @Param("size") Integer size,
                                      @Param("offset") int offset);
@@ -42,6 +42,6 @@ public interface UsersInfoMapper {
                             @Param("socialSite") String socialSite,
                             @Param("businessVerifiedYn") String businessVerifiedYn,
                             @Param("influencerYn") String influencerYn,
-                            @Param("userStatus") String userStatus/*,
-                            @Param("userAuth") String userAuth*/);
+                            @Param("userStatus") String userStatus,
+                            @Param("userAuth") String userAuth);
 }

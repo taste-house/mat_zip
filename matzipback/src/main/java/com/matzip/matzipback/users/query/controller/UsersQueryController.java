@@ -1,5 +1,6 @@
 package com.matzip.matzipback.users.query.controller;
 
+import com.matzip.matzipback.common.util.CustomUserUtils;
 import com.matzip.matzipback.users.command.domain.aggregate.Users;
 import com.matzip.matzipback.users.query.dto.userInfo.AllUserInfoResponseDTO;
 import com.matzip.matzipback.users.query.service.UsersInfoService;
@@ -69,18 +70,18 @@ public class UsersQueryController {
 //            @RequestParam(value = "userAuth", required = false) String userAuth,
             @RequestParam(value = "orderBy", defaultValue = "regDateDesc") String orderBy,
             @RequestParam(value = "page", defaultValue = "1") Integer page,
-            @RequestParam(value = "size", defaultValue = "10") Integer size,
-            @AuthenticationPrincipal Users user // 로그인한 사용자의 정보를 가져옴
+            @RequestParam(value = "size", defaultValue = "10") Integer size
+//            @AuthenticationPrincipal Users user // 로그인한 사용자의 정보를 가져옴
     ) {
         //defaultValue : 기본값 설정, required = false : 파라미터 선택적(필수아님)
         log.info("GET /api/v1/users/search - 회원 검색 조회 요청");
-
-        String userAuth = user.getUserAuth();
+        
+        String userAuth = CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority();
         AllUserInfoResponseDTO users;
         if(userAuth.equals("user")) {   // 일반회원
-            users =  usersInfoService.getSearchUserList(searchType, searchWord, socialYn, socialSite, businessVerifiedYn, influencerYn, "actice", orderBy, page, size);
+            users =  usersInfoService.getSearchUserList(searchType, searchWord, socialYn, socialSite, businessVerifiedYn, influencerYn, "actice", userAuth, orderBy, page, size);
         } else {    // 관리자
-            users =  usersInfoService.getSearchUserList(searchType, searchWord, socialYn, socialSite, businessVerifiedYn, influencerYn, null, orderBy, page, size);
+            users =  usersInfoService.getSearchUserList(searchType, searchWord, socialYn, socialSite, businessVerifiedYn, influencerYn, null, userAuth, orderBy, page, size);
         }
 
 //        AllUserInfoResponseDTO users = usersInfoService.getSearchUserList(searchType, searchWord, socialYn, socialSite, businessVerifiedYn, influencerYn, userStatus, userAuth, orderBy, page, size);
