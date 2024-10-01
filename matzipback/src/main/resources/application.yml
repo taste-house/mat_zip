@@ -12,7 +12,12 @@ spring:
     url: jdbc:mariadb://${MARIADB_HOST}:${MARIADB_PORT}/${MARIADB_DATABASE}
     username: ${MARIADB_USER}
     password: ${MARIADB_PASSWORD}
-    driver-class-name: org.mariadb.jdbc.Driver
+    driver-class-name: ${DRIVER_CLASS_NAME}
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
   mail:
     host: ${SMTP_HOST}
     port: ${SMTP_PORT}
