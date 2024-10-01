@@ -19,4 +19,10 @@ public class Restaurant {
     private String restaurantAddress;
     private String restaurantPhone;
     private BigDecimal restaurantStar;
+
+    public void updateRestaurantDetails(String restaurantTitle, String restaurantAddress, String restaurantPhone) {
+        this.restaurantTitle = restaurantTitle;
+        this.restaurantAddress = restaurantAddress;
+        this.restaurantPhone = restaurantPhone;
+    }
 }

@@ -1,6 +1,7 @@
-package com.matzip.matzipback.restaurant.command.application.conroller;
+package com.matzip.matzipback.restaurant.command.application.controller;
 
 import com.matzip.matzipback.restaurant.command.application.dto.RestaurantCreateRequest;
+import com.matzip.matzipback.restaurant.command.application.dto.RestaurantUpdateRequest;
 import com.matzip.matzipback.restaurant.command.application.service.RestaurantCommandService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,6 +26,19 @@ public class RestaurantCommandController {
             @RequestBody @Valid RestaurantCreateRequest restaurantRequest) {
 
         Long restaurantSeq = restaurantCommandService.createRestaurant(restaurantRequest);
+
+        return ResponseEntity
+                .created(URI.create("/api/vi/restaurant/" + restaurantSeq))
+                .build();
+    }
+
+    @PutMapping("/restaurant/{restaurantSeq}")
+    @Operation(summary = "음식점 수정", description = "음식점을 수정한다.")
+    public ResponseEntity<Void> updateRestaurant(
+            @PathVariable Long restaurantSeq,
+            @RequestBody @Valid RestaurantUpdateRequest restaurantRequest) {
+
+        restaurantCommandService.updateRestaurant(restaurantSeq, restaurantRequest);
 
         return ResponseEntity
                 .created(URI.create("/api/vi/restaurant/" + restaurantSeq))
