@@ -3,9 +3,6 @@ package com.matzip.matzipback.board.command.application.controller;
 import com.matzip.matzipback.board.command.application.dto.PostAndTagRequestDTO;
 import com.matzip.matzipback.board.command.application.service.PostCommandService;
 import lombok.RequiredArgsConstructor;
-//import com.google.gson.JsonObject;
-//import org.apache.commons.io.FileUtils;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

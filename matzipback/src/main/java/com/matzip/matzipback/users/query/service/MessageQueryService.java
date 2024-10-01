@@ -19,4 +19,6 @@ public class MessageQueryService {
     public List<MessageChatResDTO> searchMessageList(long loginUserSeq) {
         return messageMapper.searchMessageListByUserSeq(loginUserSeq);
     }
+
+
 }

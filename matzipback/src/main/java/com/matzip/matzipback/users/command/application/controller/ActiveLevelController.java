@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
 import java.util.List;
 
 @RestController
@@ -24,7 +23,6 @@ public class ActiveLevelController {
 
     // active-level 저장
     @PostMapping("/active-level")
-
     public ResponseEntity<ActiveLevelResMessageDTO> saveActiveLevel(@RequestBody CreateActiveLevelReqDTO createActiveLevelReqDTO) {
         ActiveLevelResDTO savedActiveLevel = activeLevelService.saveActiveLevel(createActiveLevelReqDTO);
 

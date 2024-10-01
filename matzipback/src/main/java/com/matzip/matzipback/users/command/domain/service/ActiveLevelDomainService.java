@@ -29,7 +29,6 @@ public class ActiveLevelDomainService {
 
         ActiveLevel newActiveLevel = modelMapper.map(createActiveLevelReqDTO, ActiveLevel.class);
 
-
         ActiveLevel savedActiveLevel = userActiveLevelRepository.save(newActiveLevel);
 
         return modelMapper.map(savedActiveLevel, ActiveLevelResDTO.class);

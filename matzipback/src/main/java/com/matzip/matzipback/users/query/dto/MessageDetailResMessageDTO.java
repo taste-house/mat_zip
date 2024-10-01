@@ -1,4 +1,4 @@
-package com.matzip.matzipback.users.command.dto;
+package com.matzip.matzipback.users.query.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CreateActiveLevelResMessageDTO {
+public class MessageDetailResMessageDTO {
 
     private int code;
     private String message;
-    private List<ActiveLevelResDTO> activeLevels;
+    private List<MessageDetailResDTO> messages;
 }
