@@ -2,6 +2,7 @@ package com.matzip.matzipback.users.query.service;
 
 import com.matzip.matzipback.users.command.domain.repository.MessageRepository;
 import com.matzip.matzipback.users.query.dto.MessageChatResDTO;
+import com.matzip.matzipback.users.query.dto.MessageDetailResDTO;
 import com.matzip.matzipback.users.query.mapper.MessageMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,8 @@ public class MessageQueryService {
         return messageMapper.searchMessageListByUserSeq(loginUserSeq);
     }
 
+    public List<MessageDetailResDTO> searchMessageDetail(long userSeq, long partnerSeq) {
 
+        return messageMapper.searchMessageDetail(userSeq, partnerSeq);
+    }
 }
