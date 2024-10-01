@@ -22,8 +22,12 @@ public class PostCommentDomainService {
 
     // 작성 된 댓글 저장
     public ResPostCmtDTO save(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
+        // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
+        Long userSeq = /*CustomUserUtils.getCurrentUserSeq();*/ 1L;
+
         // DTO -> Entity 매퍼를 사용하여 생성되도록 수정 (Entity 불변성 유지)
         PostComment postComment = modelMapper.map(reqPostCmtCreateDTO, PostComment.class);
+        postComment.putUserSeq(userSeq);
         postCommentRepository.save(postComment); // 댓글 저장
 
         return modelMapper.map(postComment, ResPostCmtDTO.class);
