@@ -67,7 +67,6 @@ public class Report {
         return new Report(reporterUserSeq, reportedUserSeq, postCmtReportReqDTO);
     }
 
-
     /*@ManyToOne
     @JoinColumn(name = "post_seq")
     private Post postSeq; // 게시글과의 관계
@@ -91,7 +90,5 @@ public class Report {
     @ManyToOne
     @JoinColumn(name = "review_seq")
     private Review reviewSeq;*/
-
-
 
 }

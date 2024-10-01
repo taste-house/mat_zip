@@ -31,6 +31,7 @@ mybatis:
 springdoc:
   swagger-ui:
     path: /  # swagger-ui 접근 경로에 대한 별칭, 해당 주소로 접속해도 http://localhost:8080/swagger-ui/index.html로 리다이렉션 됨.
+    operations-sorter: method
 
 token:
   expiration_time: 7200000
