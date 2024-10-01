@@ -1,5 +1,6 @@
 package com.matzip.matzipback.board.command.application.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,8 +8,10 @@ import lombok.Setter;
 @Setter
 public class ReqPostCmtCreateDTO {
 
-    private Long postCommentUserSeq;
+    @NotBlank
     private Long postSeq;
+    private Long PostCommentUserSeq;
+    @NotBlank
     private String postCommentContent;
 
 }
