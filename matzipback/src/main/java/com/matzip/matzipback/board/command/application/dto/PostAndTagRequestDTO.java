@@ -15,5 +15,6 @@ public class PostAndTagRequestDTO {
     private Long boardCategorySeq;  // 게시판 카테고리 고유번호
     private Long listSeq;           // 연결된 리스트 고유번호
     private Long restaurantSeq;     // 연결된 음식점 고유번호
-    private List<Long> tagSeq;      // 게시글 태그
+    private List<Long> tagSeq;      // 게시물 태그 고유번호
+    private List<String> tagName;   // 게시글 태그
 }
