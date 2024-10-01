@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ReportCommandService {
+public class ReportPostService {
 
     private final PostDomainService postDomainService;
     private final ReportDomainService reportDomainService;
