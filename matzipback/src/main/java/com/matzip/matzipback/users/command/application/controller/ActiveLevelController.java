@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 
 @RestController
@@ -40,5 +41,6 @@ public class ActiveLevelController {
         ActiveLevelResDTO updatedActiveLevel = activeLevelService.updateActiveLevel(updateActiveLevelReqDTO);
 
         return ResponseEntity.ok(new ActiveLevelResMessageDTO(HttpStatus.OK.value(), ResponseMessage.UPDATE_SUCCESS.getMessage(), List.of(updatedActiveLevel)));
+
     }
 }

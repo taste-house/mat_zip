@@ -24,6 +24,7 @@ public class ActiveLevelDomainService {
         return userActiveLevelRepository.findAll();
     }
 
+
     public ActiveLevelResDTO saveActiveLevel(CreateActiveLevelReqDTO createActiveLevelReqDTO) {
 
         ActiveLevel newActiveLevel = modelMapper.map(createActiveLevelReqDTO, ActiveLevel.class);
@@ -32,6 +33,7 @@ public class ActiveLevelDomainService {
 
         return modelMapper.map(savedActiveLevel, ActiveLevelResDTO.class);
     }
+
 
     public ActiveLevelResDTO updateLevelDomainService(UpdateActiveLevelReqDTO updateActiveLevelReqDTO) {
 
@@ -44,4 +46,5 @@ public class ActiveLevelDomainService {
 
         return modelMapper.map(updatedActiveLevel, ActiveLevelResDTO.class);
     }
+
 }

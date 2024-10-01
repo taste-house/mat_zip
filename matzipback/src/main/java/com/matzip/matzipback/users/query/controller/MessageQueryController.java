@@ -2,8 +2,6 @@ package com.matzip.matzipback.users.query.controller;
 
 import com.matzip.matzipback.responsemessage.ResponseMessage;
 import com.matzip.matzipback.users.query.dto.MessageChatResDTO;
-import com.matzip.matzipback.users.query.dto.MessageDetailResDTO;
-import com.matzip.matzipback.users.query.dto.MessageDetailResMessageDTO;
 import com.matzip.matzipback.users.query.dto.SearchMessageListMessageDTO;
 import com.matzip.matzipback.users.query.service.MessageQueryService;
 import lombok.RequiredArgsConstructor;
@@ -43,21 +41,5 @@ public class MessageQueryController {
         searchMessageListMessageDTO.setMessageChats(messageChatResDTOS);
 
         return ResponseEntity.ok(searchMessageListMessageDTO);
-    }
-
-
-    @GetMapping("/messageList/{userSeq}/{partnerSeq}")
-    public ResponseEntity<MessageDetailResMessageDTO> searchMessageDetail(@PathVariable long userSeq, @PathVariable long partnerSeq) {
-
-        // 로그인한 회원
-//        long currentUserSeq = CustomUserUtils.getCurrentUserSeq();
-//
-//        if (userSeq != currentUserSeq) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
-
-
-        List<MessageDetailResDTO> messageDetailList = messageQueryService.searchMessageDetail(userSeq, partnerSeq);
-        return ResponseEntity.ok(new MessageDetailResMessageDTO(HttpStatus.OK.value(), ResponseMessage.FOUND.getMessage(), messageDetailList));
     }
 }
