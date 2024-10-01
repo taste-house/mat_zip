@@ -2,13 +2,12 @@ package com.matzip.matzipback.board.command.application.service;
 
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtCreateDTO;
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtUpdateDTO;
-import com.matzip.matzipback.board.command.domain.aggregate.PostComment;
+import com.matzip.matzipback.board.command.application.dto.ResPostCmtDTO;
 import com.matzip.matzipback.board.command.domain.repository.PostCommentRepository;
 import com.matzip.matzipback.board.command.domain.service.PostCommentDomainService;
 import com.matzip.matzipback.exception.ErrorCode;
 import com.matzip.matzipback.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,17 +17,16 @@ public class PostCommentService {
 
     private final PostCommentRepository postCommentRepository;
     private final PostCommentDomainService postCommentDomainService;
-    private final ModelMapper modelMapper;
 
     // 댓글 작성
     @Transactional
-    public void createPostComment(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
+    public ResPostCmtDTO createPostComment(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
         // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
         Long userSeq = /*CustomUserUtils.getCurrentUserSeq();*/ 1L;
 
         reqPostCmtCreateDTO.setPostCommentUserSeq(userSeq);
 
-        postCommentDomainService.save(reqPostCmtCreateDTO);
+        return postCommentDomainService.save(reqPostCmtCreateDTO);
     }
 
     // 댓글 수정
