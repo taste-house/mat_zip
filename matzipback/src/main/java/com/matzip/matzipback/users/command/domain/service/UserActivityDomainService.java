@@ -14,7 +14,7 @@ import java.util.List;
 public class UserActivityDomainService {
 
     private final UserActivityRepository userActivityRepository;
-    private final UserActiveLevelDomainService userActiveLevelDomainService;
+    private final ActiveLevelDomainService activeLevelDomainService;
 
     // 유저 활동 포인트를 업데이트 하는 메서드
     @Transactional
@@ -50,7 +50,7 @@ public class UserActivityDomainService {
 
     // 유저 회원 등급 조정
     private long calculateLevel(int point) {
-        List<ActiveLevel> activeLevelList = userActiveLevelDomainService.getAllActiveLevel();
+        List<ActiveLevel> activeLevelList = activeLevelDomainService.getAllActiveLevel();
         for (ActiveLevel level : activeLevelList) {
             if (point >= level.getActiveLevelStandard()) {
                 return level.getActiveLevelSeq();

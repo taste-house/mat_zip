@@ -1,0 +1,39 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matzip.matzipback.users.query.mapper.MessageMapper">
+
+    <resultMap id="MessageList" type="com.matzip.matzipback.users.query.dto.MessageChatResDTO">
+        <result property="messageReceiveUserSeq" column="message_receive_user_seq"/>
+        <result property="userNickname" column="user_nickname"/>
+        <result property="recentMessageDate" column="message_date"/>
+    </resultMap>
+
+    <select id="searchMessageListByUserSeq" resultMap="MessageList">
+        SELECT message_receive_user_seq
+             , user_nickname
+             , MAX(m.message_date) AS message_date
+          FROM messages m
+          JOIN users u ON m.message_receive_user_seq = u.user_seq
+         WHERE m.message_send_user_seq = #{loginUserSeq}
+           AND m.message_sender_deleted_yn = 'N'
+         GROUP BY message_receive_user_seq, user_nickname
+         ORDER BY message_date DESC
+    </select>
+
+    <select id="searchMessageDetail" resultType="com.matzip.matzipback.users.query.dto.MessageDetailResDTO">
+        SELECT message_send_user_seq
+             , message_receive_user_seq
+             , u1.user_nickname as send_user_nickname
+             , u2.user_nickname as receive_user_
+          FROM messages m
+          JOIN users u1 ON m.message_send_user_seq = u1.user_seq
+          JOIN users u2 ON m.message_receive_user_seq = u2.user_seq
+
+
+
+    </select>
+
+
+</mapper>
