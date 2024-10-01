@@ -6,11 +6,14 @@ import com.matzip.matzipback.board.command.application.dto.ResPostCmtDTO;
 import com.matzip.matzipback.board.command.application.service.PostCommentService;
 import com.matzip.matzipback.board.command.domain.aggregate.PostComment;
 import com.matzip.matzipback.responsemessage.ResponseMessage;
+import com.matzip.matzipback.responsemessage.SuccessResMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
+
+import static com.matzip.matzipback.responsemessage.SuccessCode.BASIC_DELETE_SUCCESS;
 
 @RestController
 @RequiredArgsConstructor
@@ -47,9 +50,9 @@ public class PostCmtCommandController {
 
     // 댓글 삭제
     @DeleteMapping("/postcomment/{postCommentSeq}")
-    public ResponseEntity<ErrorResponse> deletePostComment(@PathVariable Long postCommentSeq) {
+    public ResponseEntity<SuccessResMessage> deletePostComment(@PathVariable Long postCommentSeq) {
         postCommentService.deletePostComment(postCommentSeq);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok(new SuccessResMessage(BASIC_DELETE_SUCCESS));
     }
 
 }
