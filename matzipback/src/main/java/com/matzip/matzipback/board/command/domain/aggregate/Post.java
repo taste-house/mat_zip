@@ -43,4 +43,5 @@ public class Post {
         }
         postUpdatedTime = null; // 명시적으로 null 설정
     }
+
 }

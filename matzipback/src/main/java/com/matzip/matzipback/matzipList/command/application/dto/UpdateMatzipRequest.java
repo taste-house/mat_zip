@@ -6,17 +6,15 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class UpdateListRequset {
+public class UpdateMatzipRequest {
     @NotNull
-    private Long listSeq;
-    @NotBlank
-    private String listTitle;
-    @NotBlank
-    private String listContent;
-
-
+    private final Long listSeq;
+    @NotNull
+    private final Long listMatzipSeq;
+    @NotNull
+    private final Long restaurantSeq;
+    private final String listMatzipComment;
 }

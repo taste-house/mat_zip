@@ -1,5 +1,6 @@
 package com.matzip.matzipback.board.query.controller;
 
+import com.matzip.matzipback.board.query.dto.PostDetailResponse;
 import com.matzip.matzipback.board.query.dto.PostListResponse;
 import com.matzip.matzipback.board.query.service.PostQueryService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,15 @@ public class PostQueryController {
             @PathVariable Long boardCategorySeq
     ) {
         PostListResponse response = postQueryService.getPostsByCategory(page, size, boardCategorySeq);
+
+        return ResponseEntity.ok(response);
+    }
+
+    /* 3. 게시글 상세 조회 */
+    @GetMapping("/post/{postSeq}")
+    public ResponseEntity<PostDetailResponse> getPostDetail(@PathVariable Long postSeq) {
+
+        PostDetailResponse response = postQueryService.getPostDetail(postSeq);
 
         return ResponseEntity.ok(response);
     }

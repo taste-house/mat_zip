@@ -4,6 +4,7 @@ package com.matzip.matzipback.matzipList.command.application.controller;
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListRequest;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequset;
 import com.matzip.matzipback.matzipList.command.application.service.ListCommandService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class ListCommandController {
 
     // 리스트 수정
     @PutMapping("/list")
-    public ResponseEntity<Void> updateList(@RequestBody UpdateListRequset updateListRequset){
+    public ResponseEntity<Void> updateList(@Valid @RequestBody UpdateListRequset updateListRequset){
 
         Long listSeq = listCommandService.updateList(updateListRequset);
 

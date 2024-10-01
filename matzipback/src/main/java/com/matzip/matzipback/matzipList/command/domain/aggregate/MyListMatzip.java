@@ -3,6 +3,7 @@ package com.matzip.matzipback.matzipList.command.domain.aggregate;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 
 @Entity
@@ -26,6 +27,22 @@ public class MyListMatzip {
 
     public static MyListMatzip create(Long listSeq, Long restaurantSeq, String listMatzipComment) {
         return new MyListMatzip(listSeq, restaurantSeq, listMatzipComment);
+    }
+
+    public void updateListSeq(Long listSeq) {
+        this.listSeq = listSeq;
+    }
+
+    public void updateListMatzipSeq(Long listMatzipSeq) {
+        this.listMatzipSeq = listMatzipSeq;
+    }
+
+    public void updateRestaurantSeq(Long restaurantSeq) {
+        this.restaurantSeq = restaurantSeq;
+    }
+
+    public void updateListMatzipComment(String listMatzipComment) {
+        this.listMatzipComment = listMatzipComment;
     }
 
 }
