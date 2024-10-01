@@ -13,8 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.matzip.matzipback.responsemessage.SuccessCode.BASIC_DELETE_SUCCESS;
-import static com.matzip.matzipback.responsemessage.SuccessCode.BASIC_UPDATE_SUCCESS;
+import static com.matzip.matzipback.responsemessage.SuccessCode.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,15 +24,9 @@ public class PostCmtCommandController {
 
     // 댓글 등록
     @PostMapping("/postcomment")
-    public ResponseEntity<ResPostCmtDTO> createPostComment(@RequestBody ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
-        PostComment postComment = postCommentService.createPostComment(reqPostCmtCreateDTO);
-
-        if (postComment.getPostCommentSeq() != null) {  // 등록 성공
-            return ResponseEntity.status(HttpStatus.CREATED).body(new ResPostCmtDTO(201, ResponseMessage.SAVE_SUCCESS.getMessage(), postComment.getPostSeq()));
-        }
-
-        // 등록 실패
-        return ResponseEntity.status(HttpStatus.OK).body(new ResPostCmtDTO(204, ResponseMessage.SAVE_FAIL.getMessage(), postComment.getPostSeq()));
+    public ResponseEntity<SuccessResMessage> createPostComment(@Valid @RequestBody ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
+        postCommentService.createPostComment(reqPostCmtCreateDTO);
+        return ResponseEntity.ok(new SuccessResMessage(BASIC_SAVE_SUCCESS));
     }
 
     // 댓글 수정
