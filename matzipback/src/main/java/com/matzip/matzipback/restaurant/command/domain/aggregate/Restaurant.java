@@ -1,4 +1,4 @@
-package com.matzip.matzipback.restaurant.command.aggregate;
+package com.matzip.matzipback.restaurant.command.domain.aggregate;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
