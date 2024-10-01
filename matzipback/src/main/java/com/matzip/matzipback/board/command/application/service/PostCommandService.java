@@ -6,6 +6,7 @@ import com.matzip.matzipback.board.command.domain.aggregate.Post;
 import com.matzip.matzipback.board.command.domain.aggregate.PostTag;
 import com.matzip.matzipback.board.command.domain.repository.PostRepository;
 import com.matzip.matzipback.board.command.domain.repository.PostTagRepository;
+import com.matzip.matzipback.common.util.CustomUserUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -26,7 +27,8 @@ public class PostCommandService {
     public Long createPost(PostAndTagRequestDTO newPost) {
 
         // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
-        Long userSeq = 1L;
+        Long userSeq = 4L;
+        //Long userSeq = CustomUserUtils.getCurrentUserSeq();
         newPost.setPostUserSeq(userSeq);
 
         // DTO -> Entity
