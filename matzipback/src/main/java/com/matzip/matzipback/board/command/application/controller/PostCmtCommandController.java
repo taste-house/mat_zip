@@ -7,13 +7,14 @@ import com.matzip.matzipback.board.command.application.service.PostCommentServic
 import com.matzip.matzipback.board.command.domain.aggregate.PostComment;
 import com.matzip.matzipback.responsemessage.ResponseMessage;
 import com.matzip.matzipback.responsemessage.SuccessResMessage;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import static com.matzip.matzipback.responsemessage.SuccessCode.BASIC_DELETE_SUCCESS;
+import static com.matzip.matzipback.responsemessage.SuccessCode.BASIC_UPDATE_SUCCESS;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,15 +38,11 @@ public class PostCmtCommandController {
 
     // 댓글 수정
     @PutMapping("/postcomment")
-    public ResponseEntity<ResPostCmtDTO> updatePostComment(@RequestBody ReqPostCmtUpdateDTO reqPostCmtUpdateDTO) {
-        PostComment postComment = postCommentService.updatePostComment(reqPostCmtUpdateDTO);
-
-        if (postComment != null) {  // 수정 성공
-            return ResponseEntity.status(HttpStatus.CREATED).body(new ResPostCmtDTO(201, ResponseMessage.SAVE_SUCCESS.getMessage(), postComment.getPostSeq()));
-        }
-
-        // 수정 실패
-        return ResponseEntity.status(HttpStatus.OK).body(new ResPostCmtDTO(204, ResponseMessage.SAVE_FAIL.getMessage(), reqPostCmtUpdateDTO.getPostSeq()));
+    public ResponseEntity<SuccessResMessage> updatePostComment(
+            @Valid @RequestBody ReqPostCmtUpdateDTO reqPostCmtUpdateDTO
+    ) {
+        postCommentService.updatePostComment(reqPostCmtUpdateDTO);
+        return ResponseEntity.ok(new SuccessResMessage(BASIC_UPDATE_SUCCESS));
     }
 
     // 댓글 삭제
