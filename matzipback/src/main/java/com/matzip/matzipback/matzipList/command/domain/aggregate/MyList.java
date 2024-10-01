@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @Getter
-@Setter
 @SQLDelete(sql = "UPDATE lists SET list_status = 'delete', list_deleted_time = NOW() WHERE list_seq = ?")
 public class MyList {
     
@@ -53,6 +52,14 @@ public class MyList {
 
     public static MyList create(Long listUserSeq, String listTitle, String listContent, int listLevel) {
         return new MyList(listUserSeq, listTitle, listContent, listLevel);
+    }
+
+    public void updateListTitle(String listTitle) {
+        this.listTitle = listTitle;
+    }
+
+    public void updateListContent(String listContent) {
+        this.listContent = listContent;
     }
 
 
