@@ -138,4 +138,17 @@
          WHERE post_seq = #{postSeq}
     </select>
 
+    <select id="getPopularTag" resultType="String">
+        SELECT
+               a.tag_name
+          FROM tags a
+          JOIN post_tag b ON (a.tag_seq = b.tag_seq)
+          JOIN post c ON (b.post_seq = c.post_seq)
+         WHERE c.board_category_seq = #{boardSeq}
+           AND c.post_status = 'active'
+         GROUP BY tag_name
+         ORDER BY COUNT(a.tag_name) DESC
+         LIMIT 10;
+    </select>
+
 </mapper>

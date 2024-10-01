@@ -1,5 +1,6 @@
 package com.matzip.matzipback.board.query.controller;
 
+import com.matzip.matzipback.board.query.dto.PopularTagResponse;
 import com.matzip.matzipback.board.query.dto.PostDetailResponse;
 import com.matzip.matzipback.board.query.dto.PostListResponse;
 import com.matzip.matzipback.board.query.service.PostQueryService;
@@ -41,10 +42,19 @@ public class PostQueryController {
     }
 
     /* 3. 게시글 상세 조회 */
-    @GetMapping("/post/{postSeq}")
+    @GetMapping("/posts/{postSeq}")
     public ResponseEntity<PostDetailResponse> getPostDetail(@PathVariable Long postSeq) {
 
         PostDetailResponse response = postQueryService.getPostDetail(postSeq);
+
+        return ResponseEntity.ok(response);
+    }
+
+    /* 4. 게시판 별 인기 태그 조회 */
+    @GetMapping("/boards/{boardSeq}/popular-tag")
+    public ResponseEntity<PopularTagResponse> getPopularTag(@PathVariable Long boardSeq) {
+
+        PopularTagResponse response = postQueryService.getPopularTag(boardSeq);
 
         return ResponseEntity.ok(response);
     }

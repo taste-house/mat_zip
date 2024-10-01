@@ -27,4 +27,6 @@ public interface PostMapper {
     Long getLikeCount(Long postSeq);
 
     List<PostCommentDTO> getPostComment(Long postSeq);
+
+    List<String> getPopularTag(Long boardSeq);
 }

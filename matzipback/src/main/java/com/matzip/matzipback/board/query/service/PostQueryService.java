@@ -97,4 +97,15 @@ public class PostQueryService {
                 .comments(comments)
                 .build();
     }
+
+    /* 4. 게시판 별 인기 태그 조회 */
+    @Transactional(readOnly = true)
+    public PopularTagResponse getPopularTag(Long boardSeq) {
+
+        List<String> tags = postMapper.getPopularTag(boardSeq);
+
+        return PopularTagResponse.builder()
+                .tags(tags)
+                .build();
+    }
 }
