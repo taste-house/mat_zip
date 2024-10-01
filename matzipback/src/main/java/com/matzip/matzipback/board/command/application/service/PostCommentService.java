@@ -5,6 +5,8 @@ import com.matzip.matzipback.board.command.application.dto.ReqPostCmtUpdateDTO;
 import com.matzip.matzipback.board.command.domain.aggregate.PostComment;
 import com.matzip.matzipback.board.command.domain.repository.PostCommentRepository;
 import com.matzip.matzipback.board.command.domain.service.PostCommentDomainService;
+import com.matzip.matzipback.exception.ErrorCode;
+import com.matzip.matzipback.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -72,6 +74,15 @@ public class PostCommentService {
     public void deletePostComment(Long postCommentSeq) {
         // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
         Long userSeq = /*CustomUserUtils.getCurrentUserSeq();*/ 1L;
-        postCommentDomainService.deletePostCmtById(postCommentSeq);
+
+        Long resultPostCmtUserSeq
+                = postCommentDomainService.findUserSeqByPostCmtSeq(postCommentSeq);
+
+        if (userSeq.equals(resultPostCmtUserSeq)) {
+            postCommentDomainService.deletePostCmtById(postCommentSeq);
+        } else {
+            throw new RestApiException(ErrorCode.FORBIDDEN_ACCESS);
+        }
+
     }
 }
