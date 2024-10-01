@@ -8,4 +8,6 @@ public interface RestaurantRepository {
     Restaurant save(Restaurant restaurant);
 
     Optional<Restaurant> findById(Long restaurantSeq);
+
+    void deleteById(Long restaurantSeq);
 }

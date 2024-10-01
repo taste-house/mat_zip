@@ -44,4 +44,14 @@ public class RestaurantCommandController {
                 .created(URI.create("/api/vi/restaurant/" + restaurantSeq))
                 .build();
     }
+
+    @DeleteMapping("/restaurant/{restaurantSeq}")
+    @Operation(summary = "음식점 삭제", description = "음식점을 삭제한다.")
+    public ResponseEntity<Void> deleteRestaurant(
+            @PathVariable Long restaurantSeq) {
+
+        restaurantCommandService.deleteRestaurant(restaurantSeq);
+
+        return ResponseEntity.noContent().build();
+    }
 }

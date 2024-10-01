@@ -39,4 +39,10 @@ public class RestaurantCommandService {
                 restaurantRequest.getRestaurantPhone()
         );
     }
+
+    @Transactional
+    public void deleteRestaurant(Long restaurantSeq) {
+
+        restaurantRepository.deleteById(restaurantSeq);
+    }
 }
