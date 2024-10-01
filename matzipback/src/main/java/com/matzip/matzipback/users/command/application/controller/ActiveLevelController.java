@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+
 import java.util.List;
 
 @RestController
@@ -22,6 +24,7 @@ public class ActiveLevelController {
 
     // active-level 저장
     @PostMapping("/active-level")
+
     public ResponseEntity<ActiveLevelResMessageDTO> saveActiveLevel(@RequestBody CreateActiveLevelReqDTO createActiveLevelReqDTO) {
         ActiveLevelResDTO savedActiveLevel = activeLevelService.saveActiveLevel(createActiveLevelReqDTO);
 
@@ -40,5 +43,6 @@ public class ActiveLevelController {
         ActiveLevelResDTO updatedActiveLevel = activeLevelService.updateActiveLevel(updateActiveLevelReqDTO);
 
         return ResponseEntity.ok(new ActiveLevelResMessageDTO(HttpStatus.OK.value(), ResponseMessage.UPDATE_SUCCESS.getMessage(), List.of(updatedActiveLevel)));
+
     }
 }

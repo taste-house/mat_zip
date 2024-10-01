@@ -45,6 +45,11 @@ public class MyListComment {
     public static MyListComment create(Long listSeq, Long listCommentUserSeq, String listCommentContent) {
         return new MyListComment(listSeq, listCommentUserSeq, listCommentContent);
     }
+
+
+    public void updateListCommentContent(String listCommentContent) {
+        this.listCommentContent = listCommentContent;
+    }
 }
 
 

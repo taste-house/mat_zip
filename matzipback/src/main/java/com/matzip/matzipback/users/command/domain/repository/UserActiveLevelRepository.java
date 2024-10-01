@@ -11,4 +11,5 @@ public interface UserActiveLevelRepository {
     ActiveLevel save(ActiveLevel newActiveLevel);
 
     Optional<ActiveLevel> findById(long activeLevelSeq);
+
 }

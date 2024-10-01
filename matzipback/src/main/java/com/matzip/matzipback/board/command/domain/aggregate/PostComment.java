@@ -60,7 +60,8 @@ public class PostComment {
 //    }
 
     // 요청 받은 댓글 내용을 기존 댓글에서 수정
-    public void updatePostCmt(String postCommentContent) {
+    public PostComment updatePostCmt(String postCommentContent) {
         this.postCommentContent = postCommentContent;
+        return this;
     }
 }
