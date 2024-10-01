@@ -2,6 +2,7 @@ package com.matzip.matzipback.matzipList.command.application.controller;
 
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListCmtRequest;
 import com.matzip.matzipback.matzipList.command.application.dto.DeleteListCmtRequset;
+import com.matzip.matzipback.matzipList.command.application.dto.UpdateListCmtRequest;
 import com.matzip.matzipback.matzipList.command.application.service.ListCmtCommandService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,13 @@ public class ListCmtCommandController {
         listCmtCommandService.deleteListCmt(deleteListCmtRequset);
 
         return ResponseEntity.noContent().build();
+    }
+
+    // 리스트 댓글 수정
+    @PutMapping("/list/comment")
+    public ResponseEntity<Void> updateListCmt(@Valid @RequestBody UpdateListCmtRequest updateListCmtRequest){
+        Long listCmtSeq = listCmtCommandService.updateListCmt(updateListCmtRequest);
+
+        return ResponseEntity.created(URI.create("/api/v1/list/comment" + listCmtSeq)).build();
     }
 }

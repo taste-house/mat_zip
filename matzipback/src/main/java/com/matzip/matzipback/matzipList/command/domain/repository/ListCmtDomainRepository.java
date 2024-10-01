@@ -4,6 +4,8 @@ import com.matzip.matzipback.matzipList.command.application.dto.DeleteListCmtReq
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyListComment;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.Optional;
+
 public interface ListCmtDomainRepository {
 
 
@@ -11,4 +13,6 @@ public interface ListCmtDomainRepository {
 
 
     void deleteById(@NotBlank Long listCommentSeq);
+
+    Optional<MyListComment> findById(Long listCmtSeq);
 }
