@@ -9,6 +9,7 @@ import com.matzip.matzipback.responsemessage.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -46,14 +47,9 @@ public class PostCmtCommandController {
 
     // 댓글 삭제
     @DeleteMapping("/postcomment/{postCommentSeq}")
-    public ResponseEntity<ResPostCmtDTO> deletePostComment(@PathVariable Long postCommentSeq) {
-        PostComment postComment = postCommentService.deletePostComment(postCommentSeq);
-
-        if (postComment.getPostCommentStatus().equals("delete")) { // 삭제 성공
-            return ResponseEntity.status(HttpStatus.CREATED).body(new ResPostCmtDTO(201, ResponseMessage.SAVE_SUCCESS.getMessage(), postComment.getPostSeq()));
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(new ResPostCmtDTO(204, ResponseMessage.SAVE_FAIL.getMessage(), postComment.getPostSeq()));
+    public ResponseEntity<ErrorResponse> deletePostComment(@PathVariable Long postCommentSeq) {
+        postCommentService.deletePostComment(postCommentSeq);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
