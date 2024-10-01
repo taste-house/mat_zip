@@ -19,4 +19,8 @@ public class ListDomainService {
     public Report saveReport(Report newReport) {
         return listDomainRepository.save(newReport);
     }
+
+    public boolean checkListCmtExists(Long reporterUserSeq, Long listCommentSeq) {
+        return listDomainRepository.existsByReporterUserSeqAndListCommentSeq(reporterUserSeq, listCommentSeq);
+    }
 }
