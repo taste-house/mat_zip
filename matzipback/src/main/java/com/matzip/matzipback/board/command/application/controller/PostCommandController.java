@@ -28,12 +28,8 @@ public class PostCommandController {
         // 게시글 등록
         Long postSeq = postCommandService.createPost(newPost);
 
-        // redirect URI 생성
-        String redirectURI = "/api/v1/post/" + postSeq;
-
-        // 저장된 게시글 고유번호(postSeq) 반환
         return ResponseEntity.status(HttpStatus.CREATED)
-                .location(URI.create(redirectURI))
+                .location(URI.create("/api/v1/post/" + postSeq))    // 리소스가 생성된 위치
                 .build();
 
     }
@@ -85,24 +81,20 @@ public class PostCommandController {
             @RequestBody PostAndTagRequestDTO updatedPost
     ) {
 
+        // 게시글 수정
         postCommandService.updatePost(postSeq, updatedPost);
 
-        // redirect URI 생성
-        String redirectURI = "/api/v1/post/" + postSeq;
-
-        // 수정된 게시글 고유번호(postSeq) 반환
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .location(URI.create(redirectURI))
-                .build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     /* 3. 게시글 삭제 */
     @DeleteMapping("/post/{postSeq}")
-    public ResponseEntity<Long> deletePost(@PathVariable Long postSeq) {
+    public ResponseEntity<Void> deletePost(@PathVariable Long postSeq) {
 
-        Long boardCategorySeq = postCommandService.deletePost(postSeq);
+        // 게시글 삭제
+        postCommandService.deletePost(postSeq);
 
-        return ResponseEntity.ok(boardCategorySeq);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
