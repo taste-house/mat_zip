@@ -9,9 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class MessageResMessageDTO {
+public class CreateActiveLevelResMessageDTO {
 
     private int code;
     private String message;
-    private List<MessageResDTO> messages;
+    private List<ActiveLevelResDTO> activeLevels;
 }

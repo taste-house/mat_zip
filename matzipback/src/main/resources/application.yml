@@ -13,6 +13,24 @@ spring:
     username: ${MARIADB_USER}
     password: ${MARIADB_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
+  mail:
+    host: ${SMTP_HOST}
+    port: ${SMTP_PORT}
+    username: ${SMTP_USERNAME}
+    password: ${SMTP_PASSWORD}
+    protocol: ${SMTP_PROTOCOL}
+    properties:
+      mail:
+        smtp:
+          # 사용자 인증 시도 여부
+          auth: true
+          # starttls 활성화 여부
+          starttls:
+            enable: true
+          # 서버 연결 타임아웃 10초
+          connectiontimeout: 10000
+          debug: true
+
 
   jpa:
     hibernate:
