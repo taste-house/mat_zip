@@ -44,7 +44,7 @@ public class PostComment {
 
     @PrePersist
     public void prePersist() {
-        // 생성 전에 실행되서 Status 값 active로 설정
+        // 생성 전에 실행되서 Status 값 active 로 설정
         if(postCommentStatus == null) {
             postCommentStatus = "active";
         }

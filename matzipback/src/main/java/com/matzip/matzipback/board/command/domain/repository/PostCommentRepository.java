@@ -5,7 +5,8 @@ import com.matzip.matzipback.board.command.domain.aggregate.PostComment;
 import java.util.Optional;
 
 public interface PostCommentRepository {
-    PostComment save(PostComment postComment);
+
+    void save(PostComment postComment);
 
     Optional<PostComment> findById(Long postCommentSeq);
 
