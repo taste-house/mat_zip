@@ -1,11 +1,13 @@
 package com.matzip.matzipback.board.command.domain.service;
 
+import com.matzip.matzipback.board.command.application.dto.ReqPostCmtCreateDTO;
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtUpdateDTO;
 import com.matzip.matzipback.board.command.domain.aggregate.PostComment;
 import com.matzip.matzipback.board.command.domain.repository.PostCommentRepository;
 import com.matzip.matzipback.exception.ErrorCode;
 import com.matzip.matzipback.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -14,7 +16,16 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class PostCommentDomainService {
 
+    private final ModelMapper modelMapper;
     private final PostCommentRepository postCommentRepository;
+
+    // 작성 된 댓글 저장
+    public void save(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
+        // DTO -> Entity 매퍼를 사용하여 생성되도록 수정 (Entity 불변성 유지)
+        PostComment postComment = modelMapper.map(reqPostCmtCreateDTO, PostComment.class);
+        postCommentRepository.save(postComment); // 댓글 저장
+
+    }
 
     // postCommentSeq 로 postComment 조회
     public PostComment findByPostCommentSeq(Long postCommentSeq) {
@@ -24,7 +35,7 @@ public class PostCommentDomainService {
 
     // 댓글 수정 후 저장
     public void updatePostCmt(ReqPostCmtUpdateDTO reqPostCmtUpdateDTO) {
-        // 스프링 jpa를 이용해서 영속성 컨텍스트로 해당 댓글 가져오기
+        // 스프링 jpa 를 이용해서 영속성 컨텍스트로 해당 댓글 가져오기
         PostComment postComment = postCommentRepository.findById(reqPostCmtUpdateDTO.getPostCommentSeq())
                 .orElseThrow(() -> new RestApiException(ErrorCode.NOT_FOUND));
 
@@ -43,6 +54,5 @@ public class PostCommentDomainService {
     public void deletePostCmtById(Long postCommentSeq) {
         postCommentRepository.deleteById(postCommentSeq);
     }
-
 
 }
