@@ -21,11 +21,6 @@ public class PostCommentService {
     // 댓글 작성
     @Transactional
     public ResPostCmtDTO createPostComment(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
-        // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
-        Long userSeq = /*CustomUserUtils.getCurrentUserSeq();*/ 1L;
-
-        reqPostCmtCreateDTO.setPostCommentUserSeq(userSeq);
-
         return postCommentDomainService.save(reqPostCmtCreateDTO);
     }
 
