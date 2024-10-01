@@ -13,6 +13,9 @@ public enum ErrorCode {
      */
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "Invalid request."),
 
+    /* 409 CONFLICT : 서버와의 충돌
+    * 저장 실패했을 때 보통 사용하는 상태코드라고 합니다. */
+    NOT_SAVED(HttpStatus.CONFLICT, "Not saved."),
     /*
      * 401 UNAUTHORIZED: 인증되지 않은 사용자의 요청
      */
