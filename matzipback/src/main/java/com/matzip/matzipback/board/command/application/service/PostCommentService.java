@@ -12,8 +12,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
-
 @Service
 @RequiredArgsConstructor
 public class PostCommentService {
@@ -45,28 +43,17 @@ public class PostCommentService {
 
     // 댓글 수정
     @Transactional
-    public PostComment updatePostComment(ReqPostCmtUpdateDTO reqPostCmtUpdateDTO) {
+    public void updatePostComment(ReqPostCmtUpdateDTO reqPostCmtUpdateDTO) {
 
         // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
-        Long userSeq = 1L;
+        Long userSeq = /*CustomUserUtils.getCurrentUserSeq();*/ 1L;
 
-        Long postCommentSeq = reqPostCmtUpdateDTO.getPostCommentSeq();
+        Long resultPostCmtUserSeq
+                = postCommentDomainService.findUserSeqByPostCmtSeq(reqPostCmtUpdateDTO.getPostCommentSeq());
 
-        // 스프링 jpa를 이용해서 영속성 컨텍스트로 해당 댓글 가져오기
-        PostComment postComment = postCommentRepository.findById(postCommentSeq)
-                .orElseThrow(NoSuchElementException::new);
-
-        // DB내 작성된 댓글 수정 (수정 전 입력 값과 동일하면 안된다.)
-        if (postComment.getPostCommentContent().equals(reqPostCmtUpdateDTO.getPostCommentContent()) || reqPostCmtUpdateDTO.getPostCommentContent().isEmpty()) {
-//            throw new RuntimeException("댓글 수정에 실패했습니다."); // 예외 처리
-            return null;
+        if (userSeq.equals(resultPostCmtUserSeq)) {
+            postCommentDomainService.updatePostCmt(reqPostCmtUpdateDTO);
         }
-
-        // postCommentRepository.save(postComment);    // save 호출 시 @LastModifiedDate 가 적용
-
-        // 수정 값이 자동으로 업데이트 시에 @LastModifiedDate 가 적용
-        return postComment.updatePostCmt(reqPostCmtUpdateDTO.getPostCommentContent());
-
     }
 
     // 댓글 삭제(소프트 삭제)
