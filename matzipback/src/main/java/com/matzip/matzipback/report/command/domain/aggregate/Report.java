@@ -1,5 +1,6 @@
 package com.matzip.matzipback.report.command.domain.aggregate;
 
+import com.matzip.matzipback.report.command.dto.ListCmtReportReqDTO;
 import com.matzip.matzipback.report.command.dto.ListReportReqDTO;
 import com.matzip.matzipback.report.command.dto.PostCmtReportReqDTO;
 import com.matzip.matzipback.report.command.dto.PostReportReqDTO;
@@ -67,6 +68,15 @@ public class Report {
         this.reportContent = listReportReqDTO.getReportContent();
     }
 
+    private Report(Long reporterUserSeq, Long reportedUserSeq, ListCmtReportReqDTO listCmtReportReqDTO) {
+        this.reporterUserSeq = reporterUserSeq;
+        this.reportedUserSeq = reportedUserSeq;
+        this.listCommentSeq = listCmtReportReqDTO.getListCommentSeq();
+        this.reportContent = listCmtReportReqDTO.getReportContent();
+    }
+
+
+
     public static Report getReportSeq(Long reporterUserSeq, Long reportedUserSeq, PostReportReqDTO postReportReqDTO) {
         return new Report(reporterUserSeq, reportedUserSeq, postReportReqDTO);
     }
@@ -77,6 +87,10 @@ public class Report {
 
     public static Report getListReportSeq(Long reporterUserSeq, Long reportedUserSeq, ListReportReqDTO listReportReqDTO) {
         return new Report(reporterUserSeq, reportedUserSeq, listReportReqDTO);
+    }
+
+    public static Report getListCmtReportSeq(Long reporterUserSeq, Long reportedUserSeq, ListCmtReportReqDTO listCmtReportReqDTO) {
+        return new Report(reporterUserSeq, reportedUserSeq, listCmtReportReqDTO);
     }
 
     /*@ManyToOne
