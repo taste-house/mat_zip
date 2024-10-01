@@ -1,9 +1,6 @@
 package com.matzip.matzipback.config;
 
-import com.matzip.matzipback.users.command.domain.aggregate.Users;
-import com.matzip.matzipback.users.command.dto.CreateUserRequest;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

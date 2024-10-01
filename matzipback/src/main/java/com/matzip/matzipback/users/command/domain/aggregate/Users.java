@@ -1,19 +1,19 @@
 package com.matzip.matzipback.users.command.domain.aggregate;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor/*(access = AccessLevel.PROTECTED)*/
-@SQLDelete(sql = "UPDATE users SET user_status = 'delete', user_delete_date = NOW() WHERE user_seq = ?")
+@EntityListeners(AuditingEntityListener.class)  //@CreatedDate 사용위해
+@SQLDelete(sql = "UPDATE users SET user_status = 'inactive', user_delete_date = NOW() WHERE user_seq = ?")
 @Getter
 public class Users {
 
@@ -41,15 +41,33 @@ public class Users {
     private LocalDateTime pwTokenDueTime;
 
     @PrePersist
-    public void prePersist() {
-        if (socialToken == null) socialToken = "N";
-        if (userRegDate == null) userRegDate = LocalDateTime.now();
-        if (penaltyYn == null) penaltyYn = "N";
-        if (businessVerifiedYn == null) businessVerifiedYn = "N";
-        if (userStatus == null) userStatus = UserStatus.active;
+    public void prePersist() {  // 전처리(디폴트값 설정)
+//        if (userRegDate == null) userRegDate = LocalDateTime.now();
+        if (userAuth == null) userAuth = "user"; // 권한
+        if (penaltyYn == null) penaltyYn = "N"; // 패널티여부
+        if (businessVerifiedYn == null) businessVerifiedYn = "N"; // 사업자인증여부
     }
 
+    // 비밀번호 암호화
     public void encryptPassword(String password) {
         this.userPassword = password;
     }
+
+    // 닉네임 변경
+    public void updateNickname(String nickname) {
+        if (nickname != null && !nickname.trim().isEmpty()) {
+            this.userNickname = nickname;
+        }
+    }
+
+    // 휴대폰 번호 변경
+    public void updatePhone(String phoneNumber) {
+        this.userPhone = phoneNumber;
+    }
+
+    // 사업자 인증 상태 변경
+    public void updateBusinessStatus(boolean isVerified) {
+        this.businessVerifiedYn = isVerified ? "Y" : "N";
+    }
+
 }

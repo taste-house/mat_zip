@@ -1,39 +1,42 @@
 package com.matzip.matzipback.report.command.domain.aggregate;
 
-import com.matzip.matzipback.board.command.domain.aggregate.Post;
-import com.matzip.matzipback.board.command.domain.aggregate.PostComment;
-import com.matzip.matzipback.matzipList.command.domain.aggregate.MyList;
-import com.matzip.matzipback.matzipList.command.domain.aggregate.MyListComment;
-import com.matzip.matzipback.matzipList.command.domain.aggregate.Review;
-import com.matzip.matzipback.users.command.domain.aggregate.Messages;
-import com.matzip.matzipback.users.command.domain.aggregate.Users;
+import com.matzip.matzipback.report.command.dto.PostCmtReportReqDTO;
+import com.matzip.matzipback.report.command.dto.PostReportReqDTO;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "report")
-@NoArgsConstructor/*(access = AccessLevel.PROTECTED)*/
+@Getter
+@EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportSeq;
 
-    private Long reporterUser;
+    @Column(nullable = false)
+    private Long reporterUserSeq;
+    @Column(nullable = false)
     private Long reportedUserSeq;
     private Long penaltySeq;
 
     @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime reportTime;
     private String reportContent;
     private LocalDateTime reportFinishedTime;
-    private String reportStatus;
+    @Column(nullable = false)
+    @ColumnDefault("wait") // 기본값 지정
+    private String reportStatus = "wait"; // wait, none, penalty
 
     private Long postSeq;
     private Long postCommentSeq;
@@ -42,6 +45,27 @@ public class Report {
     private Long messageSeq;
     private Long reviewSeq;
 
+    private Report(Long reporterUserSeq, Long reportedUserSeq, PostReportReqDTO postReportReqDTO) {
+        this.reporterUserSeq = reporterUserSeq;
+        this.reportedUserSeq = reportedUserSeq;
+        this.postSeq = postReportReqDTO.getPostSeq();
+        this.reportContent = postReportReqDTO.getReportContent();
+    }
+
+    private Report(Long reporterUserSeq, Long reportedUserSeq, PostCmtReportReqDTO postCmtReportReqDTO) {
+        this.reporterUserSeq = reporterUserSeq;
+        this.reportedUserSeq = reportedUserSeq;
+        this.postCommentSeq = postCmtReportReqDTO.getPostCommentSeq();
+        this.reportContent = postCmtReportReqDTO.getReportContent();
+    }
+
+    public static Report getReportSeq(Long reporterUserSeq, Long reportedUserSeq, PostReportReqDTO postReportReqDTO) {
+        return new Report(reporterUserSeq, reportedUserSeq, postReportReqDTO);
+    }
+
+    public static Report getCmtReportSeq(Long reporterUserSeq, Long reportedUserSeq, PostCmtReportReqDTO postCmtReportReqDTO) {
+        return new Report(reporterUserSeq, reportedUserSeq, postCmtReportReqDTO);
+    }
 
 
     /*@ManyToOne

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.matzip.matzipback.review.query.mapper.ReviewMapper">
+    <!-- 리뷰 검색 및 조회 -->
+    <select id="selectReviews" resultType="com.matzip.matzipback.review.query.dto.ReviewListDto">
+        SELECT
+            review.review_seq,
+            review.review_user_seq,
+            users.user_nickname,
+            restaurant.restaurant_seq,
+            restaurant.restaurant_title,
+            review_image.review_image_seq,
+            LEFT(review.review_content, 20) AS review_content,
+            review.review_created_time,
+            review.review_star
+        FROM review
+        JOIN users ON (review.review_user_seq = users.user_seq)
+        JOIN restaurant USING (restaurant_seq)
+        LEFT JOIN review_image USING (review_seq)
+        WHERE review.review_status = 'active'
+        <if test="userNickname != null">
+            AND users.user_nickname LIKE CONCAT('%', #{userNickname}, '%')
+        </if>
+        <if test="reviewContent != null">
+            AND review.review_content LIKE CONCAT('%', #{reviewContent}, '%')
+        </if>
+        <if test="restaurantTitle != null">
+            AND restaurant.restaurant_title LIKE CONCAT('%', #{restaurantTitle}, '%')
+        </if>
+        GROUP BY review.review_seq
+        ORDER BY review.review_created_time DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <!-- 리뷰 검색 및 조회 기능의 페이징 처리를 위한 쿼리 -->
+    <select id="countReviews" resultType="long">
+        SELECT
+            COUNT(*)
+        FROM review
+        JOIN users ON (review.review_user_seq = users.user_seq)
+        JOIN restaurant USING (restaurant_seq)
+        WHERE review.review_status = 'active'
+        <if test="userNickname != null">
+            AND users.user_nickname LIKE CONCAT('%', #{userNickname}, '%')
+        </if>
+        <if test="reviewContent != null">
+            AND review.review_content LIKE CONCAT('%', #{reviewContent}, '%')
+        </if>
+        <if test="restaurantTitle != null">
+            AND restaurant.restaurant_title LIKE CONCAT('%', #{restaurantTitle}, '%')
+        </if>
+    </select>
+
+    <!-- 리뷰 상세 조회 -->
+    <select id="selectReview" resultType="com.matzip.matzipback.review.query.dto.ReviewDetailResponse">
+        SELECT
+            review.review_seq,
+            review.review_user_seq,
+            users.user_nickname,
+            restaurant.restaurant_seq,
+            restaurant.restaurant_title,
+            review.review_content,
+            review.review_created_time,
+            review.review_updated_time,
+            review.review_star
+        FROM review
+            JOIN users ON (review.review_user_seq = users.user_seq)
+            JOIN restaurant USING (restaurant_seq)
+        WHERE
+            review.review_status = 'active'
+        AND
+            review.review_seq = #{reviewSeq}
+    </select>
+
+    <!-- 리뷰 이미지 로드 -->
+    <select id="selectReviewImages" resultType="com.matzip.matzipback.review.query.dto.ReviewImageDto">
+        SELECT
+            review_image_path
+        FROM review
+            JOIN review_image USING (review_seq)
+        WHERE
+            review.review_status = 'active'
+        AND
+            review.review_seq = #{reviewSeq}
+    </select>
+</mapper>

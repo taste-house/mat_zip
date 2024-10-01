@@ -2,7 +2,10 @@ package com.matzip.matzipback.report.command.domain.repository;
 
 import com.matzip.matzipback.report.command.domain.aggregate.Report;
 
-public interface ReportDomainRepository {
+import java.util.Optional;
 
-    Report save(Report report);
+public interface ReportDomainRepository {
+    Report save(Report newReport);
+
+    boolean existsByReporterUserSeqAndPostSeq(Long reporterUserSeq, Long postSeq);
 }

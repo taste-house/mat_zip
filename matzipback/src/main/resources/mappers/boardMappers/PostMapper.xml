@@ -4,12 +4,13 @@
 
 <mapper namespace="com.matzip.matzipback.board.query.mapper.PostMapper">
 
-    <select id="searchPosts" resultType="com.matzip.matzipback.board.query.dto.PostDto">
+    <select id="searchPosts" resultType="com.matzip.matzipback.board.query.dto.PostDTO">
         SELECT
                b.board_category_name
              , a.post_title
              , c.user_nickname
-             , IFNULL(a.post_updated_time, a.post_created_time) as postTime
+             , a.post_created_time
+             , a.post_updated_time
           FROM post a
           LEFT JOIN board_category b USING (board_category_seq)
           LEFT JOIN users c ON (a.post_user_seq = c.user_seq)
@@ -24,7 +25,7 @@
         LIMIT #{size} OFFSET #{offset}
     </select>
 
-    <select id="countPosts" resultType="long">
+    <select id="countPostsBySearch" resultType="long">
         SELECT COUNT(*)
           FROM post a
         <if test="userNickname != null">
@@ -37,6 +38,104 @@
         <if test="userNickname != null">
             AND c.user_nickname = #{userNickname}
         </if>
+    </select>
+
+    <select id="getPostsByCategory" resultType="com.matzip.matzipback.board.query.dto.PostDTO">
+        SELECT
+               b.board_category_name
+             , a.post_title
+             , c.user_nickname
+             , a.post_created_time
+             , a.post_updated_time
+             <!-- , IFNULL(a.post_updated_time, a.post_created_time) as postTime -->
+          FROM post a
+          LEFT JOIN board_category b USING (board_category_seq)
+          LEFT JOIN users c ON (a.post_user_seq = c.user_seq)
+         WHERE post_status = 'active'
+            <if test="boardCategorySeq != null">
+                AND b.board_category_seq = #{boardCategorySeq}
+            </if>
+         ORDER BY a.post_seq
+         LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="countPostsByCategory" resultType="long">
+        SELECT COUNT(*)
+          FROM post a
+        <if test="boardCategorySeq != null">
+            LEFT JOIN board_category b USING (board_category_seq)
+        </if>
+         WHERE a.post_status = 'active'
+        <if test="postTitle != null">
+            AND b.board_category_seq = #{boardCategorySeq}
+        </if>
+    </select>
+
+    <select id="getPostDetail" resultType="com.matzip.matzipback.board.query.dto.PostDTO">
+        SELECT
+                b.board_category_name
+              , a.post_title
+              , c.user_nickname
+              , a.post_created_time
+              , a.post_updated_time
+        <!-- , IFNULL(a.post_updated_time, a.post_created_time) as postTime -->
+        FROM post a
+        LEFT JOIN board_category b USING (board_category_seq)
+        LEFT JOIN users c ON (a.post_user_seq = c.user_seq)
+        WHERE a.post_seq = #{postSeq}
+          AND a.post_status = 'active'
+    </select>
+
+    <select id="getPostTags" resultType="com.matzip.matzipback.board.query.dto.PostTagDTO">
+        SELECT
+                a.post_tag_seq
+              , b.tag_name
+        FROM post_tag a
+        LEFT JOIN tags b USING(tag_seq)
+        WHERE a.post_seq = #{postSeq}
+    </select>
+
+    <select id="getPostList" resultType="com.matzip.matzipback.board.query.dto.ListDTO">
+        SELECT
+                a.list_seq
+              , a.list_title
+              , a.list_content
+          FROM lists a
+          JOIN post b USING (list_seq)
+         WHERE b.post_seq = #{postSeq}
+    </select>
+
+    <select id="getPostRestaurant" resultType="com.matzip.matzipback.board.query.dto.RestaurantDTO">
+        SELECT
+                a.restaurant_seq
+              , a.restaurant_title
+              , a.restaurant_address
+              , a.restaurant_phone
+              , a.restaurant_star
+          FROM restaurant a
+          JOIN post b USING (restaurant_seq)
+         WHERE b.post_seq = #{postSeq}
+
+    </select>
+
+    <select id="getLikeCount" resultType="Long">
+        SELECT
+                COUNT(*)
+          FROM `like`
+         WHERE post_seq = #{postSeq}
+    </select>
+
+    <select id="getPostComment" resultType="com.matzip.matzipback.board.query.dto.PostCommentDTO">
+        SELECT
+                a.post_comment_seq
+              , c.user_nickname
+              , a.post_comment_content
+              , a.post_comment_created_time as createdTime
+              , a.post_comment_updated_time as lastUpdateTime
+          FROM post_comment a
+         RIGHT JOIN post b USING (post_seq)
+          LEFT JOIN users c ON (a.post_comment_user_seq = c.user_seq)
+         WHERE post_seq = #{postSeq}
     </select>
 
 </mapper>
