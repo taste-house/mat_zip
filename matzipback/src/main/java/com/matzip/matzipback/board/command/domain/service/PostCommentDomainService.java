@@ -2,6 +2,7 @@ package com.matzip.matzipback.board.command.domain.service;
 
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtCreateDTO;
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtUpdateDTO;
+import com.matzip.matzipback.board.command.application.dto.ResPostCmtDTO;
 import com.matzip.matzipback.board.command.domain.aggregate.PostComment;
 import com.matzip.matzipback.board.command.domain.repository.PostCommentRepository;
 import com.matzip.matzipback.exception.ErrorCode;
@@ -20,11 +21,12 @@ public class PostCommentDomainService {
     private final PostCommentRepository postCommentRepository;
 
     // 작성 된 댓글 저장
-    public void save(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
+    public ResPostCmtDTO save(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
         // DTO -> Entity 매퍼를 사용하여 생성되도록 수정 (Entity 불변성 유지)
         PostComment postComment = modelMapper.map(reqPostCmtCreateDTO, PostComment.class);
         postCommentRepository.save(postComment); // 댓글 저장
 
+        return modelMapper.map(postComment, ResPostCmtDTO.class);
     }
 
     // postCommentSeq 로 postComment 조회
