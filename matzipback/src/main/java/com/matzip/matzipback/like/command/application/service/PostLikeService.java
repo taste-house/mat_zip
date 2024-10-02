@@ -1,12 +1,8 @@
 package com.matzip.matzipback.like.command.application.service;
 
 import com.matzip.matzipback.like.command.application.dto.PostLikeReqDTO;
-import com.matzip.matzipback.like.command.domain.aggregate.Like;
-import com.matzip.matzipback.like.command.domain.repository.PostLikeRepository;
 import com.matzip.matzipback.like.command.domain.service.PostLikeDomainService;
-import com.matzip.matzipback.users.command.domain.service.UserActivityDomainService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,27 +11,28 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostLikeService {
 
     private final PostLikeDomainService postLikeDomainService;
-    private final UserActivityDomainService userActivityDomainService;
-    private final ModelMapper modelMapper;
 
+    // 1차 수정완료 - 창윤
     @Transactional
-    public Like savePostLike(PostLikeReqDTO postLikeReqDTO) {
+    public boolean savePostLike(PostLikeReqDTO postLikeReqDTO) {
 
 //        Long likeUserSeq = CustomUserUtils.getCurrentUserSeq();
         long likeUserSeq = 2L;
+        postLikeReqDTO.setLikeUserSeq(likeUserSeq);
 
-        Like foundPostLike = postLikeDomainService.findByLikeUserSeqAndPostSeq(likeUserSeq, postLikeReqDTO.getPostSeq()).orElse(null);
+        // 존재하는지 검사
+        boolean isExistsLike = postLikeDomainService
+                .existsByLikeUserSeqAndPostSeq(postLikeReqDTO);
 
         // 좋아요를 하지 않은 게시물에 대한 경우
-        if (foundPostLike == null) {
-            postLikeReqDTO.setLikeUserSeq(likeUserSeq);
-            Like newPostLike = modelMapper.map(postLikeReqDTO, Like.class); // 좋아요 저장
-            return postLikeDomainService.save(newPostLike);
+        if (!isExistsLike) {
+            postLikeDomainService.save(postLikeReqDTO);
+            return true;
         }
 
         // 좋아요를 한 게시물이 있는 경우
-        postLikeDomainService.delete(foundPostLike); // 좋아요를 다시 누르면 좋아요 취소됨
-        return null;
-
+        postLikeDomainService
+                .deleteByLikeUserSeqAndPostSeq(postLikeReqDTO); // 좋아요를 다시 누르면 좋아요 취소됨
+        return false;
     }
 }
