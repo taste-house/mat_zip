@@ -22,8 +22,8 @@ public class LikeController {
 
     // 1차 수정 완료 - 창윤
     // 좋아요한 게시글 조회
-    @Operation(summary = "좋아요한 게시글 조회", description = "좋아요한 게시글을 조회한다.")
     @GetMapping("/liked-posts/{userSeq}")
+    @Operation(summary = "좋아요한 게시글 조회", description = "좋아요한 게시글을 조회한다.")
     public ResponseEntity<SuccessSearchResMessage<?>> likedPosts(@PathVariable(required = false) Long userSeq,
                                                                  @RequestParam(value = "page", defaultValue = "1") long page) {
         List<LikedPostDTO> myLikedPost = likeQueryService.findMyLikedPost(userSeq, page);
