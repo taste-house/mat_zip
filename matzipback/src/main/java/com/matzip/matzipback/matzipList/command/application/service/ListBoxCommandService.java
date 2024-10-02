@@ -1,5 +1,6 @@
 package com.matzip.matzipback.matzipList.command.application.service;
 
+import com.matzip.matzipback.common.util.CustomUserUtils;
 import com.matzip.matzipback.exception.ErrorCode;
 import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.matzipList.command.application.dto.ListBoxUpdateRequest;
@@ -21,24 +22,28 @@ public class ListBoxCommandService {
     @Transactional
     public MyList updateListBoxLevel(@Valid ListBoxUpdateRequest listBoxUpdateRequest) {
         // 입력받은 레벨 변수 선언
-        int updateListBoxLevel = listBoxUpdateRequest.getListLevel();
-        Long currentListSeq = listBoxUpdateRequest.getListSeq();
+        int inputListBoxLevel = listBoxUpdateRequest.getListLevel();
+        Long inputListSeq = listBoxUpdateRequest.getListSeq();
 
+        // 토근 유저 시퀀스
+//        Long ListUserSeq = CustomUserUtils.getCurrentUserSeq();
+
+        long ListUserSeq = 2L;
 
         // 전체 리스트 불러오기
-        List<MyList> allLists = listDomainRepository.findByListUserSeq(listBoxUpdateRequest.getListUserSeq());
+        List<MyList> allLists = listDomainRepository.findByListUserSeq(ListUserSeq);
 
 
         // 변경된 레벨 적용
-        MyList targetList = listDomainRepository.findByListSeqAndListUserSeq(listBoxUpdateRequest.getListSeq(), listBoxUpdateRequest.getListUserSeq());
-        int targetListLevel = targetList.getListLevel();
-        if (targetListLevel != listBoxUpdateRequest.getListLevel()) {
-            targetList.updateListLevel(updateListBoxLevel);
+        MyList targetList = listDomainRepository.findByListSeqAndListUserSeq(listBoxUpdateRequest.getListSeq(), ListUserSeq);
+        int originListLevel = targetList.getListLevel();
+        if (originListLevel != listBoxUpdateRequest.getListLevel()) {
+            targetList.updateListLevel(inputListBoxLevel);
 
             for (MyList nowList : allLists) {
-                if (nowList.getListLevel() >= updateListBoxLevel && nowList.getListLevel() < targetListLevel  && nowList.getListSeq() != currentListSeq) {
+                if (nowList.getListLevel() >= inputListBoxLevel && nowList.getListLevel() < originListLevel  && nowList.getListSeq() != inputListSeq) {
                     nowList.updateListLevel(nowList.getListLevel() + 1);
-                } else if (nowList.getListLevel() > targetListLevel && nowList.getListSeq() != currentListSeq) {
+                } else if (nowList.getListLevel() > originListLevel && nowList.getListSeq() != inputListSeq) {
                     nowList.updateListLevel(nowList.getListLevel() - 1);
                 }
             }
