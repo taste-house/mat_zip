@@ -9,6 +9,7 @@ import com.matzip.matzipback.matzipList.command.domain.repository.ListCmtDomainR
 import com.matzip.matzipback.matzipList.command.domain.service.DomainListCmtUpdateService;
 import com.matzip.matzipback.matzipList.command.domain.service.DomainListUpdateService;
 import com.matzip.matzipback.matzipList.command.mapper.ListCmtMapper;
+import com.matzip.matzipback.users.command.domain.service.UserActivityDomainService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class ListCmtCommandService {
 
     private final ListCmtDomainRepository listCmtDomainRepository;
     private final DomainListCmtUpdateService domainListCmtUpdateService;
+    private final UserActivityDomainService userActivityDomainService;
 
     // 리스트 댓글 등록
     @Transactional
@@ -33,6 +35,9 @@ public class ListCmtCommandService {
 
         MyListComment MyListMatzipCmt = listCmtDomainRepository.save(newMyListMatzipCmt);
 
+        // 리스트 등록 시 점수 획득(1점)
+        userActivityDomainService.updateUserActivityPoint(listCommentUserSeq, 1);
+
         return MyListMatzipCmt.getListCommentSeq();
 
     }
@@ -41,6 +46,10 @@ public class ListCmtCommandService {
     @Transactional
     public void deleteListCmt(DeleteListCmtRequset deleteListCmtRequset) {
         listCmtDomainRepository.deleteById(deleteListCmtRequset.getListCommentSeq());
+
+        // 리스트 삭제 시 획득 점수 차감(-1점)
+        MyListComment commentUser = listCmtDomainRepository.findByListCommentSeq(deleteListCmtRequset.getListCommentSeq());
+        userActivityDomainService.updateUserActivityPoint(commentUser.getListCommentUserSeq(), -1);
     }
 
     // 리스트 댓글 수정
