@@ -9,7 +9,9 @@ import com.matzip.matzipback.board.command.domain.aggregate.Tag;
 import com.matzip.matzipback.board.command.domain.repository.PostRepository;
 import com.matzip.matzipback.board.command.domain.repository.PostTagRepository;
 import com.matzip.matzipback.board.command.domain.repository.TagRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.matzip.matzipback.common.util.CustomUserUtils;
+import com.matzip.matzipback.exception.RestApiException;
+import com.matzip.matzipback.users.command.domain.service.UserActivityDomainService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Optional;
+
+import static com.matzip.matzipback.exception.ErrorCode.NOT_FOUND;
 
 
 @Service
@@ -27,14 +31,15 @@ public class PostCommandService {
     private final PostTagRepository postTagRepository;
     private final TagRepository tagRepository;
     private final ModelMapper modelMapper;
+    private final UserActivityDomainService userActivityDomainService;
 
     /* 1. 게시글, 태그 등록 */
     @Transactional
     public Long createPost(PostAndTagRequestDTO newPost) {
 
-        // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
-        Long userSeq = 4L;
-        //Long userSeq = CustomUserUtils.getCurrentUserSeq();
+        // Authorization 에서 회원 고유번호를 가져온다. (JwtUtil 에서의 메서드 활용)
+        // Long userSeq = 4L;   // 개발 테스트용
+        Long userSeq = CustomUserUtils.getCurrentUserSeq();
 
         // DTO -> Entity
         Post post = modelMapper.map(newPost, Post.class);
@@ -47,6 +52,9 @@ public class PostCommandService {
         // tags, postTag 저장을 위한 함수 호출
         registerTagInfo(postSeq, newPost);
 
+        // 회원 포인트 변경 (게시글 등록 시 5점 획득)
+        userActivityDomainService.updateUserActivityPoint(userSeq, 5);
+
         return postSeq;
     }
 
@@ -56,11 +64,16 @@ public class PostCommandService {
     public void updatePost(Long postSeq, PostAndTagRequestDTO updatedPost) {
 
         Post post = postRepository.findById(postSeq)
-                .orElseThrow(() -> new EntityNotFoundException("Post not found with postSeq: " + postSeq));
+                .orElseThrow(() -> new RestApiException(NOT_FOUND));     // 조회 된 Post 엔티티가 없을 경우
+
+        // 이미 soft delete 된 게시글의 경우
+        if(post.getPostStatus().equals("delete")){
+            throw new RestApiException(NOT_FOUND);
+        }
 
         // 찾아온 Entity -> DTO
         PostAndTagRequestDTO tempPost = modelMapper.map(post, PostAndTagRequestDTO.class);
-        // DTO Setter Method를 활용하여 수정사항 반영
+        // DTO Setter Method 를 활용하여 수정사항 반영
         tempPost.setPostTitle(updatedPost.getPostTitle());
         tempPost.setPostContent(updatedPost.getPostContent());
         tempPost.setBoardCategorySeq(updatedPost.getBoardCategorySeq());
@@ -70,21 +83,11 @@ public class PostCommandService {
         // 수정한 DTO -> Entity
         modelMapper.map(tempPost, post);
 
-        // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
-        Long userSeq = 4L;
-        //Long userSeq = CustomUserUtils.getCurrentUserSeq();
+        // Authorization 에서 회원 고유번호를 가져온다. (JwtUtil 에서의 메서드 활용)
+        // Long userSeq = 4L;   // 개발 테스트용
+        Long userSeq = CustomUserUtils.getCurrentUserSeq();
         post.putPostSeq(postSeq);
         post.putUserSeq(userSeq);
-
-        /* 수정을 위해 엔티티 정보 변경(Entity 내 메소드 정의 최소화를 위해 주석처리) */
-/*        post.updatePostDetails(
-                updatedPost.getPostTitle(),
-                updatedPost.getPostContent(),
-                updatedPost.getBoardCategorySeq(),
-                updatedPost.getListSeq(),
-                updatedPost.getRestaurantSeq()
-        );
-*/
 
         // 태그 등록 이전에 post_tag 테이블에 해당 게시글과 관련하여 등록된 태그 모두 삭제
         postTagRepository.deleteAllByPostSeq(postSeq);
@@ -99,12 +102,18 @@ public class PostCommandService {
     public void deletePost(Long postSeq) {
 
         // 전달 된 postSeq로 Post Entity 조회
-        Post post = postRepository.findById(postSeq)
-                // 조회 된 Post 엔티티가 없을 경우
-                .orElseThrow(() -> new EntityNotFoundException("Post not found with postSeq: " + postSeq));
+        Post post = postRepository.findById(postSeq).orElseThrow(() -> new RestApiException(NOT_FOUND));
+
+        // 이미 soft delete 된 게시글의 경우
+        if(post.getPostStatus().equals("delete")){
+            throw new RestApiException(NOT_FOUND);
+        }
 
         // 게시글 Soft Delete
         postRepository.deleteById(postSeq);
+
+        // 회원 포인트 변경 (게시글 삭제 시 5점 소멸)
+        userActivityDomainService.updateUserActivityPoint(post.getPostUserSeq(), -5);
 
     }
 
