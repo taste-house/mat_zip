@@ -1,5 +1,7 @@
 package com.matzip.matzipback.like.command.application.service;
 
+import com.matzip.matzipback.exception.ErrorCode;
+import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.like.command.application.dto.PostCmtLikeReqDTO;
 import com.matzip.matzipback.like.command.domain.aggregate.Like;
 import com.matzip.matzipback.like.command.domain.service.PostCmtLikeDomainService;
@@ -16,7 +18,7 @@ public class PostCmtLikeService {
     private final ModelMapper modelMapper;
 
     @Transactional
-    public void savePostCmtLike(PostCmtLikeReqDTO postCmtLikeReqDTO) {
+    public boolean savePostCmtLike(PostCmtLikeReqDTO postCmtLikeReqDTO) {
 
         long likeUserSeq = /*CustomUserUtils.getCurrentUserSeq()*/ 1L;
 
@@ -30,9 +32,11 @@ public class PostCmtLikeService {
             postCmtLikeReqDTO.setLikeUserSeq(likeUserSeq);
             Like newPostCmtLike = modelMapper.map(postCmtLikeReqDTO, Like.class); // 좋아요 저장
             postCmtLikeDomainService.save(newPostCmtLike);
+            return true;
         } else {
             // 이미 좋아요를 한 게시물에 대한 경우
             postCmtLikeDomainService.deleteById(foundPostCmtLike.getLikeSeq()); // 좋아요를 다시 누르면 좋아요 취소됨
+            return false;
         }
 
     }
