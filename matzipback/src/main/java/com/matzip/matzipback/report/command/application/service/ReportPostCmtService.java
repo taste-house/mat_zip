@@ -2,9 +2,8 @@ package com.matzip.matzipback.report.command.application.service;
 
 import com.matzip.matzipback.board.command.domain.aggregate.PostComment;
 import com.matzip.matzipback.board.command.domain.service.PostCommentDomainService;
-import com.matzip.matzipback.report.command.domain.aggregate.Report;
 import com.matzip.matzipback.report.command.domain.service.ReportDomainService;
-import com.matzip.matzipback.report.command.dto.PostCmtReportReqDTO;
+import com.matzip.matzipback.report.command.dto.PtAndCmtReportReqDTO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +13,7 @@ public class ReportPostCmtService {
     ReportDomainService reportDomainService;
 
     // 게시글 댓글 신고 기능
-    public void savePostCmtReport(PostCmtReportReqDTO postCmtReportReqDTO) {
+    public void savePostCmtReport(PtAndCmtReportReqDTO postCmtReportReqDTO) {
         // 댓글 가져오기
         PostComment foundPostComment = postCommentDomainService
                 .findByPostCommentSeq(postCmtReportReqDTO.getPostCommentSeq());
@@ -23,7 +22,7 @@ public class ReportPostCmtService {
         postCmtReportReqDTO.setReporterUserSeq(/*CustomUserUtils.getCurrentUserSeq();*/ 2L);
         postCmtReportReqDTO.setReportedUserSeq(foundPostComment.getPostCommentUserSeq());
         // 이미 신고된 게시글 댓글인지 확인
-        PostCmtReportReqDTO validReport = reportDomainService.checkReportExists(postCmtReportReqDTO);
+        PtAndCmtReportReqDTO validReport = reportDomainService.checkReportExists(postCmtReportReqDTO);
         // 확인된 게시글 댓글 신고 저장
         reportDomainService.saveReport(validReport);
     }
