@@ -34,6 +34,11 @@ public enum ErrorCode {
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "Not allowed method."),
 
     /*
+    * 409 DUPLICATE_ENTRY: 이미 값이 존재
+    */
+    CONFLICT(HttpStatus.CONFLICT, "Date Conflict"),
+
+    /*
      * 500 INTERNAL_SERVER_ERROR: 내부 서버 오류
      */
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Server error.");
