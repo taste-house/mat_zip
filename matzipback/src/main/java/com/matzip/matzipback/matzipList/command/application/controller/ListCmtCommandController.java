@@ -1,7 +1,6 @@
 package com.matzip.matzipback.matzipList.command.application.controller;
 
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListCmtRequest;
-import com.matzip.matzipback.matzipList.command.application.dto.DeleteListCmtRequset;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateListCmtRequest;
 import com.matzip.matzipback.matzipList.command.application.service.ListCmtCommandService;
 import com.matzip.matzipback.responsemessage.SuccessCode;
@@ -34,13 +33,14 @@ public class ListCmtCommandController {
         return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
     }
 
+    // 1차 수정 완료 - 창윤
     // 리스트 댓글 삭제
-    @DeleteMapping("/list/comment")
-    public ResponseEntity<Void> deleteListCmt(@Valid @RequestBody DeleteListCmtRequset deleteListCmtRequset){
+    @DeleteMapping("/list/comment/{listCommentSeq}")
+    public ResponseEntity<SuccessResMessage> deleteListCmt(@PathVariable(value = "listCommentSeq") Long listCommentSeq){
 
-        listCmtCommandService.deleteListCmt(deleteListCmtRequset);
+        listCmtCommandService.deleteListCmt(listCommentSeq);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_DELETE_SUCCESS));
     }
 
     // 리스트 댓글 수정
