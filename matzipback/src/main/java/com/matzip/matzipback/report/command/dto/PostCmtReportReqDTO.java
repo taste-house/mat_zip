@@ -8,6 +8,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PostCmtReportReqDTO {
+
+    private Long reporterUserSeq;
+    private Long reportedUserSeq;
+    private Long postSeq;
     private Long postCommentSeq;
     private String reportContent;
 }
