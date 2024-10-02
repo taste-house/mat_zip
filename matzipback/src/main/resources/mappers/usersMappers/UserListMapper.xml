@@ -21,7 +21,7 @@
         <!-- 회원 활동 정보 -->
         <association property="activityInfo" resultMap="ActivityResultMap"/>
         <!-- 사업자 정보 -->
-        <association property="businessInfo" resultMap="BusinessResultMap"/>
+<!--        <association property="businessInfo" resultMap="BusinessResultMap"/>-->
     </resultMap>
 
     <!-- 회원상세조회 : 관리자, 자신 -->
