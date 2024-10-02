@@ -20,6 +20,36 @@
         <association property="penalty" resultMap="PenaltyResultMap"/>
         <!-- 회원 활동 정보 -->
         <association property="activityInfo" resultMap="ActivityResultMap"/>
+        <!-- 사업자 정보 -->
+        <association property="businessInfo" resultMap="BusinessResultMap"/>
+    </resultMap>
+
+    <!-- 회원상세조회 : 관리자, 자신 -->
+    <resultMap id="UsersDetailResultMap" type="com.matzip.matzipback.users.query.dto.userInfo.UserDetailInfoDTO">
+        <id property="userSeq" column="user_seq"/>
+        <result property = "userEmail" column = "user_email"/>
+        <result property = "userNickname" column = "user_nickname"/>
+        <result property = "userName" column = "user_name"/>
+        <result property = "userPhone" column = "user_phone"/>
+        <result property = "socialYn" column = "user_social_yn"/>
+        <result property = "socialSite" column = "user_social_site"/>
+        <result property = "penaltyYn" column = "penalty_yn"/>
+        <result property = "penaltyStartDate" column = "penalty_startDate"/>
+        <result property = "penaltyEndDate" column = "penalty_end_date"/>
+        <result property = "userStatus" column = "user_status"/>
+        <result property = "userAuth" column = "user_auth"/>
+        <result property = "userRegDate" column = "user_reg_date"/>
+        <result property = "userDeleteDate" column = "user_delete_date"/>
+        <result property = "listCount" column = "listCount"/>
+        <result property = "reviewCount" column = "reviewCount"/>
+        <result property = "businessVerifiedYn" column = "business_verified_yn"/>
+        <result property = "followerCount" column = "followerCount"/>
+        <result property = "followingCount" column = "followingCount"/>
+
+        <!-- 사업자 정보 -->
+        <association property="businessInfo" resultMap="BusinessResultMap"/>
+        <!-- 회원 활동 정보 -->
+        <association property="activityInfo" resultMap="ActivityResultMap"/>
     </resultMap>
 
     <resultMap id="ActivityResultMap" type="com.matzip.matzipback.users.query.dto.userInfo.UserActivityInfoDTO">
@@ -40,15 +70,15 @@
         <result property="penaltyReasonContent" column="penalty_reason_content"/>
     </resultMap>
 
-<!--    <resultMap id="ResultMap" type="com.matzip.matzipback.users.query.dto.userInfo.BusinessLicenseDTO">-->
-<!--        <id property="businessSeq" column="business_seq"/>-->
-<!--        <result property="userSeq" column="user_seq"/>-->
-<!--        <result property="businessName" column="business_name"/>-->
-<!--        <result property="businessNumber" column="business_number"/>-->
-<!--        <result property="businessAddress" column="business_address"/>-->
-<!--        <result property="verificationDate" column="business_verification_date"/>-->
-<!--        <result property="businessStatus" column="business_verification_status"/>-->
-<!--    </resultMap>-->
+    <resultMap id="BusinessResultMap" type="com.matzip.matzipback.users.query.dto.userInfo.BusinessLicenseDTO">
+        <id property="businessSeq" column="business_seq"/>
+        <result property="userSeq" column="user_seq"/>
+        <result property="businessName" column="business_name"/>
+        <result property="businessNumber" column="business_number"/>
+        <result property="businessAddress" column="business_address"/>
+        <result property="verificationDate" column="business_verification_date"/>
+        <result property="businessStatus" column="business_verification_status"/>
+    </resultMap>
 
     <!-- 회원 전체조회 : 관리자 -->
     <select id="getAllUserInfo" resultMap="UsersResultMap">
@@ -96,13 +126,10 @@
         <where>
             <!-- 관리자 계정 제외 -->
             u.user_auth = 'user'
-            <if test="userStatus != null and userStatus != ''">
-                And u.user_status = #{userStatus}
-            </if>
 
             <!-- 소셜회원 여부 필터링 -->
             <if test="socialYn != null and socialYn != ''">
-                u.user_social_yn = #{socialYn}
+                AND u.user_social_yn = #{socialYn}
                 <!-- 소셜회원인 경우에는 socialSite 보이게 조건 추가 -->
                 <if test="socialYn == 'Y' and socialSite != null and socialSite != ''">
                     AND u.user_social_site = #{socialSite}
@@ -161,12 +188,9 @@
         LEFT JOIN penalty p ON u.user_seq = p.penalty_user_seq
         <where>
             u.user_auth = 'user'
-            <if test="userStatus != null and userStatus != ''">
-                And u.user_status = #{userStatus}
-            </if>
 
             <if test="socialYn != null and socialYn != ''">
-                u.user_social_yn = #{socialYn}
+                AND u.user_social_yn = #{socialYn}
                 <if test="socialYn == 'Y' and socialSite != null and socialSite != ''">
                     AND u.user_social_site = #{socialSite}
                 </if>
@@ -229,9 +253,6 @@
         <where>
             <!-- 관리자 계정 제외 -->
             u.user_auth = 'user'
-            <if test="userStatus != null and userStatus != ''">
-                And u.user_status = #{userStatus}
-            </if>
 
             <!-- 검색 조건 추가 -->
             <if test="searchWord != null and searchWord != ''">
@@ -264,7 +285,7 @@
                 <!-- 관리자일 때만 탈퇴 회원도 조회, 필터링은 관리자만 가능 -->
                 <!-- 소셜회원 여부 필터링 -->
                 <if test="socialYn == 'Y' and socialYn != null and socialYn != ''">
-                    u.user_social_yn = #{socialYn}
+                    AND u.user_social_yn = #{socialYn}
                     <!-- 소셜회원인 경우에는 socialSite 보이게 조건 추가 -->
                     <if test="socialSite != null and socialSite != ''">
                         AND u.user_social_site = #{socialSite}
@@ -326,9 +347,6 @@
         <where>
             <!-- 관리자 계정 제외 -->
             u.user_auth = 'user'
-            <if test="userStatus != null and userStatus != ''">
-                And u.user_status = #{userStatus}
-            </if>
 
             <!-- 검색 조건 추가 -->
             <if test="searchWord != null and searchWord != ''">
@@ -361,7 +379,7 @@
                 <!-- 관리자일 때만 탈퇴 회원도 조회, 필터링은 관리자만 가능 -->
                 <!-- 소셜회원 여부 필터링 -->
                 <if test="socialYn == 'Y' and socialYn != null and socialYn != ''">
-                    u.user_social_yn = #{socialYn}
+                    AND u.user_social_yn = #{socialYn}
                     <!-- 소셜회원인 경우에는 socialSite 보이게 조건 추가 -->
                     <if test="socialSite != null and socialSite != ''">
                         AND u.user_social_site = #{socialSite}
@@ -382,5 +400,109 @@
             </if>
         </where>
     </select>
+
+    <!-- 회원 상세조회 : 관리자, 회원(자신의정보) -->
+    <select id="getDetailInfoDto" resultMap="UsersDetailResultMap">
+        SELECT u.user_seq
+             , u.user_email
+             , u.user_nickname
+             , CASE
+                WHEN #{userAuth} = 'user'
+                THEN u.user_name
+                ELSE NULL
+                END AS user_name
+             , CASE
+                WHEN #{userAuth} = 'user'
+                THEN u.user_phone
+                ELSE NULL
+                END AS user_phone
+             , u.user_social_yn
+             , u.user_social_site
+             , CASE
+             <![CDATA[
+                    WHEN u.penalty_yn = 'Y'
+                     AND p.penalty_start_date <= NOW()
+                     AND p.penalty_end_date >= NOW()
+                     AND #{userAuth} = 'admin'
+                    THEN 'Y'
+                    ELSE 'N'
+                     END AS penalty_yn
+                  , CASE
+                    WHEN u.penalty_yn = 'Y'
+                     AND p.penalty_start_date <= NOW()
+                     AND p.penalty_end_date >= NOW()
+                     AND #{userAuth} = 'admin'
+                    THEN p.penalty_start_date
+                    ELSE NULL
+                     END AS penalty_start_date
+                  , CASE
+                    WHEN u.penalty_yn = 'Y'
+                     AND p.penalty_start_date <= NOW()
+                     AND p.penalty_end_date >= NOW()
+                     AND #{userAuth} = 'admin'
+                    THEN p.penalty_end_date
+                    ELSE NULL
+                  ]]>
+             END AS penalty_end_date
+             , u.user_auth
+             , CASE
+                WHEN #{userAuth} = 'admin'
+                THEN u.user_status
+                ELSE NULL
+                END AS user_status
+             , CASE
+                WHEN #{userAuth} = 'admin'
+                THEN u.user_reg_date
+                ELSE NULL
+                END AS user_reg_date
+             , CASE
+                WHEN #{userAuth} = 'admin'
+                THEN u.user_delete_date
+                ELSE NULL
+                END AS user_delete_date
+             , ua.activity_point
+             , al.active_level_name
+             , al.active_level_standard
+             , ua.influencer_yn
+             , u.business_verified_yn
+             , bl.business_name
+             , bl.business_number
+             , bl.business_address
+             , bl.business_verification_date
+             , bl.business_verification_status
+             , (SELECT COUNT(*) FROM lists  WHERE list_user_seq = u.user_seq) AS listCount
+             , (SELECT COUNT(*) FROM review WHERE review_user_seq = u.user_seq) AS reviewCount
+             , (SELECT COUNT(*) FROM follow WHERE followed_user_seq = u.user_seq) AS followerCount
+             , (SELECT COUNT(*) FROM follow WHERE following_user_seq = u.user_seq) AS followingCount
+        FROM users u
+        LEFT JOIN user_activity ua ON u.user_seq = ua.activity_user_seq
+        LEFT JOIN active_level al ON ua.active_level_seq = al.active_level_seq
+        LEFT JOIN penalty p ON u.user_seq = p.penalty_user_seq
+        LEFT JOIN business_license bl ON bl.user_seq = u.user_seq
+       WHERE
+             u.user_seq = #{userSeq}
+    </select>
+
+    <!-- 회원 상세조회 : 다른 회원 -->
+    <select id="getOtherUserInfoDto" resultType="com.matzip.matzipback.users.query.dto.userInfo.OtherUserInfoDto">
+        SELECT u.user_seq
+        , u.user_nickname
+        , ua.activity_point
+        , al.active_level_name
+        <!--             , al.active_level_standard-->
+        , ua.influencer_yn
+        , (SELECT COUNT(*) FROM lists  WHERE list_user_seq = u.user_seq) AS listCount
+        , (SELECT COUNT(*) FROM review WHERE review_user_seq = u.user_seq) AS reviewCount
+        , (SELECT COUNT(*) FROM follow WHERE followed_user_seq = u.user_seq) AS followerCount
+        , (SELECT COUNT(*) FROM follow WHERE following_user_seq = u.user_seq) AS followingCount
+        FROM users u
+        LEFT JOIN user_activity ua ON u.user_seq = ua.activity_user_seq
+        LEFT JOIN active_level al ON ua.active_level_seq = al.active_level_seq
+        WHERE
+        u.user_seq = #{userSeq}
+    </select>
+
+
+
 
 </mapper>
