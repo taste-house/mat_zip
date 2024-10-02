@@ -33,7 +33,7 @@ public class PostCommentDomainService {
     // postCommentSeq 로 postComment 조회
     public PostComment findByPostCommentSeq(Long postCommentSeq) {
         return postCommentRepository.findById(postCommentSeq)
-                .orElseThrow(NoSuchElementException::new);
+                .orElseThrow(() -> new RestApiException(ErrorCode.NOT_FOUND));
     }
 
     // 댓글 수정 후 저장
