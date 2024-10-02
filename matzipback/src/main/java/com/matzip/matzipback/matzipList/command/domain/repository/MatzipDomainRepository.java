@@ -11,4 +11,8 @@ public interface MatzipDomainRepository {
     void deleteById(@NotBlank Long listMatzipSeq);
 
     Optional<MyListMatzip> findById(Long listMatzipSeq);
+
+    boolean existsByRestaurantSeq(Long restaurantSeq);
+
+    boolean existsByListSeqAndRestaurantSeq(Long listSeq, Long restaurantSeq);
 }
