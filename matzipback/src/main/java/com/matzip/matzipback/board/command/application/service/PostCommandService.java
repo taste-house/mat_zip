@@ -35,10 +35,10 @@ public class PostCommandService {
         // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
         Long userSeq = 4L;
         //Long userSeq = CustomUserUtils.getCurrentUserSeq();
-        newPost.setPostUserSeq(userSeq);
 
         // DTO -> Entity
         Post post = modelMapper.map(newPost, Post.class);
+        post.putUserSeq(userSeq);
 
         // 게시글 저장 후 Post Entity 반환
         Post savedPost = postRepository.save(post);
@@ -47,7 +47,7 @@ public class PostCommandService {
         // tags, postTag 저장을 위한 함수 호출
         registerTagInfo(postSeq, newPost);
 
-        return savedPost.getPostSeq();
+        return postSeq;
     }
 
 
@@ -61,8 +61,6 @@ public class PostCommandService {
         // 찾아온 Entity -> DTO
         PostAndTagRequestDTO tempPost = modelMapper.map(post, PostAndTagRequestDTO.class);
         // DTO Setter Method를 활용하여 수정사항 반영
-        tempPost.setPostSeq(postSeq);
-        tempPost.setPostUserSeq(post.getPostUserSeq());
         tempPost.setPostTitle(updatedPost.getPostTitle());
         tempPost.setPostContent(updatedPost.getPostContent());
         tempPost.setBoardCategorySeq(updatedPost.getBoardCategorySeq());
@@ -71,6 +69,12 @@ public class PostCommandService {
 
         // 수정한 DTO -> Entity
         modelMapper.map(tempPost, post);
+
+        // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
+        Long userSeq = 4L;
+        //Long userSeq = CustomUserUtils.getCurrentUserSeq();
+        post.putPostSeq(postSeq);
+        post.putUserSeq(userSeq);
 
         /* 수정을 위해 엔티티 정보 변경(Entity 내 메소드 정의 최소화를 위해 주석처리) */
 /*        post.updatePostDetails(
