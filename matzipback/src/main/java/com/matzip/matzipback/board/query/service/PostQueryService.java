@@ -39,16 +39,16 @@ public class PostQueryService {
 
     /* 2. 게시판 카테고리 별 게시글 목록 조회 */
     @Transactional(readOnly = true)
-    public PostListResponse getPostsByCategory(Integer page, Integer size, Long boardCategorySeq) {
+    public PostListResponse getPostsByCategory(Integer page, Integer size, Long boardSeq) {
 
         // offset : 몇번째 row부터 출력할지 설정
         int offset = (page -1) * size;
 
         // 해당 게시판에 속해있는 게시글 조회
-        List<PostDTO> posts = postMapper.getPostsByCategory(offset, size, boardCategorySeq);
+        List<PostDTO> posts = postMapper.getPostsByCategory(offset, size, boardSeq);
 
         // 해당 게시판 카테고리에 작성된 게시글 갯수
-        long totalPosts = postMapper.countPostsByCategory(boardCategorySeq);
+        long totalPosts = postMapper.countPostsByCategory(boardSeq);
 
         return PostListResponse.builder()
                 .posts(posts)
@@ -103,6 +103,16 @@ public class PostQueryService {
     public PopularTagResponse getPopularTag(Long boardSeq) {
 
         List<String> tags = postMapper.getPopularTag(boardSeq);
+
+        return PopularTagResponse.builder()
+                .tags(tags)
+                .build();
+    }
+
+    /* 5. 게시글 등록 페이지에서 태그 작성 시 관련 인기 키워드 제시 */
+    @Transactional(readOnly = true)
+    public PopularTagResponse getTagKeywords(String tag) {
+        List<String> tags = postMapper.getTagKeywords(tag);
 
         return PopularTagResponse.builder()
                 .tags(tags)
