@@ -20,8 +20,6 @@
         <association property="penalty" resultMap="PenaltyResultMap"/>
         <!-- 회원 활동 정보 -->
         <association property="activityInfo" resultMap="ActivityResultMap"/>
-        <!-- 사업자 정보 -->
-        <association property="businessInfo" resultMap="BusinessResultMap"/>
     </resultMap>
 
     <!-- 회원상세조회 : 관리자, 자신 -->
@@ -131,7 +129,7 @@
             <if test="socialYn != null and socialYn != ''">
                 AND u.user_social_yn = #{socialYn}
                 <!-- 소셜회원인 경우에는 socialSite 보이게 조건 추가 -->
-                <if test="socialYn == 'Y' and socialSite != null and socialSite != ''">
+                <if test="socialYn.equals('Y') and socialSite != null and socialSite != ''">
                     AND u.user_social_site = #{socialSite}
                 </if>
             </if>
@@ -191,7 +189,7 @@
 
             <if test="socialYn != null and socialYn != ''">
                 AND u.user_social_yn = #{socialYn}
-                <if test="socialYn == 'Y' and socialSite != null and socialSite != ''">
+                <if test="socialYn.equals('Y') and socialSite != null and socialSite != ''">
                     AND u.user_social_site = #{socialSite}
                 </if>
             </if>
@@ -284,7 +282,7 @@
             <if test="userAuth == 'admin'">
                 <!-- 관리자일 때만 탈퇴 회원도 조회, 필터링은 관리자만 가능 -->
                 <!-- 소셜회원 여부 필터링 -->
-                <if test="socialYn == 'Y' and socialYn != null and socialYn != ''">
+                <if test="socialYn.equals('Y') and socialYn != null and socialYn != ''">
                     AND u.user_social_yn = #{socialYn}
                     <!-- 소셜회원인 경우에는 socialSite 보이게 조건 추가 -->
                     <if test="socialSite != null and socialSite != ''">
@@ -378,7 +376,7 @@
             <if test="userAuth == 'admin'">
                 <!-- 관리자일 때만 탈퇴 회원도 조회, 필터링은 관리자만 가능 -->
                 <!-- 소셜회원 여부 필터링 -->
-                <if test="socialYn == 'Y' and socialYn != null and socialYn != ''">
+                <if test="socialYn.equals('Y') and socialYn != null and socialYn != ''">
                     AND u.user_social_yn = #{socialYn}
                     <!-- 소셜회원인 경우에는 socialSite 보이게 조건 추가 -->
                     <if test="socialSite != null and socialSite != ''">
