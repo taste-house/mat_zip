@@ -1,10 +1,9 @@
 package com.matzip.matzipback.matzipList.command.application.service;
 
+import com.matzip.matzipback.exception.ErrorCode;
+import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListCmtRequest;
-import com.matzip.matzipback.matzipList.command.application.dto.DeleteListCmtRequset;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateListCmtRequest;
-import com.matzip.matzipback.matzipList.command.domain.repository.ListCmtDomainRepository;
-import com.matzip.matzipback.matzipList.command.domain.service.DomainListCmtUpdateService;
 import com.matzip.matzipback.matzipList.command.domain.service.ListCmtDomainService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ListCmtCommandService {
 
-    private final ListCmtDomainRepository listCmtDomainRepository;
-    private final DomainListCmtUpdateService domainListCmtUpdateService;
     private final ListCmtDomainService listCmtDomainService;
 
     // 1차 수정 완료 - 창윤
@@ -33,10 +30,22 @@ public class ListCmtCommandService {
         listCmtDomainService.createListCmt(createListCmtRequest);
     }
 
+    // 1차 수정 완료
     // 리스트 댓글 삭제
     @Transactional
-    public void deleteListCmt(DeleteListCmtRequset deleteListCmtRequset) {
-        listCmtDomainRepository.deleteById(deleteListCmtRequset.getListCommentSeq());
+    public void deleteListCmt(Long listCommentSeq) {
+
+//        long loginUserSeq = CustomUserUtils.getCurrentUserSeq();
+        long loginUserSeq = 4L;
+
+        long foundUserSeq = listCmtDomainService.getUserSeqFindById(listCommentSeq);
+
+        // 댓글을 지우려는 사용자와 댓글을 작성한 작성자가 다르면 인증되지 않은 요청이라고 에러를 터트린다.
+        if (loginUserSeq != foundUserSeq) {
+            throw new RestApiException(ErrorCode.UNAUTHORIZED_REQUEST);
+        }
+
+        listCmtDomainService.deleteListCmt(listCommentSeq);
     }
 
     // 리스트 댓글 수정
