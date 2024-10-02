@@ -13,6 +13,9 @@ public enum ErrorCode {
      */
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "Invalid request."),
 
+    /* 409 CONFLICT : 서버와의 충돌
+    * 저장 실패했을 때 보통 사용하는 상태코드라고 합니다. */
+    NOT_SAVED(HttpStatus.CONFLICT, "Not saved."),
     /*
      * 401 UNAUTHORIZED: 인증되지 않은 사용자의 요청
      */
@@ -32,6 +35,11 @@ public enum ErrorCode {
      * 405 METHOD_NOT_ALLOWED: 허용되지 않은 Request Method 호출
      */
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "Not allowed method."),
+
+    /*
+    * 409 DUPLICATE_ENTRY: 이미 값이 존재
+    */
+    CONFLICT(HttpStatus.CONFLICT, "Data Conflict"),
 
     /*
      * 500 INTERNAL_SERVER_ERROR: 내부 서버 오류

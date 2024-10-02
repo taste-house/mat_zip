@@ -12,9 +12,9 @@ public interface PostMapper {
 
     long countPostsBySearch(String postTitle, String userNickname);
 
-    List<PostDTO> getPostsByCategory(int offset, Integer size, Long boardCategorySeq);
+    List<PostDTO> getPostsByCategory(int offset, Integer size, Long boardSeq);
 
-    long countPostsByCategory(Long boardCategorySeq);
+    long countPostsByCategory(Long boardSeq);
 
     PostDTO getPostDetail(Long postSeq);
 
@@ -27,4 +27,8 @@ public interface PostMapper {
     Long getLikeCount(Long postSeq);
 
     List<PostCommentDTO> getPostComment(Long postSeq);
+
+    List<String> getPopularTag(Long boardSeq);
+
+    List<String> getTagKeywords(String tag);
 }

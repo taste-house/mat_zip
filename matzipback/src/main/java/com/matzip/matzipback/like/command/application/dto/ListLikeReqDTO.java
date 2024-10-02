@@ -10,6 +10,6 @@ import lombok.Setter;
 public class ListLikeReqDTO {
 
     private Long likeUserSeq;
-    @NotNull
+    @NotNull(message = "리스트 고유번호가 null이면 안됩니다.")
     private Long listSeq;
 }

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 public class LikedPostDTO {
 
-    private String postTitle;
-    private String userNickname;
-    private LocalDateTime postUpdatedTime;
+    private String postTitle; // 게시글 제목
+    private String userNickname; // 유저 닉네임
+    private LocalDateTime postUpdatedTime; // 게시글 수정 시간
 }

@@ -2,6 +2,8 @@ package com.matzip.matzipback.board.command.application.controller;
 
 import com.matzip.matzipback.board.command.application.dto.PostAndTagRequestDTO;
 import com.matzip.matzipback.board.command.application.service.PostCommandService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 //import com.google.gson.JsonObject;
 //import org.apache.commons.io.FileUtils;
@@ -14,13 +16,15 @@ import java.net.URI;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Tag(name = "Post", description = "게시글")
 public class PostCommandController {
 
     private final PostCommandService postCommandService;
 
     /* 1. 게시글 등록, 이미지 업로드, 이미지 삭제 */
     // 게시글 기본 정보 + 태그 등록
-    @PostMapping("/post")
+    @PostMapping("/posts")
+    @Operation(summary = "게시글 등록", description = "게시글을 등록한다.")
     public ResponseEntity<Void> registPost(
             @RequestBody PostAndTagRequestDTO newPost    // 게시글 정보 + 태그 정보
     ){
@@ -28,12 +32,8 @@ public class PostCommandController {
         // 게시글 등록
         Long postSeq = postCommandService.createPost(newPost);
 
-        // redirect URI 생성
-        String redirectURI = "/api/v1/post/" + postSeq;
-
-        // 저장된 게시글 고유번호(postSeq) 반환
         return ResponseEntity.status(HttpStatus.CREATED)
-                .location(URI.create(redirectURI))
+                .location(URI.create("/api/v1/post/" + postSeq))    // 리소스가 생성된 위치
                 .build();
 
     }
@@ -79,30 +79,28 @@ public class PostCommandController {
     */
 
     /* 2. 게시글 수정 */
-    @PutMapping("/post/{postSeq}")
+    @PutMapping("/posts/{postSeq}")
+    @Operation(summary = "게시글 수정", description = "게시글을 수정한다.")
     public ResponseEntity<Void> updatePost(
             @PathVariable Long postSeq,
             @RequestBody PostAndTagRequestDTO updatedPost
     ) {
 
+        // 게시글 수정
         postCommandService.updatePost(postSeq, updatedPost);
 
-        // redirect URI 생성
-        String redirectURI = "/api/v1/post/" + postSeq;
-
-        // 수정된 게시글 고유번호(postSeq) 반환
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .location(URI.create(redirectURI))
-                .build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     /* 3. 게시글 삭제 */
-    @DeleteMapping("/post/{postSeq}")
-    public ResponseEntity<Long> deletePost(@PathVariable Long postSeq) {
+    @DeleteMapping("/posts/{postSeq}")
+    @Operation(summary = "게시글 삭제", description = "게시글을 삭제한다.")
+    public ResponseEntity<Void> deletePost(@PathVariable Long postSeq) {
 
-        Long boardCategorySeq = postCommandService.deletePost(postSeq);
+        // 게시글 삭제
+        postCommandService.deletePost(postSeq);
 
-        return ResponseEntity.ok(boardCategorySeq);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

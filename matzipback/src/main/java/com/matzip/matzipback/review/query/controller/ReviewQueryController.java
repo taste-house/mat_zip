@@ -4,6 +4,8 @@ import com.matzip.matzipback.review.query.dto.ReviewDetailResponse;
 import com.matzip.matzipback.review.query.dto.ReviewImageResponse;
 import com.matzip.matzipback.review.query.dto.ReviewListResponse;
 import com.matzip.matzipback.review.query.service.ReviewQueryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Tag(name = "Review", description = "리뷰")
 public class ReviewQueryController {
 
     private final ReviewQueryService reviewQueryService;
 
-    // 리뷰 검색 및 조회
     @GetMapping("/review")
+    @Operation(summary = "리뷰 검색 및 조회", description = "리뷰를 검색 및 조회한다.")
     public ResponseEntity<ReviewListResponse> getReview(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size,
@@ -29,8 +32,8 @@ public class ReviewQueryController {
         return ResponseEntity.ok(response);
     }
 
-    // 리뷰 상세 조히
     @GetMapping("/review/{reviewSeq}")
+    @Operation(summary = "리뷰 상세 조회", description = "특정 리뷰를 조회한다.")
     public ResponseEntity<ReviewDetailResponse> getReview(@PathVariable Long reviewSeq) {
 
         ReviewDetailResponse response = reviewQueryService.getReview(reviewSeq);
@@ -38,8 +41,8 @@ public class ReviewQueryController {
         return ResponseEntity.ok(response);
     }
 
-    // 리뷰 이미지 로드
     @GetMapping("/review/{reviewSeq}/image")
+    @Operation(summary = "리뷰 이미지 로드", description = "특정 리뷰의 이미지를 로드한다.")
     public ResponseEntity<ReviewImageResponse> getReviewImages(@PathVariable Long reviewSeq) {
 
         ReviewImageResponse response = reviewQueryService.getReviewImages(reviewSeq);

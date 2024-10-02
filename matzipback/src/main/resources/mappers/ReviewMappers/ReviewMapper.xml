@@ -85,4 +85,13 @@
         AND
             review.review_seq = #{reviewSeq}
     </select>
+
+    <!-- 평균 별점 산출 -->
+    <select id="selectRestaurantStarAverage" resultType="bigdecimal">
+        SELECT
+            FORMAT(AVG(review_star), 2)
+        FROM review
+        WHERE
+            restaurant_seq = #{restaurantSeq}
+    </select>
 </mapper>

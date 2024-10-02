@@ -10,5 +10,5 @@ public interface PostCmtLikeRepository  {
 
     Like save(Like newPostCmtLike);
 
-    void delete(Like foundPostCmtLike);
+    void deleteById(Long likeSeq);
 }

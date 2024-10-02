@@ -4,10 +4,11 @@ import com.matzip.matzipback.like.command.domain.aggregate.Like;
 
 import java.util.Optional;
 
+// 1차 수정완료 - 창윤
 public interface PostLikeRepository {
-    Optional<Like> findByLikeUserSeqAndPostSeq(long likeUserSeq, Long postSeq);
+    boolean existsByLikeUserSeqAndPostSeq(long likeUserSeq, Long postSeq);
 
     Like save(Like newPostLike);
 
-    void delete(Like foundPostLike);
+    void deleteByLikeUserSeqAndPostSeq(long likeUserSeq, long postSeq);
 }

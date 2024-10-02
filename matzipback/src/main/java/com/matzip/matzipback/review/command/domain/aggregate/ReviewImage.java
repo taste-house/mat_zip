@@ -1,4 +1,4 @@
-package com.matzip.matzipback.matzipList.command.domain.aggregate;
+package com.matzip.matzipback.review.command.domain.aggregate;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;

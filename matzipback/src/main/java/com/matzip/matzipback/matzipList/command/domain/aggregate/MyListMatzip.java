@@ -1,6 +1,7 @@
 package com.matzip.matzipback.matzipList.command.domain.aggregate;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,4 +46,15 @@ public class MyListMatzip {
         this.listMatzipComment = listMatzipComment;
     }
 
+    public void createListSeq(@NotNull Long listSeq) {
+        this.listSeq = listSeq;
+    }
+
+    public void createRestaurantSeq(@NotNull Long restaurantSeq) {
+        this.restaurantSeq = restaurantSeq;
+    }
+
+    public void createListMatzipComment(String listMatzipComment) {
+        this.listMatzipComment = listMatzipComment;
+    }
 }

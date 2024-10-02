@@ -7,9 +7,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PostCmtReportResMessageDTO {
+public class PtAndCmtReportReqDTO {
 
-    private int code;
-    private String message;
+    private Long reporterUserSeq;
+    private Long reportedUserSeq;
     private Long postSeq;
+    private Long postCommentSeq;
+    private String reportContent;
 }

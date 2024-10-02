@@ -1,11 +1,8 @@
 package com.matzip.matzipback.like.command.application.service;
 
-import com.matzip.matzipback.common.util.CustomUserUtils;
 import com.matzip.matzipback.like.command.application.dto.ListLikeReqDTO;
-import com.matzip.matzipback.like.command.domain.aggregate.Like;
 import com.matzip.matzipback.like.command.domain.service.ListLikeDomainService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class ListLikeService {
 
     private final ListLikeDomainService listLikeDomainService;
-    private final ModelMapper modelMapper;
 
+    // 1차 수정완료 - 창윤
     @Transactional
-    public Like saveAndDeleteListLike(ListLikeReqDTO listLikeRequest) {
+    public boolean saveAndDeleteListLike(ListLikeReqDTO listLikeReqDTO) {
 
 
         // 인가받은 유저 seq 받아오기
@@ -25,15 +22,20 @@ public class ListLikeService {
 
         long likeUserSeq = 4L;
 
-        Like foundListLike = listLikeDomainService.findByLikeUserSeqAndListSeq(likeUserSeq, listLikeRequest.getListSeq()).orElse(null);
+        listLikeReqDTO.setLikeUserSeq(likeUserSeq);
 
-        if (foundListLike == null) {
-            listLikeRequest.setLikeUserSeq(likeUserSeq);
-            Like newListLike = modelMapper.map(listLikeRequest, Like.class);
-            return listLikeDomainService.save(newListLike);
+        // 해당 리스트에 대한 좋아요가 존재하지는 확인
+        boolean isLikeExists = listLikeDomainService
+                .existsByLikeUserSeqAndListSeq(listLikeReqDTO);
+
+        // 리스트 좋아요가 존재하지 않으면 좋아요 등록
+        if (!isLikeExists) {
+            listLikeDomainService.save(listLikeReqDTO);
+            return true;
         }
 
-        listLikeDomainService.delete(foundListLike);
-        return null;
+        // 리스트 좋아요가 존재하면 좋아요 취소
+        listLikeDomainService.deleteByLikeUserSeqAndListSeq(listLikeReqDTO);
+        return false;
     }
 }
