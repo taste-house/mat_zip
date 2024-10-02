@@ -1,6 +1,7 @@
 package com.matzip.matzipback.restaurant.command.application.service;
 
 import com.matzip.matzipback.exception.NotFoundException;
+import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.restaurant.command.application.dto.RestaurantCreateRequest;
 import com.matzip.matzipback.restaurant.command.application.dto.RestaurantUpdateRequest;
 import com.matzip.matzipback.restaurant.command.domain.aggregate.Restaurant;
@@ -10,6 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+
+import static com.matzip.matzipback.exception.ErrorCode.BAD_REQUEST;
 
 @Service
 @RequiredArgsConstructor
@@ -44,5 +49,17 @@ public class RestaurantCommandService {
     public void deleteRestaurant(Long restaurantSeq) {
 
         restaurantRepository.deleteById(restaurantSeq);
+    }
+
+    @Transactional
+    public void updateRestaurantStar(Long restaurantSeq, BigDecimal restaurantStar) {
+
+        System.out.println("restaurantSeq = " + restaurantSeq + "\nrestaurantStar = " + restaurantStar.toString());
+        Restaurant restaurant = restaurantRepository.findById(restaurantSeq)
+                .orElseThrow(() -> new RestApiException(BAD_REQUEST));
+
+        restaurant.updateRestaurantStar(
+                restaurantStar
+        );
     }
 }

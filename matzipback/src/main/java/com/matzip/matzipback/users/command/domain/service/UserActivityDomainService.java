@@ -1,5 +1,6 @@
 package com.matzip.matzipback.users.command.domain.service;
 
+import com.matzip.matzipback.common.util.CustomUserUtils;
 import com.matzip.matzipback.users.command.domain.aggregate.ActiveLevel;
 import com.matzip.matzipback.users.command.domain.aggregate.UserActivity;
 import com.matzip.matzipback.users.command.domain.repository.UserActivityRepository;
@@ -18,10 +19,10 @@ public class UserActivityDomainService {
 
     // 유저 활동 포인트를 업데이트 하는 메서드
     @Transactional
-    public void updateUserActivityPoint(int point) {
+    public void updateUserActivityPoint(Long activityUserSeq, int point) {
 
+        // 만약 신고당한 후에 관리자가 삭제하는 경우 관리자의 포인트가 깎이게 될 수 있음.
 //        long activityUserSeq = CustomUserUtils.getCurrentUserSeq();
-        long activityUserSeq = 2L;
 
         UserActivity foundUserActivity = userActivityRepository.findById(activityUserSeq).orElse(null);
 

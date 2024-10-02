@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -43,10 +44,18 @@ public class ReviewQueryService {
     }
 
     // 리뷰 이미지 로드
+    @Transactional(readOnly = true)
     public ReviewImageResponse getReviewImages(Long reviewSeq) {
         ReviewImageResponse reviewImages = new ReviewImageResponse();
         reviewImages.setReviewImages(reviewMapper.selectReviewImages(reviewSeq));
 
         return reviewImages;
+    }
+
+    // 평균 별점 산출
+    @Transactional(readOnly = true)
+    public BigDecimal getRestaurantStarAverage(Long restaurantSeq) {
+
+        return reviewMapper.selectRestaurantStarAverage(restaurantSeq);
     }
 }
