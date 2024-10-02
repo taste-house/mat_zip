@@ -2,8 +2,11 @@ package com.matzip.matzipback.matzipList.command.application.controller;
 
 
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListRequest;
+import com.matzip.matzipback.matzipList.command.application.dto.DeleteListRequest;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequset;
 import com.matzip.matzipback.matzipList.command.application.service.ListCommandService;
+import com.matzip.matzipback.responsemessage.SuccessCode;
+import com.matzip.matzipback.responsemessage.SuccessResMessage;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +23,27 @@ public class ListCommandController {
 
     // 리스트 등록
     @PostMapping("/list")
-    public ResponseEntity<Void> createList(@RequestBody CreateListRequest listRequest){
+    public ResponseEntity<SuccessResMessage> createList(@RequestBody CreateListRequest listRequest){
 
         Long listSeq = listCommandService.createList(listRequest);
 
-        return ResponseEntity.created(URI.create("/api/v1/list" + listSeq)).build();
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
     }
+
     // 리스트 삭제
-    @DeleteMapping("/list/{listSeq}")
-    public ResponseEntity<Void> deleteList(@PathVariable Long listSeq){
-        listCommandService.deleteList(listSeq);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/list")
+    public ResponseEntity<SuccessResMessage> deleteList(@Valid @RequestBody DeleteListRequest deleteListRequest){
+        listCommandService.deleteList(deleteListRequest.getListSeq());
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_DELETE_SUCCESS));
     }
 
     // 리스트 수정
     @PutMapping("/list")
-    public ResponseEntity<Void> updateList(@Valid @RequestBody UpdateListRequset updateListRequset){
+    public ResponseEntity<SuccessResMessage> updateList(@Valid @RequestBody UpdateListRequset updateListRequset){
 
         Long listSeq = listCommandService.updateList(updateListRequset);
 
-        return ResponseEntity.ok().location(URI.create("/api/v1/list" + listSeq)).build();
-
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_UPDATE_SUCCESS));
     }
 
 }
