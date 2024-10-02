@@ -1,8 +1,6 @@
 package com.matzip.matzipback.report.command.domain.aggregate;
 
 import com.matzip.matzipback.report.command.dto.ListReportReqDTO;
-import com.matzip.matzipback.report.command.dto.PostCmtReportReqDTO;
-import com.matzip.matzipback.report.command.dto.PostReportReqDTO;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -46,19 +44,7 @@ public class Report {
     private Long messageSeq;
     private Long reviewSeq;
 
-    private Report(Long reporterUserSeq, Long reportedUserSeq, PostReportReqDTO postReportReqDTO) {
-        this.reporterUserSeq = reporterUserSeq;
-        this.reportedUserSeq = reportedUserSeq;
-        this.postSeq = postReportReqDTO.getPostSeq();
-        this.reportContent = postReportReqDTO.getReportContent();
-    }
 
-    private Report(Long reporterUserSeq, Long reportedUserSeq, PostCmtReportReqDTO postCmtReportReqDTO) {
-        this.reporterUserSeq = reporterUserSeq;
-        this.reportedUserSeq = reportedUserSeq;
-        this.postCommentSeq = postCmtReportReqDTO.getPostCommentSeq();
-        this.reportContent = postCmtReportReqDTO.getReportContent();
-    }
 
     private Report(Long reporterUserSeq, Long reportedUserSeq, ListReportReqDTO listReportReqDTO) {
         this.reporterUserSeq = reporterUserSeq;
@@ -67,13 +53,9 @@ public class Report {
         this.reportContent = listReportReqDTO.getReportContent();
     }
 
-    public static Report getReportSeq(Long reporterUserSeq, Long reportedUserSeq, PostReportReqDTO postReportReqDTO) {
-        return new Report(reporterUserSeq, reportedUserSeq, postReportReqDTO);
-    }
 
-    public static Report getCmtReportSeq(Long reporterUserSeq, Long reportedUserSeq, PostCmtReportReqDTO postCmtReportReqDTO) {
-        return new Report(reporterUserSeq, reportedUserSeq, postCmtReportReqDTO);
-    }
+
+
 
     public static Report getListReportSeq(Long reporterUserSeq, Long reportedUserSeq, ListReportReqDTO listReportReqDTO) {
         return new Report(reporterUserSeq, reportedUserSeq, listReportReqDTO);

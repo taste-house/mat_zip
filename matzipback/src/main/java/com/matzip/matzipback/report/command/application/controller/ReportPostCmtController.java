@@ -1,6 +1,6 @@
 package com.matzip.matzipback.report.command.application.controller;
 
-import com.matzip.matzipback.report.command.application.service.ReportPostService;
+import com.matzip.matzipback.report.command.application.service.ReportPostCmtService;
 import com.matzip.matzipback.report.command.dto.PtAndCmtReportReqDTO;
 import com.matzip.matzipback.responsemessage.SuccessCode;
 import com.matzip.matzipback.responsemessage.SuccessResMessage;
@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class ReportPostController {
+public class ReportPostCmtController {
 
-    private final ReportPostService reportPostService;
+    private final ReportPostCmtService reportPostCmtService;
 
-    @PostMapping("/post/report")
-    public ResponseEntity<SuccessResMessage> createPostReport(@RequestBody PtAndCmtReportReqDTO ptAndCmtReportReqDTO) {
-        reportPostService.savePostReport(ptAndCmtReportReqDTO);
+    @PostMapping("/postcomment/report")
+    public ResponseEntity<SuccessResMessage> createPostCmtReport(@RequestBody PtAndCmtReportReqDTO postCmtReportDTO) {
+        reportPostCmtService.savePostCmtReport(postCmtReportDTO);
         return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
     }
+
 }

@@ -1,5 +1,7 @@
 package com.matzip.matzipback.like.command.domain.service;
 
+import com.matzip.matzipback.exception.ErrorCode;
+import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.like.command.domain.aggregate.Like;
 import com.matzip.matzipback.like.command.domain.repository.PostCmtLikeRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +20,13 @@ public class PostCmtLikeDomainService {
         return postCmtLikeRepository.findByLikeUserSeqAndPostCommentSeq(likeUserSeq, postCommentSeq);
     }
 
-    // 좋아요 취소
-    public void delete(Like foundPostCmtLike) {
-        postCmtLikeRepository.delete(foundPostCmtLike);
+    // 좋아요 저장
+    public void save(Like newPostCmtLike) {
+        postCmtLikeRepository.save(newPostCmtLike);
     }
 
-    // 좋아요 저장
-    public Like save(Like newPostCmtLike) {
-        return postCmtLikeRepository.save(newPostCmtLike);
+    // 좋아요 삭제
+    public void deleteById(Long likeSeq) {
+        postCmtLikeRepository.deleteById(likeSeq);
     }
 }
