@@ -2,7 +2,7 @@ package com.matzip.matzipback.matzipList.command.application.controller;
 
 
 import com.matzip.matzipback.matzipList.command.application.dto.CreateMatzipRequest;
-import com.matzip.matzipback.matzipList.command.application.dto.DeleteMatzipRequset;
+import com.matzip.matzipback.matzipList.command.application.dto.DeleteMatzipRequest;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateMatzipRequest;
 import com.matzip.matzipback.matzipList.command.application.service.MatzipCommandService;
 import jakarta.validation.Valid;
@@ -39,9 +39,9 @@ public class MatzipCommandController {
 
     // 맛집 삭제
     @DeleteMapping("/list/matzip/")
-    public ResponseEntity<Void> deleteMatzip(@Valid @RequestBody DeleteMatzipRequset deleteMatzipRequset){
+    public ResponseEntity<Void> deleteMatzip(@Valid @RequestBody DeleteMatzipRequest deleteMatzipRequest){
 
-        matzipCommandService.deleteMatzip(deleteMatzipRequset);
+        matzipCommandService.deleteMatzip(deleteMatzipRequest);
 
         return ResponseEntity.noContent().build();
     }
