@@ -15,25 +15,28 @@ import org.springframework.stereotype.Service;
 public class ListCmtLikeService {
 
     private final ListCmtLikeDomainService listCmtLikeDomainService;
-    private final ModelMapper modelMapper;
 
 
     @Transactional
-    public Like saveAndDeleteListCmtLike( ListCmtLikeReqDTO listCmtLikeRequest) {
+    public boolean saveAndDeleteListCmtLike(ListCmtLikeReqDTO listCmtLikeReqDTO) {
         // 인가받은 유저 seq 받아오기
 //        Long likeUserSeq = CustomUserUtils.getCurrentUserSeq();
 
         long likeUserSeq = 4L;
 
-        Like foundListCmtLike = listCmtLikeDomainService.findLikeByLikeUserSeqAndListCmtSeq(likeUserSeq, listCmtLikeRequest.getListCommentSeq()).orElse(null);
+        listCmtLikeReqDTO.setLikeUserSeq(likeUserSeq);
 
-        if(foundListCmtLike == null) {
-            listCmtLikeRequest.setLikeUserSeq(likeUserSeq);
-            Like newListCmtLike = modelMapper.map(listCmtLikeRequest, Like.class);
-            return listCmtLikeDomainService.save(newListCmtLike);
+        boolean isLikeExists = listCmtLikeDomainService
+                .existsByLikeUserSeqAndListCommentSeq(listCmtLikeReqDTO);
+
+        // 리스트 댓글이 좋아요 안되어 있으면 좋아요 등록
+        if(!isLikeExists) {
+            listCmtLikeDomainService.save(listCmtLikeReqDTO);
+            return true;
         }
 
-        listCmtLikeDomainService.delete(foundListCmtLike);
-        return null;
+        // 리스트 댓글이 좋아요되어 있으면 좋아요 취소
+        listCmtLikeDomainService.deleteByLikeUserSeqAndListCommentSeq(listCmtLikeReqDTO);
+        return false;
     }
 }
