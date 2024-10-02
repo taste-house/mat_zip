@@ -9,8 +9,9 @@ public interface ListCmtDomainRepository {
     // 1차 수정 완료 - 창윤
     MyListComment save(MyListComment newMyListMatzipCmt);
 
-
+    // 1차 수정 완료 - 창윤
     void deleteById(Long listCommentSeq);
 
+    // 1차 수정 완료 - 창윤
     Optional<MyListComment> findById(Long listCmtSeq);
 }
