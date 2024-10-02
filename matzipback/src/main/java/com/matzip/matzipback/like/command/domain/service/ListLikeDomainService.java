@@ -31,9 +31,9 @@ public class ListLikeDomainService {
 
     // 1차 수정 완료 - 창윤
     // 좋아요 취소
-    public void deleteByLieUserSeqAndListSeq(ListLikeReqDTO listLikeReqDTO) {
+    public void deleteByLikeUserSeqAndListSeq(ListLikeReqDTO listLikeReqDTO) {
         listLikeRepository
-                .deleteByLieUserSeqAndListSeq(
+                .deleteByLikeUserSeqAndListSeq(
                         listLikeReqDTO.getLikeUserSeq(), listLikeReqDTO.getListSeq());
     }
 }
