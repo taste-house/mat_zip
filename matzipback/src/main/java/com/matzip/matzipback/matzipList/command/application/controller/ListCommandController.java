@@ -3,7 +3,7 @@ package com.matzip.matzipback.matzipList.command.application.controller;
 
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListRequest;
 import com.matzip.matzipback.matzipList.command.application.dto.DeleteListRequest;
-import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequset;
+import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequest;
 import com.matzip.matzipback.matzipList.command.application.service.ListCommandService;
 import com.matzip.matzipback.responsemessage.SuccessCode;
 import com.matzip.matzipback.responsemessage.SuccessResMessage;
@@ -11,8 +11,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,9 +39,9 @@ public class ListCommandController {
 
     // 리스트 수정
     @PutMapping("/list")
-    public ResponseEntity<SuccessResMessage> updateList(@Valid @RequestBody UpdateListRequset updateListRequset){
+    public ResponseEntity<SuccessResMessage> updateList(@Valid @RequestBody UpdateListRequest updateListRequest){
 
-        Long listSeq = listCommandService.updateList(updateListRequset);
+        Long listSeq = listCommandService.updateList(updateListRequest);
 
         return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_UPDATE_SUCCESS));
     }
