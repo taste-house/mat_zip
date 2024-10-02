@@ -7,7 +7,7 @@ public interface ListLikeRepository {
 
     Like save(Like newListLike);
 
-    void deleteByLieUserSeqAndListSeq(long likeUserSeq, long listSeq);
+    void deleteByLikeUserSeqAndListSeq(long likeUserSeq, long listSeq);
 
     boolean existsByLikeUserSeqAndListSeq(long likeUserSeq, long listSeq);
 
