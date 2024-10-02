@@ -49,13 +49,22 @@ public class ListCmtCommandService {
     }
 
     // 리스트 댓글 수정
-    public Long updateListCmt(@Valid UpdateListCmtRequest updateListCmtRequest) {
+    @Transactional
+    public void updateListCmt(@Valid UpdateListCmtRequest updateListCmtRequest) {
         //로그인한 사람의 유저 시퀀스를 가져오는 기능(권한이 들어있는 유저 시퀀스)
-//        Long listUserSeq = CustomUserUtils.getCurrentUserSeq();
+//        Long loginUserSeq = CustomUserUtils.getCurrentUserSeq();
 
         // 테스트용 코드 생성
-        long listCmtUserSeq = 4L;
+        long loginUserSeq = 4L;
 
-        return listCmtDomainService.updateListCmt(updateListCmtRequest, listCmtUserSeq);
+        long foundUserSeq = listCmtDomainService.getUserSeqFindById(updateListCmtRequest.getListCommentSeq());
+
+        // 댓글을 수정하려는 사용자와 댓글을 작성한 작성자가 다르면 인증되지 않은 요청이라고 에러를 터트린다.
+        if (loginUserSeq != foundUserSeq) {
+            throw new RestApiException(ErrorCode.UNAUTHORIZED_REQUEST);
+        }
+
+        listCmtDomainService.updateListCmt(updateListCmtRequest);
+
     }
 }
