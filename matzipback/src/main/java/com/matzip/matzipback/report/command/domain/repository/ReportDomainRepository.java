@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface ReportDomainRepository {
     Report save(Report newReport);
 
-    boolean existsByReporterUserSeqAndPostSeq(Long reporterUserSeq, Long postSeq);
+    Optional<Report> existsByReporterUserSeqAndPostSeq(Long reporterUserSeq, Long postSeq);
 }
