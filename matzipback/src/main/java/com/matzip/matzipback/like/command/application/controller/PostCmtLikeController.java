@@ -5,6 +5,8 @@ import com.matzip.matzipback.like.command.application.dto.PostCmtLikeResMessageD
 import com.matzip.matzipback.like.command.application.service.PostCmtLikeService;
 import com.matzip.matzipback.like.command.domain.aggregate.Like;
 import com.matzip.matzipback.responsemessage.ResponseMessage;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/post")
+@Tag(name = "PostCmtLike", description = "게시글 댓글 좋아요")
 public class PostCmtLikeController {
 
     private final PostCmtLikeService postCmtLikeService;
 
     // 게시글 댓글 좋아요
     @PostMapping("/{postSeq}/postcomment/{postCommentSeq}/like")
+    @Operation(summary = "게시글 댓글 좋아요 등록, 취소", description = "게시글 댓글 좋아요를 등록 또는 취소한다.")
     public ResponseEntity<PostCmtLikeResMessageDTO> savePostCmtLike(@RequestBody PostCmtLikeReqDTO postCmtLikeReqDTO) {
          Like resultLike = postCmtLikeService.savePostCmtLike(postCmtLikeReqDTO);
 

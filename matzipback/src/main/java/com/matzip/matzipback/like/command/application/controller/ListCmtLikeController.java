@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-@Tag(name = "List Comment Like", description = "리스트 댓글 좋아요")
+@Tag(name = "ListCommentLike", description = "리스트 댓글 좋아요")
 public class ListCmtLikeController {
 
     private final ListCmtLikeService listCmtLikeService;
 
     // 1차 수정 - 창윤
-    @Operation(summary = "리스트 댓글 좋아요", description = "리스트의 댓글에 좋아요 등록 또는 취소한다.")
     @PostMapping("/listCmt/like")
+    @Operation(summary = "리스트 댓글 좋아요 등록, 취소", description = "리스트의 댓글에 좋아요 등록 또는 취소한다.")
     public ResponseEntity<SuccessResMessage> saveListCmtLike(@Valid @RequestBody ListCmtLikeReqDTO listCmtLikeRequest){
         boolean resultLike = listCmtLikeService.saveAndDeleteListCmtLike(listCmtLikeRequest);
 
