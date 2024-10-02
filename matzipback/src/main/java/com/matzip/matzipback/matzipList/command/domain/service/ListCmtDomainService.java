@@ -27,18 +27,15 @@ public class ListCmtDomainService {
     }
 
     // 리스트 댓글 수정
-    public Long updateListCmt(@Valid UpdateListCmtRequest updateListCmtRequest, long listCmtUserSeq) {
+    public void updateListCmt(UpdateListCmtRequest updateListCmtRequest) {
 
         Long listCmtSeq = updateListCmtRequest.getListCommentSeq();
 
-        MyListComment existListCmt = listCmtDomainRepository.findById(listCmtSeq).orElseThrow();
+        MyListComment existListCmt = listCmtDomainRepository
+                .findById(listCmtSeq)
+                .orElseThrow(() -> new RestApiException(ErrorCode.NOT_FOUND));
 
         modelMapper.map(updateListCmtRequest, existListCmt);
-        existListCmt.updateListCommentContent(existListCmt.getListCommentContent());
-
-        listCmtDomainRepository.save(existListCmt);
-        return listCmtSeq;
-
     }
 
     // 1차 수정 완료 - 창윤
