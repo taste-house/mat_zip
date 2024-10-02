@@ -27,4 +27,11 @@
          WHERE k.like_user_seq = #{userSeq}
     </select>
 
+    <select id="countMyLikePost" resultType="long">
+        SELECT COUNT(*)
+          FROM `like`
+         WHERE like_user_seq = #{userSeq}
+           AND post_seq IS NOT NULL
+    </select>
+
 </mapper>
