@@ -44,6 +44,7 @@ public class ReivewCommandService {
 
         // 음식점 별점 수정
 
+
         return newReview.getReviewSeq();
     }
 
@@ -51,7 +52,7 @@ public class ReivewCommandService {
         reviewImageRepository.save(
                 modelMapper.map(ReviewImageRequest.builder()
                         .reviewSeq(reviewSeq)
-                        .reviewImagePath(FileUploadUtils.saveFile(IMAGE_DIR, image)),
+                        .reviewImagePath(IMAGE_DIR + "/" + FileUploadUtils.saveFile(IMAGE_DIR, image)),
                         ReviewImage.class));
     }
 }

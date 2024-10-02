@@ -1,6 +1,7 @@
 package com.matzip.matzipback.review.command.application.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -10,10 +11,10 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class ReviewCreateRequest {
 
-    @NotBlank
+    @NotNull
     private final Long restaurantSeq;
     @NotBlank
     private final String reviewContent;
-    @NotBlank
+    @NotNull
     private final BigDecimal reviewStar;
 }
