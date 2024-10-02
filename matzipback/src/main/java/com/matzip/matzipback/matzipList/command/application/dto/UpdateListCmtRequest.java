@@ -10,10 +10,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UpdateListCmtRequest {
 
-    @NotNull
-    private final Long listSeq;
-    @NotNull
+    @NotNull(message = "수정하려는 댓글 번호를 넣어주세요.")
     private final Long listCommentSeq;
-    @NotBlank
+    @NotBlank(message = "수정할 내용이 빈 값이면 안됩니다.")
     private final String listCommentContent;
 }
