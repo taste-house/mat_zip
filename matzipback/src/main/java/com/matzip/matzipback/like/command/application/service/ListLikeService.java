@@ -35,7 +35,7 @@ public class ListLikeService {
         }
 
         // 리스트 좋아요가 존재하면 좋아요 취소
-        listLikeDomainService.deleteByLieUserSeqAndListSeq(listLikeReqDTO);
+        listLikeDomainService.deleteByLikeUserSeqAndListSeq(listLikeReqDTO);
         return false;
     }
 }
