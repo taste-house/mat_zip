@@ -44,4 +44,13 @@ public class Post {
         postUpdatedTime = null; // 명시적으로 null 설정
     }
 
+    // 게시글 작성 시 토큰에서 꺼낸 userSeq 를 Entity 에 담는 메서드
+    public void putUserSeq(Long userSeq) {
+        this.postUserSeq = userSeq;
+    }
+
+    // 게시글 수정 시 path Variable 로 받은 postSeq 를 Entity 에 담는 메서드
+    public void putPostSeq(Long postSeq) {
+        this.postSeq = postSeq;
+    }
 }
