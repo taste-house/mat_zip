@@ -4,6 +4,10 @@ import com.matzip.matzipback.matzipList.command.application.dto.CreateListCmtReq
 import com.matzip.matzipback.matzipList.command.application.dto.DeleteListCmtRequset;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateListCmtRequest;
 import com.matzip.matzipback.matzipList.command.application.service.ListCmtCommandService;
+import com.matzip.matzipback.responsemessage.SuccessCode;
+import com.matzip.matzipback.responsemessage.SuccessResMessage;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,17 +18,20 @@ import java.net.URI;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Tag(name = "ListComment", description = "리스트 댓글")
 public class ListCmtCommandController {
 
     private final ListCmtCommandService listCmtCommandService;
 
+    // 1차 수정 완료 - 창윤
     // 리스트 댓글 등록
     @PostMapping("/list/comment")
-    public ResponseEntity<Void> createListCmt(@RequestBody CreateListCmtRequest listCmtRequest){
+    @Operation(summary = "리스트 댓글 등록", description = "리스트 댓글을 등록한다.")
+    public ResponseEntity<SuccessResMessage> createListCmt(@RequestBody CreateListCmtRequest createListCmtRequest){
 
-        Long listCmtSeq = listCmtCommandService.createListCmt(listCmtRequest);
+        listCmtCommandService.createListCmt(createListCmtRequest);
 
-        return ResponseEntity.created(URI.create("/api/v1/list/comment" + listCmtSeq)).build();
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
     }
 
     // 리스트 댓글 삭제
