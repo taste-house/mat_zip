@@ -10,8 +10,7 @@ public class ListBoxUpdateRequest {
 
     @NotNull
     private Long listSeq;
-    @NotNull
-    private Long listUserSeq;
+
     @NotNull
     private int listLevel;
 }
