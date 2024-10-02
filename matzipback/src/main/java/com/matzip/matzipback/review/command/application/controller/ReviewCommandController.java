@@ -26,7 +26,6 @@ public class ReviewCommandController {
 
     private final ReivewCommandService reivewCommandService;
 
-    // 리뷰 작성
     @PostMapping(value = "/review", consumes = {"multipart/form-data"})
     @Operation(summary = "리뷰 등록", description = "리뷰를 등록한다.")
     public ResponseEntity<Void> createReview(
@@ -40,5 +39,4 @@ public class ReviewCommandController {
                 .created(URI.create("/api/v1/review/" + reviewSeq))
                 .build();
     }
-
 }

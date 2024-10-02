@@ -25,4 +25,8 @@ public class Restaurant {
         this.restaurantAddress = restaurantAddress;
         this.restaurantPhone = restaurantPhone;
     }
+
+    public void updateRestaurantStar(BigDecimal restaurantStar) {
+        this.restaurantStar = restaurantStar;
+    }
 }
