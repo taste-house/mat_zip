@@ -49,8 +49,13 @@ public class Post {
         this.postUserSeq = userSeq;
     }
 
-    // 게시글 수정 시 path Variable 로 받은 postSeq 를 Entity 에 담는 메서드
-    public void putPostSeq(Long postSeq) {
+    public void updatePostDetails(Long postSeq, Long userSeq, String postTitle, String postContent, Long boardCategorySeq, Long listSeq, Long restaurantSeq) {
         this.postSeq = postSeq;
+        this.postUserSeq = userSeq;
+        this.postTitle = postTitle;
+        this.postContent = postContent;
+        this.boardCategorySeq = boardCategorySeq;
+        this.listSeq = listSeq;
+        this.restaurantSeq = restaurantSeq;
     }
 }

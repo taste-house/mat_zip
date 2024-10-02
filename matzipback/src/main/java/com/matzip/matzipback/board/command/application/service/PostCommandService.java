@@ -38,7 +38,7 @@ public class PostCommandService {
     public Long createPost(PostAndTagRequestDTO newPost) {
 
         // Authorization 에서 회원 고유번호를 가져온다. (JwtUtil 에서의 메서드 활용)
-        // Long userSeq = 4L;   // 개발 테스트용
+        //Long userSeq = 4L;   // 개발 테스트용
         Long userSeq = CustomUserUtils.getCurrentUserSeq();
 
         // DTO -> Entity
@@ -71,23 +71,20 @@ public class PostCommandService {
             throw new RestApiException(NOT_FOUND);
         }
 
-        // 찾아온 Entity -> DTO
-        PostAndTagRequestDTO tempPost = modelMapper.map(post, PostAndTagRequestDTO.class);
-        // DTO Setter Method 를 활용하여 수정사항 반영
-        tempPost.setPostTitle(updatedPost.getPostTitle());
-        tempPost.setPostContent(updatedPost.getPostContent());
-        tempPost.setBoardCategorySeq(updatedPost.getBoardCategorySeq());
-        tempPost.setListSeq(updatedPost.getListSeq());
-        tempPost.setRestaurantSeq(updatedPost.getRestaurantSeq());
-
-        // 수정한 DTO -> Entity
-        modelMapper.map(tempPost, post);
-
         // Authorization 에서 회원 고유번호를 가져온다. (JwtUtil 에서의 메서드 활용)
         // Long userSeq = 4L;   // 개발 테스트용
         Long userSeq = CustomUserUtils.getCurrentUserSeq();
-        post.putPostSeq(postSeq);
-        post.putUserSeq(userSeq);
+
+        /* 수정을 위해 엔티티 정보 변경 */
+        post.updatePostDetails(
+                postSeq,
+                userSeq,
+                updatedPost.getPostTitle(),
+                updatedPost.getPostContent(),
+                updatedPost.getBoardCategorySeq(),
+                updatedPost.getListSeq(),
+                updatedPost.getRestaurantSeq()
+        );
 
         // 태그 등록 이전에 post_tag 테이블에 해당 게시글과 관련하여 등록된 태그 모두 삭제
         postTagRepository.deleteAllByPostSeq(postSeq);
