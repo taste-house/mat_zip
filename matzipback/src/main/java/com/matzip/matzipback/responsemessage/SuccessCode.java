@@ -16,7 +16,13 @@ public enum SuccessCode {
     LIKE_SUCCESS(HttpStatus.OK, "좋아요 성공"),
 
     /* 좋아요 취소 */
-    LIKE_DELETE_SUCCESS(HttpStatus.OK, "좋아요 취소");
+    LIKE_DELETE_SUCCESS(HttpStatus.OK, "좋아요 취소"),
+
+    /* 조회 성공 */
+    BASIC_GET_SUCCESS(HttpStatus.OK, "조회 성공"),
+
+    /* 회원 탈퇴 */
+    USER_DELETION_SUCCESS(HttpStatus.OK, "탈퇴가 성공적으로 처리되었습니다.");
 
 
 
