@@ -7,4 +7,6 @@ public interface ListDomainRepository {
     boolean existsByReporterUserSeqAndListSeq(Long reporterUserSeq, Long listSeq);
 
     Report save(Report newReport);
+
+    boolean existsByReporterUserSeqAndListCommentSeq(Long reporterUserSeq, Long listCommentSeq);
 }
