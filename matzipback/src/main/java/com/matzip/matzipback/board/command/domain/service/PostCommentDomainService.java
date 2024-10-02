@@ -25,8 +25,8 @@ public class PostCommentDomainService {
         Long userSeq = /*CustomUserUtils.getCurrentUserSeq();*/ 1L;
 
         // DTO -> Entity 매퍼를 사용하여 생성되도록 수정 (Entity 불변성 유지)
+        reqPostCmtCreateDTO.setPostCommentUserSeq(userSeq);
         PostComment postComment = modelMapper.map(reqPostCmtCreateDTO, PostComment.class);
-        postComment.putUserSeq(userSeq);    // 토큰에서 추출한 userSeq를 따로 메서드로 넣어줌
         postCommentRepository.save(postComment); // 댓글 저장
     }
 

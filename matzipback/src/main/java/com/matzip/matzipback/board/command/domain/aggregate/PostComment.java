@@ -52,11 +52,6 @@ public class PostComment {
         postCommentUpdatedTime = null;
     }
 
-    // 댓글 작성 시 토큰에서 꺼낸 userSeq 를 Entity 에 담는 메서드
-    public void putUserSeq(Long userSeq) {
-        this.postCommentUserSeq = userSeq;
-    }
-
     // 요청 받은 댓글 내용을 기존 댓글에서 수정
     public void updatePostCmt(ReqPostCmtUpdateDTO reqPostCmtUpdateDTO) {
         this.postCommentContent = reqPostCmtUpdateDTO.getPostCommentContent();
