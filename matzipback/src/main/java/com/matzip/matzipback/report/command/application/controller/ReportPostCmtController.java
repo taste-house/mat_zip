@@ -20,8 +20,8 @@ public class ReportPostCmtController {
 
     @PostMapping("/postcomment/report")
     public ResponseEntity<SuccessResMessage> createPostCmtReport(@RequestBody PostCmtReportReqDTO postCmtReportDTO) {
-        boolean savedPostCmtReport = reportPostCmtService.savePostCmtReport(postCmtReportDTO);
-            return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
+        reportPostCmtService.savePostCmtReport(postCmtReportDTO);
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
     }
 
 }
