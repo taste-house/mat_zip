@@ -3,6 +3,7 @@ package com.matzip.matzipback.matzipList.command.application.service;
 import com.matzip.matzipback.exception.ErrorCode;
 import com.matzip.matzipback.exception.ErrorResponse;
 import com.matzip.matzipback.exception.RestApiException;
+import com.matzip.matzipback.matzipList.command.application.dto.DeleteListRequest;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequset;
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyList;
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListRequest;
@@ -11,6 +12,7 @@ import com.matzip.matzipback.matzipList.command.domain.service.DomainListUpdateS
 import com.matzip.matzipback.matzipList.command.mapper.ListMapper;
 import com.matzip.matzipback.users.command.domain.service.UserActivityDomainService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,12 +52,12 @@ public class ListCommandService {
 
     // 리스트 삭제
     @Transactional
-    public void deleteList(Long listSeq) {
-        listDomainRepository.deleteById(listSeq);
+    public void deleteList(DeleteListRequest deleteListRequest) {
+        listDomainRepository.deleteById(deleteListRequest.getListSeq());
 
         // 리스트 삭제 시 점수 삭제(-3점)
         MyList listUser = listDomainRepository
-                .findById(listSeq).orElseThrow(() -> new RestApiException(ErrorCode.NOT_FOUND));
+                .findByListSeq(deleteListRequest.getListSeq()).orElseThrow(() -> new RestApiException(ErrorCode.NOT_FOUND));
         userActivityDomainService.updateUserActivityPoint(listUser.getListUserSeq(), -3);
     }
 
