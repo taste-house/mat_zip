@@ -1,19 +1,20 @@
 package com.matzip.matzipback.users.query.controller;
 
 import com.matzip.matzipback.common.util.CustomUserUtils;
+import com.matzip.matzipback.exception.ErrorCode;
 import com.matzip.matzipback.users.command.domain.aggregate.Users;
 import com.matzip.matzipback.users.query.dto.userInfo.AllUserInfoResponseDTO;
+import com.matzip.matzipback.users.query.dto.userInfo.OtherUserInfoDto;
+import com.matzip.matzipback.users.query.dto.userInfo.UserDetailInfoDTO;
 import com.matzip.matzipback.users.query.service.UsersInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,6 +96,42 @@ public class UsersQueryController {
 
         return ResponseEntity.ok(users);    // 결과 DTO를 ResponseEntity에 반환
     }
+
+    @GetMapping("/users/list/{userSeq}")
+    @Operation(summary = "회원 상세조회", description = "관리자 또는 회원이 회원정보를 상세조회한다.")
+    public ResponseEntity<?> DetailUserInfo(@PathVariable Long userSeq
+//                                            ,@AuthenticationPrincipal Users users    // 로그인한 사용자의 정보
+    ) {
+        String userAuth = CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority();
+        Long currentUserSeq = CustomUserUtils.getCurrentUserSeq();
+//        String userAuth = "admin";
+//        Long currentUserSeq = 1L;
+
+//        if(users.getUserAuth().equals("admin")) {
+//            // 관리자
+//            UserDetailInfoDTO userInfo = usersInfoService.getDetailUserInfo(userSeq, users.getUserAuth());
+        if(userAuth.equals("admin")) {
+            // 관리자
+            UserDetailInfoDTO userInfo = usersInfoService.getDetailUserInfo(userSeq, userAuth);
+            return ResponseEntity.ok(userInfo);
+//        } else if(users.getUserSeq() == (userSeq)) {
+//            // 일반 회원이 자신의 정보를 조회하는 경우
+//            UserDetailInfoDTO userInfo = usersInfoService.getDetailUserInfo(userSeq, users.getUserAuth());
+        } else if(currentUserSeq.equals(userSeq)) {
+            // 일반 회원이 자신의 정보를 조회하는 경우
+            UserDetailInfoDTO userInfo = usersInfoService.getDetailUserInfo(userSeq, userAuth);
+            return ResponseEntity.ok(userInfo);
+        } else {
+            // 다른 회원 정보를 조회하는 경우
+            OtherUserInfoDto otherUserInfo = usersInfoService.getOthersInfo(userSeq);
+            return ResponseEntity.ok(otherUserInfo);
+        }
+
+        // 권한이 없는 경우
+//        return ResponseEntity.status(ErrorCode.FORBIDDEN_ACCESS.getHttpStatus())
+//                .body(ErrorCode.FORBIDDEN_ACCESS.getMessage());
+    }
+
 
 
 }
