@@ -4,6 +4,8 @@ import com.matzip.matzipback.common.util.CustomUserUtils;
 import com.matzip.matzipback.users.command.domain.aggregate.Users;
 import com.matzip.matzipback.users.query.dto.userInfo.AllUserInfoResponseDTO;
 import com.matzip.matzipback.users.query.service.UsersInfoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @Slf4j
+@Tag(name = "Users", description = "회원관리")
 public class UsersQueryController {
 
     private final UsersInfoService usersInfoService;
@@ -41,6 +44,7 @@ public class UsersQueryController {
 //    }
 
     @GetMapping("/users/list")
+    @Operation(summary = "회원 전체조회", description = "관리자가 회원을 전체 조회한다.")
     public ResponseEntity<AllUserInfoResponseDTO> getAllUserList(@RequestParam(value = "socialYn", required = false) String socialYn,
                                                                  @RequestParam(value = "socialSite", required = false) String socialSite,
                                                                  @RequestParam(value = "businessVerifiedYn", required = false) String businessVerifiedYn,
@@ -59,6 +63,7 @@ public class UsersQueryController {
     }
 
     @GetMapping("/users/search")
+    @Operation(summary = "회원 검색", description = "관리자 또는 회원이 회원을 검색한다.")
     public ResponseEntity<AllUserInfoResponseDTO> getSearchUserList(
             @RequestParam(value = "searchType", required = false) String searchType,
             @RequestParam(value = "searchWord", required = false) String searchWord,
