@@ -43,11 +43,13 @@ public class ListCmtCommandController {
         return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_DELETE_SUCCESS));
     }
 
+    // 1차 수정 완료 - 창윤
     // 리스트 댓글 수정
     @PutMapping("/list/comment")
-    public ResponseEntity<Void> updateListCmt(@Valid @RequestBody UpdateListCmtRequest updateListCmtRequest){
-        Long listCmtSeq = listCmtCommandService.updateListCmt(updateListCmtRequest);
+    public ResponseEntity<SuccessResMessage> updateListCmt(@Valid @RequestBody UpdateListCmtRequest updateListCmtRequest){
 
-        return ResponseEntity.created(URI.create("/api/v1/list/comment" + listCmtSeq)).build();
+        listCmtCommandService.updateListCmt(updateListCmtRequest);
+
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_UPDATE_SUCCESS));
     }
 }
