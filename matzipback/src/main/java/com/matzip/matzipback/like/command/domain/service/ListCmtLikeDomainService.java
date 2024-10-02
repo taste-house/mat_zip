@@ -1,29 +1,33 @@
 package com.matzip.matzipback.like.command.domain.service;
 
+import com.matzip.matzipback.like.command.application.dto.ListCmtLikeReqDTO;
 import com.matzip.matzipback.like.command.domain.aggregate.Like;
 import com.matzip.matzipback.like.command.domain.repository.ListCmtLikeRepository;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ListCmtLikeDomainService {
 
     private final ListCmtLikeRepository listCmtLikeRepository;
+    private final ModelMapper modelMapper;
 
-    public Optional<Like> findLikeByLikeUserSeqAndListCmtSeq(long likeUserSeq, Long listCommentSeq) {
-        return listCmtLikeRepository.findByLikeUserSeqAndListCommentSeq(likeUserSeq, listCommentSeq);
+
+    // 리스트 댓글 좋아요 등록
+    public void save(ListCmtLikeReqDTO listCmtLikeReqDTO) {
+        Like newListCmtLike = modelMapper.map(listCmtLikeReqDTO, Like.class);
+        listCmtLikeRepository.save(newListCmtLike);
     }
 
-    // 좋아요 취소
-    public void delete(Like foundListCmtLike) {
-        listCmtLikeRepository.delete(foundListCmtLike);
+    // 리스트 댓글 좋아요 취소
+    public void deleteByLikeUserSeqAndListCommentSeq(ListCmtLikeReqDTO listCmtLikeReqDTO) {
+        listCmtLikeRepository.deleteByLikeUserSeqAndListCommentSeq(listCmtLikeReqDTO.getLikeUserSeq(), listCmtLikeReqDTO.getListCommentSeq());
     }
 
-    public Like save(Like newListCmtLike) {
-        return listCmtLikeRepository.save(newListCmtLike);
+    // 리스트 댓글 존재하는지 확인
+    public boolean existsByLikeUserSeqAndListCommentSeq(ListCmtLikeReqDTO listCmtLikeReqDTO) {
+        return listCmtLikeRepository.existsByLikeUserSeqAndListCommentSeq(listCmtLikeReqDTO.getLikeUserSeq(), listCmtLikeReqDTO.getListCommentSeq());
     }
 }
