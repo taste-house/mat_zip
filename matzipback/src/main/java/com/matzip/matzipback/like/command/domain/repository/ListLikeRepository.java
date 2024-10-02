@@ -2,14 +2,13 @@ package com.matzip.matzipback.like.command.domain.repository;
 
 import com.matzip.matzipback.like.command.domain.aggregate.Like;
 
-import java.util.Optional;
-
+// 1차 수정 완료 - 창윤
 public interface ListLikeRepository {
 
     Like save(Like newListLike);
 
-    void delete(Like foundListLike);
+    void deleteByLieUserSeqAndListSeq(long likeUserSeq, long listSeq);
 
-    Optional<Like> findByLikeUserSeqAndListSeq(long likeUserSeq, Long listSeq);
+    boolean existsByLikeUserSeqAndListSeq(long likeUserSeq, long listSeq);
 
 }
