@@ -1,10 +1,9 @@
 package com.matzip.matzipback.matzipList.command.application.service;
 
 import com.matzip.matzipback.exception.ErrorCode;
-import com.matzip.matzipback.exception.ErrorResponse;
 import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.matzipList.command.application.dto.DeleteListRequest;
-import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequset;
+import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequest;
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyList;
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListRequest;
 import com.matzip.matzipback.matzipList.command.domain.repository.ListDomainRepository;
@@ -12,8 +11,6 @@ import com.matzip.matzipback.matzipList.command.domain.service.DomainListUpdateS
 import com.matzip.matzipback.matzipList.command.mapper.ListMapper;
 import com.matzip.matzipback.users.command.domain.service.UserActivityDomainService;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +61,7 @@ public class ListCommandService {
 
     // 리스트 수정
     @Transactional
-    public Long updateList(UpdateListRequset updateListRequset) {
+    public Long updateList(UpdateListRequest updateListRequest) {
 
         //로그인한 사람의 유저 시퀀스를 가져오는 기능(권한이 들어있는 유저 시퀀스)
 //        Long listUserSeq = CustomUserUtils.getCurrentUserSeq();
@@ -72,7 +69,7 @@ public class ListCommandService {
         // 테스트용 코드 생성
         long listUserSeq = 4L;
 
-        return domainListUpdateService.updateList(updateListRequset, listUserSeq);
+        return domainListUpdateService.updateList(updateListRequest, listUserSeq);
 
     }
 
