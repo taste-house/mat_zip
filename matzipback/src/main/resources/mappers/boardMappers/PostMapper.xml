@@ -19,7 +19,7 @@
             AND a.post_title LIKE CONCAT('%', #{postTitle}, '%')
         </if>
         <if test="userNickname != null">
-            AND c.user_nickname = #{userNickname}
+            AND c.user_nickname LIKE CONCAT('%', #{userNickname})
         </if>
         ORDER BY a.post_seq
         LIMIT #{size} OFFSET #{offset}
@@ -36,7 +36,7 @@
             AND a.post_title LIKE CONCAT('%', #{postTitle}, '%')
         </if>
         <if test="userNickname != null">
-            AND c.user_nickname = #{userNickname}
+            AND c.user_nickname LIKE CONCAT('%', #{userNickname})
         </if>
     </select>
 
@@ -52,8 +52,8 @@
           LEFT JOIN board_category b USING (board_category_seq)
           LEFT JOIN users c ON (a.post_user_seq = c.user_seq)
          WHERE post_status = 'active'
-            <if test="boardCategorySeq != null">
-                AND b.board_category_seq = #{boardCategorySeq}
+            <if test="boardSeq != null">
+                AND b.board_category_seq = #{boardSeq}
             </if>
          ORDER BY a.post_seq
          LIMIT #{size} OFFSET #{offset}
@@ -62,12 +62,12 @@
     <select id="countPostsByCategory" resultType="long">
         SELECT COUNT(*)
           FROM post a
-        <if test="boardCategorySeq != null">
+        <if test="boardSeq != null">
             LEFT JOIN board_category b USING (board_category_seq)
         </if>
          WHERE a.post_status = 'active'
         <if test="postTitle != null">
-            AND b.board_category_seq = #{boardCategorySeq}
+            AND b.board_category_seq = #{boardSeq}
         </if>
     </select>
 
@@ -75,6 +75,7 @@
         SELECT
                 b.board_category_name
               , a.post_title
+              , a.post_content
               , c.user_nickname
               , a.post_created_time
               , a.post_updated_time
@@ -145,6 +146,19 @@
           JOIN post_tag b ON (a.tag_seq = b.tag_seq)
           JOIN post c ON (b.post_seq = c.post_seq)
          WHERE c.board_category_seq = #{boardSeq}
+           AND c.post_status = 'active'
+         GROUP BY tag_name
+         ORDER BY COUNT(a.tag_name) DESC
+         LIMIT 10;
+    </select>
+
+    <select id="getTagKeywords" resultType="String">
+        SELECT
+               a.tag_name
+          FROM tags a
+          JOIN post_tag b USING (tag_seq)
+          JOIN post c ON (b.post_seq = c.post_seq)
+         WHERE a.tag_name LIKE CONCAT('%', #{tag}, '%')
            AND c.post_status = 'active'
          GROUP BY tag_name
          ORDER BY COUNT(a.tag_name) DESC
