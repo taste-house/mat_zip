@@ -2,7 +2,6 @@ package com.matzip.matzipback.board.command.domain.service;
 
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtCreateDTO;
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtUpdateDTO;
-import com.matzip.matzipback.board.command.application.dto.ResPostCmtDTO;
 import com.matzip.matzipback.board.command.domain.aggregate.PostComment;
 import com.matzip.matzipback.board.command.domain.repository.PostCommentRepository;
 import com.matzip.matzipback.exception.ErrorCode;
@@ -21,7 +20,7 @@ public class PostCommentDomainService {
     private final PostCommentRepository postCommentRepository;
 
     // 작성 된 댓글 저장
-    public ResPostCmtDTO save(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
+    public void save(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
         // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
         Long userSeq = /*CustomUserUtils.getCurrentUserSeq();*/ 1L;
 
@@ -29,8 +28,6 @@ public class PostCommentDomainService {
         PostComment postComment = modelMapper.map(reqPostCmtCreateDTO, PostComment.class);
         postComment.putUserSeq(userSeq);
         postCommentRepository.save(postComment); // 댓글 저장
-
-        return modelMapper.map(postComment, ResPostCmtDTO.class);
     }
 
     // postCommentSeq 로 postComment 조회

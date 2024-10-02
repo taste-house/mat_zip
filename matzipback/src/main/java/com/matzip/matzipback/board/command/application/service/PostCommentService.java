@@ -2,7 +2,6 @@ package com.matzip.matzipback.board.command.application.service;
 
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtCreateDTO;
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtUpdateDTO;
-import com.matzip.matzipback.board.command.application.dto.ResPostCmtDTO;
 import com.matzip.matzipback.board.command.domain.repository.PostCommentRepository;
 import com.matzip.matzipback.board.command.domain.service.PostCommentDomainService;
 import com.matzip.matzipback.exception.ErrorCode;
@@ -20,8 +19,8 @@ public class PostCommentService {
 
     // 댓글 작성
     @Transactional
-    public ResPostCmtDTO createPostComment(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
-        return postCommentDomainService.save(reqPostCmtCreateDTO);
+    public void createPostComment(ReqPostCmtCreateDTO reqPostCmtCreateDTO) {
+        postCommentDomainService.save(reqPostCmtCreateDTO);
     }
 
     // 댓글 수정
