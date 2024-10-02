@@ -1,7 +1,7 @@
 package com.matzip.matzipback.matzipList.command.application.service;
 
 import com.matzip.matzipback.matzipList.command.application.dto.CreateMatzipRequest;
-import com.matzip.matzipback.matzipList.command.application.dto.DeleteMatzipRequset;
+import com.matzip.matzipback.matzipList.command.application.dto.DeleteMatzipRequest;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateMatzipRequest;
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyListMatzip;
 import com.matzip.matzipback.matzipList.command.domain.repository.MatzipDomainRepository;
@@ -32,9 +32,9 @@ public class MatzipCommandService {
 
     // 맛집 삭제
     @Transactional
-    public void deleteMatzip(DeleteMatzipRequset deleteMatzipRequset) {
+    public void deleteMatzip(DeleteMatzipRequest deleteMatzipRequest) {
 
-        matzipDomainRepository.deleteById(deleteMatzipRequset.getListMatzipSeq());
+        matzipDomainRepository.deleteById(deleteMatzipRequest.getListMatzipSeq());
     }
 
     // 맛집 수정
