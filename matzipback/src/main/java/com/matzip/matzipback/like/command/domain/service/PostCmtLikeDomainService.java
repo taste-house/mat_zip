@@ -18,13 +18,13 @@ public class PostCmtLikeDomainService {
         return postCmtLikeRepository.findByLikeUserSeqAndPostCommentSeq(likeUserSeq, postCommentSeq);
     }
 
-    // 좋아요 취소
-    public void delete(Like foundPostCmtLike) {
-        postCmtLikeRepository.delete(foundPostCmtLike);
-    }
-
     // 좋아요 저장
     public Like save(Like newPostCmtLike) {
         return postCmtLikeRepository.save(newPostCmtLike);
+    }
+
+    // 좋아요 삭제
+    public void deleteById(Long likeSeq) {
+        postCmtLikeRepository.deleteById(likeSeq);
     }
 }

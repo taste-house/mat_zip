@@ -16,22 +16,24 @@ public class PostCmtLikeService {
     private final ModelMapper modelMapper;
 
     @Transactional
-    public Like savePostCmtLike(PostCmtLikeReqDTO postCmtLikeReqDTO) {
+    public void savePostCmtLike(PostCmtLikeReqDTO postCmtLikeReqDTO) {
 
-        //        Long likeUserSeq = CustomUserUtils.getCurrentUserSeq();
-        long likeUserSeq = 1L;
+        long likeUserSeq = /*CustomUserUtils.getCurrentUserSeq()*/ 1L;
 
-        Like foundPostCmtLike = postCmtLikeDomainService.findLikeByUserSeqAndPostCommentSeq(likeUserSeq, postCmtLikeReqDTO.getPostCommentSeq()).orElse(null);
+        Like foundPostCmtLike = postCmtLikeDomainService.findLikeByUserSeqAndPostCommentSeq(
+                likeUserSeq,
+                postCmtLikeReqDTO.getPostCommentSeq()
+        ).orElse(null);
 
         // 좋아요를 하지 않은 게시물에 대한 경우
         if (foundPostCmtLike == null) {
             postCmtLikeReqDTO.setLikeUserSeq(likeUserSeq);
             Like newPostCmtLike = modelMapper.map(postCmtLikeReqDTO, Like.class); // 좋아요 저장
-            return postCmtLikeDomainService.save(newPostCmtLike);
+            postCmtLikeDomainService.save(newPostCmtLike);
+        } else {
+            // 이미 좋아요를 한 게시물에 대한 경우
+            postCmtLikeDomainService.deleteById(foundPostCmtLike.getLikeSeq()); // 좋아요를 다시 누르면 좋아요 취소됨
         }
 
-        // 이미 좋아요를 한 게시물에 대한 경우
-        postCmtLikeDomainService.delete(foundPostCmtLike); // 좋아요를 다시 누르면 좋아요 취소됨
-        return null;
     }
 }
