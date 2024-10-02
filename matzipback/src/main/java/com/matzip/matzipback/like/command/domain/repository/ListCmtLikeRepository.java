@@ -2,13 +2,11 @@ package com.matzip.matzipback.like.command.domain.repository;
 
 import com.matzip.matzipback.like.command.domain.aggregate.Like;
 
-import java.util.Optional;
-
 public interface ListCmtLikeRepository {
 
-    Optional<Like> findByLikeUserSeqAndListCommentSeq(long likeUserSeq, Long listCommentSeq);
+    boolean existsByLikeUserSeqAndListCommentSeq(long likeUserSeq, long listCommentSeq);
 
-    void delete(Like foundListCmtLike);
+    void deleteByLikeUserSeqAndListCommentSeq(long likeUserSeq, long listCommentSeq);
 
-    Like save(Like newListCmtLike);
+    Like save(Like like);
 }
