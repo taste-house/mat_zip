@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class UpdateListRequset {
+public class UpdateListRequest {
     @NotNull
     private Long listSeq;
     @NotBlank
