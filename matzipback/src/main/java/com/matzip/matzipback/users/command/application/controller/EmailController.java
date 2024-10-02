@@ -2,7 +2,7 @@ package com.matzip.matzipback.users.command.application.controller;
 
 import com.matzip.matzipback.users.command.application.service.EmailService;
 import com.matzip.matzipback.users.command.dto.EmailChkRequest;
-import com.matzip.matzipback.users.command.dto.EmailRequest;
+import com.matzip.matzipback.users.command.dto.EmailSendRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class EmailController {
     private final EmailService emailService;
 
     @PostMapping("/auth/mail-verification")
-    public ResponseEntity<String> sendVerificationCode(@RequestBody EmailRequest request) {
+    public ResponseEntity<String> sendVerificationCode(@RequestBody EmailSendRequest request) {
         emailService.sendSignUpEmail(request.getUserEmail(), request.getUserName());
 
         return ResponseEntity.ok("인증 코드가 발송되었습니다.");
