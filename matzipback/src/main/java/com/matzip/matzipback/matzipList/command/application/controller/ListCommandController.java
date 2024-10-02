@@ -33,7 +33,9 @@ public class ListCommandController {
     // 리스트 삭제
     @DeleteMapping("/list")
     public ResponseEntity<SuccessResMessage> deleteList(@Valid @RequestBody DeleteListRequest deleteListRequest){
-        listCommandService.deleteList(deleteListRequest.getListSeq());
+
+        listCommandService.deleteList(deleteListRequest);
+
         return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_DELETE_SUCCESS));
     }
 
