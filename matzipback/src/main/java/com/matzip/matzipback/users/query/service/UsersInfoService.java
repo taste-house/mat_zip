@@ -1,6 +1,11 @@
 package com.matzip.matzipback.users.query.service;
 
+import com.matzip.matzipback.exception.ErrorCode;
+import com.matzip.matzipback.exception.NotFoundException;
+import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.users.query.dto.userInfo.AllUserInfoResponseDTO;
+import com.matzip.matzipback.users.query.dto.userInfo.OtherUserInfoDto;
+import com.matzip.matzipback.users.query.dto.userInfo.UserDetailInfoDTO;
 import com.matzip.matzipback.users.query.dto.userInfo.UserInfoDTO;
 import com.matzip.matzipback.users.query.mapper.UsersInfoMapper;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -78,4 +84,29 @@ public class UsersInfoService {
                 .totalUsers(totalUsers)
                 .build();
     }
+
+    // 관리자와 회원자신의 상세정보 조회
+    public UserDetailInfoDTO getDetailUserInfo(Long userSeq, String userAuth) {
+        log.info("getDetailUserInfo() 호출 - 유저번호: userSeq={}, 유저권한: {}", userSeq, userAuth);
+
+        // 유저 정보가 존재하는지 확인
+        UserDetailInfoDTO userInfo = usersInfoMapper.getDetailInfoDto(userSeq, userAuth);
+        if (userInfo == null) {
+            throw new RestApiException(ErrorCode.NOT_FOUND);
+        }
+        return userInfo;
+    }
+
+    // 다른 회원의 상세정보 조회
+    public OtherUserInfoDto getOthersInfo(Long userSeq){
+        log.info("getOthersInfo() 호출 - 유저번호: userSeq={}", userSeq);
+
+        // 유저 정보가 존재하는지 확인
+        OtherUserInfoDto userInfo = usersInfoMapper.getOtherUserInfoDto(userSeq);
+        if (userInfo == null) {
+            throw new RestApiException(ErrorCode.NOT_FOUND);
+        }
+        return userInfo;
+    }
+
 }
