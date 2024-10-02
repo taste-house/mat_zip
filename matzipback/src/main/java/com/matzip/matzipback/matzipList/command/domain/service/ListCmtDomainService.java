@@ -1,5 +1,7 @@
 package com.matzip.matzipback.matzipList.command.domain.service;
 
+import com.matzip.matzipback.exception.ErrorCode;
+import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListCmtRequest;
 import com.matzip.matzipback.matzipList.command.application.dto.UpdateListCmtRequest;
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyListComment;
@@ -17,6 +19,7 @@ public class ListCmtDomainService {
     private final ModelMapper modelMapper;
 
     // 1차 수정 완료 - 창윤
+    // 리스트 댓글 저장
     public void createListCmt(CreateListCmtRequest createListCmtRequest) {
 
         MyListComment newMyListMatzipCmt = modelMapper.map(createListCmtRequest, MyListComment.class);
@@ -38,4 +41,18 @@ public class ListCmtDomainService {
 
     }
 
+    // 1차 수정 완료 - 창윤
+    // 리스트 댓글 번호로 댓글 삭제
+    public void deleteListCmt(Long listCommentSeq) {
+        listCmtDomainRepository.deleteById(listCommentSeq);
+    }
+
+    // 1차 수정 완료 - 창윤
+    // 리스트 댓글에서 댓글 작성자 고유번호 찾기
+    public long getUserSeqFindById(Long listCommentSeq) {
+        MyListComment myListComment = listCmtDomainRepository.findById(listCommentSeq)
+                .orElseThrow(() -> new RestApiException(ErrorCode.NOT_FOUND));
+
+        return myListComment.getListCommentUserSeq();
+    }
 }
