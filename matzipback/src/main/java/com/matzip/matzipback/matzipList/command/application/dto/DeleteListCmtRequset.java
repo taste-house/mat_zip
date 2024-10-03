@@ -11,5 +11,5 @@ public class DeleteListCmtRequset {
     private Long listSeq;
     @NotNull
     private Long listCommentSeq;
-    private Long listCommentListSeq;
+    private Long listCommentUserSeq;
 }
