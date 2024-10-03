@@ -1,7 +1,10 @@
 package com.matzip.matzipback.review.command.domain.aggregate;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,5 +48,10 @@ public class Review {
 
     public static Review create(Long authUserSeq, Long restaurantSeq, String reviewContent, BigDecimal reviewStar) {
         return new Review(authUserSeq, restaurantSeq, reviewContent, reviewStar);
+    }
+
+    public void updateReviewDetails(String reviewContent, BigDecimal reviewStar) {
+        this.reviewContent = reviewContent;
+        this.reviewStar = reviewStar;
     }
 }

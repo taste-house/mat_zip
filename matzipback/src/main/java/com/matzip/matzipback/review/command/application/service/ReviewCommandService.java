@@ -1,9 +1,12 @@
 package com.matzip.matzipback.review.command.application.service;
 
+import com.matzip.matzipback.common.util.CustomUserUtils;
 import com.matzip.matzipback.common.util.FileUploadUtils;
+import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.restaurant.command.application.service.RestaurantCommandService;
 import com.matzip.matzipback.review.command.application.dto.ReviewCreateRequest;
 import com.matzip.matzipback.review.command.application.dto.ReviewImageRequest;
+import com.matzip.matzipback.review.command.application.dto.ReviewUpdateRequest;
 import com.matzip.matzipback.review.command.domain.aggregate.Review;
 import com.matzip.matzipback.review.command.domain.aggregate.ReviewImage;
 import com.matzip.matzipback.review.command.domain.repository.ReviewImageRepository;
@@ -13,7 +16,6 @@ import com.matzip.matzipback.review.query.service.ReviewQueryService;
 import com.matzip.matzipback.users.command.domain.service.UserActivityDomainService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,9 +23,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static com.matzip.matzipback.exception.ErrorCode.FORBIDDEN_ACCESS;
+import static com.matzip.matzipback.exception.ErrorCode.UNPROCESSABLE_ENTITY;
+
 @Service
 @RequiredArgsConstructor
-public class ReivewCommandService {
+public class ReviewCommandService {
 
     @Value("${IMAGE_URL}")
     private String IMAGE_URL;
@@ -69,5 +74,33 @@ public class ReivewCommandService {
                                 .reviewSeq(reviewSeq)
                                 .reviewImagePath(IMAGE_DIR + "/" + FileUploadUtils.saveFile(IMAGE_DIR, image)),
                         ReviewImage.class));
+    }
+
+    @Transactional
+    public Long updateReview(Long reviewSeq, ReviewUpdateRequest reviewRequest) {
+
+        // 원본 리뷰 가져오기
+        Review review = reviewRepository.findById(reviewSeq)
+                .orElseThrow(() -> new RestApiException(UNPROCESSABLE_ENTITY));
+
+        // 수정 권한 검증
+        if (CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority().equals("user")) {
+            if (!CustomUserUtils.getCurrentUserSeq().equals(review.getReviewUserSeq())) {
+                throw new RestApiException(FORBIDDEN_ACCESS);
+            }
+        }
+
+        // 원본 리뷰에 수정된 내용 덮어쓰기
+        review.updateReviewDetails(
+                reviewRequest.getReviewContent(),
+                reviewRequest.getReviewStar()
+        );
+
+        // 음식점 별점 수정
+        restaurantCommandService.updateRestaurantStar(
+                review.getRestaurantSeq(),
+                reviewQueryService.getRestaurantStarAverage(review.getRestaurantSeq()));
+
+        return review.getReviewSeq();
     }
 }

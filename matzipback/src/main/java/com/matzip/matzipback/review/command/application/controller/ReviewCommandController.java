@@ -1,18 +1,17 @@
 package com.matzip.matzipback.review.command.application.controller;
 
 import com.matzip.matzipback.common.util.CustomUserUtils;
+import com.matzip.matzipback.responsemessage.SuccessCode;
+import com.matzip.matzipback.responsemessage.SuccessResMessage;
 import com.matzip.matzipback.review.command.application.dto.ReviewCreateRequest;
-import com.matzip.matzipback.review.command.application.service.ReivewCommandService;
+import com.matzip.matzipback.review.command.application.dto.ReviewUpdateRequest;
+import com.matzip.matzipback.review.command.application.service.ReviewCommandService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
@@ -24,7 +23,7 @@ import java.util.List;
 @Tag(name = "Review", description = "리뷰")
 public class ReviewCommandController {
 
-    private final ReivewCommandService reivewCommandService;
+    private final ReviewCommandService reviewCommandService;
 
     @PostMapping(value = "/review", consumes = {"multipart/form-data"})
     @Operation(summary = "리뷰 등록", description = "리뷰를 등록한다.")
@@ -33,10 +32,23 @@ public class ReviewCommandController {
             @RequestPart(required = false) List<MultipartFile> reviewImages) {
 
         Long authUserSeq = CustomUserUtils.getCurrentUserSeq();
-        Long reviewSeq = reivewCommandService.createReview(authUserSeq, reviewRequest, reviewImages);
+        Long reviewSeq = reviewCommandService.createReview(authUserSeq, reviewRequest, reviewImages);
 
         return ResponseEntity
                 .created(URI.create("/api/v1/review/" + reviewSeq))
                 .build();
     }
+
+    @PutMapping(value = "/review/{reviewSeq}")
+    @Operation(summary = "리뷰 수정", description = "리뷰를 수정한다.")
+    public ResponseEntity<SuccessResMessage> updateReview(
+            @PathVariable Long reviewSeq,
+            @RequestBody @Valid ReviewUpdateRequest reviewRequest) {
+
+        reviewCommandService.updateReview(reviewSeq, reviewRequest);
+
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
+    }
+
+
 }
