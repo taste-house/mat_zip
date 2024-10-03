@@ -1,5 +1,6 @@
 package com.matzip.matzipback.review.query.controller;
 
+import com.matzip.matzipback.review.query.dto.ReviewByRestaurantResponse;
 import com.matzip.matzipback.review.query.dto.ReviewDetailResponse;
 import com.matzip.matzipback.review.query.dto.ReviewImageResponse;
 import com.matzip.matzipback.review.query.dto.ReviewListResponse;
@@ -46,6 +47,18 @@ public class ReviewQueryController {
     public ResponseEntity<ReviewImageResponse> getReviewImages(@PathVariable Long reviewSeq) {
 
         ReviewImageResponse response = reviewQueryService.getReviewImages(reviewSeq);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/review/restaurant/{restaurantSeq}")
+    @Operation(summary = "음식점 별 리뷰 조회", description = "음식점 별 리뷰를 조회한다.")
+    public ResponseEntity<ReviewByRestaurantResponse> getReviewsByRestaurant(
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "10") Integer size,
+            @PathVariable Long restaurantSeq) {
+
+        ReviewByRestaurantResponse response = reviewQueryService.getReviewsByRestaurant(page, size, restaurantSeq);
 
         return ResponseEntity.ok(response);
     }

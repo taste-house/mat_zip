@@ -96,4 +96,32 @@
         AND
             review_status = "active"
     </select>
+
+    <!-- 음식점 별 리뷰 조회 -->
+    <select id="selectReviewsByRestaurant" resultType="com.matzip.matzipback.review.query.dto.ReviewByRestaurantDTO">
+        SELECT
+            review.review_seq,
+            users.user_nickname,
+            review_image.review_image_seq,
+            LEFT(review.review_content, 20) AS review_content,
+            review.review_created_time,
+            review.review_star
+        FROM review
+        JOIN users ON (review.review_user_seq = users.user_seq)
+        LEFT JOIN review_image USING (review_seq)
+        WHERE review.review_status = 'active'
+            AND review.restaurant_seq = #{restaurantSeq}
+        GROUP BY review.review_seq
+        ORDER BY review.review_created_time DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <!-- 음식점 별 리뷰 조회 기능의 페이징 처리를 위한 쿼리 -->
+    <select id="countReviewsByRestaurant" resultType="long">
+        SELECT
+            COUNT(*)
+        FROM review
+        WHERE review.review_status = 'active'
+            AND review.restaurant_seq = #{restaurantSeq}
+    </select>
 </mapper>
