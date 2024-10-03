@@ -11,11 +11,11 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class UpdateListRequest {
-    @NotNull
+    @NotNull(message = "리스트 고유번호가 Null이면 안됩니다.")
     private Long listSeq;
-    @NotBlank
+    @NotBlank(message = "리스트 제목이 Blank이면 안됩니다.")
     private String listTitle;
-    @NotBlank
+    @NotBlank(message = "리스트 내용이 Blank이면 안됩니다.")
     private String listContent;
 
 
