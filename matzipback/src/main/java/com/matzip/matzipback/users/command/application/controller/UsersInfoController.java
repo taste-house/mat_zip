@@ -14,35 +14,21 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/users/list")
 @Slf4j
 @Tag(name = "Users", description = "회원관리")
-public class UsersCommandController {
+public class UsersInfoController {
 
     private final UsersCommandService usersCommandService;
 
     // 1차 수정 완료 - 가람
-    /* 회원가입 기능 */
-    @PostMapping("/auth/register")
-    @Operation(summary = "회원가입", description = "이메일, 비밀번호와 이름, 휴대폰번호를 입력 후 회원가입이 가능하다.")
-//    public ResponseEntity<String> createUser(@Valid @RequestBody CreateUserRequest newUser) {
-    public ResponseEntity<SuccessResMessage> createUser(@Valid @RequestBody CreateUserRequest newUser) {
-        log.info("GET /api/v1/auth/register - 회원가입 요청 createUser: {}", newUser);
-        usersCommandService.createUser(newUser);
-
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
-    }
-
-    // 1차 수정 완료 - 가람
     /* 회원정보 수정 */
-    @PutMapping("/users/list/{userSeq}/edit")
+    @PutMapping("/{userSeq}/edit")
     @Operation(summary = "회원정보 수정", description = "비밀번호와 휴대폰번호, 닉네임을 수정 가능하다.")
 //    public ResponseEntity<UpdateUserRequest> updateUser(
     public ResponseEntity<SuccessResMessage> updateUser(
@@ -74,7 +60,7 @@ public class UsersCommandController {
 
     // 1차 수정 완료 - 가람
     /* 회원탈퇴 */
-    @DeleteMapping("/users/list/{userSeq}/delete")
+    @DeleteMapping("/{userSeq}/delete")
     @Operation(summary = "회원탈퇴", description = "비밀번호 검증 후 탈퇴를 할 수 있다.")
 //    public ResponseEntity<String> deleteUser(@PathVariable long userSeq, @RequestBody DeleteUserRequest deleteUserInfo) {
     public ResponseEntity<SuccessResMessage> deleteUser(@PathVariable long userSeq, @RequestBody DeleteUserRequest deleteUserInfo) {
@@ -101,11 +87,6 @@ public class UsersCommandController {
         return ResponseEntity.ok(new SuccessResMessage(SuccessCode.USER_DELETION_SUCCESS));
 //        return ResponseEntity.status(HttpStatus.OK).body("탈퇴가 성공적으로 처리되었습니다.");
     }
-
-//    @PostMapping("/auth/find_email")
-//    public  ResponseEntity<String> findEmail(@Valid @RequestBody FindEmailRequest findEmailRequest) {
-//
-//    }
 
 
 }
