@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-@Tag(name = "ListSearch", description = "리스트 조회")
+@Tag(name = "List", description = "리스트")
 public class ListQueryController {
 
     private final ListQueryService listQueryService;
