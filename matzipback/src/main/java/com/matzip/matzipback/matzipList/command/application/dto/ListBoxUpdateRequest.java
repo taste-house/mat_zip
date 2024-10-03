@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ListBoxUpdateRequest {
 
-    @NotNull
+    @NotNull(message = "리스트 고유번호가 Null이면 안됩니다.")
     private Long listSeq;
 
-    @NotNull
+    @NotNull(message = "리스트 우선순위가 Null이면 안됩니다.")
     private int listLevel;
 }
