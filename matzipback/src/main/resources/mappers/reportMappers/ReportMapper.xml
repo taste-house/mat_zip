@@ -14,7 +14,7 @@
             usersA.user_nickname AS reporter_user_name,
             reported_user_seq,
             usersB.user_nickname AS reported_user_name,
-            report_content,
+            LEFT(report_content, 20) AS report_content,
             penalty_seq,
             report_status,
             report_time,
@@ -73,6 +73,27 @@
         <if test="sequence != null">
             AND seq = #{sequence}
         </if>
+    </select>
+
+    <!-- 신고 상세 조회 -->
+    <select id="selectReportBySeq" resultType="com.matzip.matzipback.report.query.dto.ReportDTO">
+        SELECT
+            report_seq,
+            category,
+            seq,
+            reporter_user_seq,
+            usersA.user_nickname AS reporter_user_name,
+            reported_user_seq,
+            usersB.user_nickname AS reported_user_name,
+            report_content,
+            penalty_seq,
+            report_status,
+            report_time,
+            report_finished_time
+        FROM report_view
+        JOIN users usersA ON (report_view.reporter_user_seq = usersA.user_seq)
+        JOIN users usersB ON (report_view.reported_user_seq = usersB.user_seq)
+        WHERE report_seq = #{reportSeq}
     </select>
 
 </mapper>

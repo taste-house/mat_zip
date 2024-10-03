@@ -28,4 +28,7 @@ public interface ReportMapper {
             @Param("reportStatus") String reportStatus,
             @Param("category") Long category,
             @Param("sequence") Long sequence);
+
+    ReportDTO selectReportBySeq(
+            @Param("reportSeq") Long reportSeq);
 }

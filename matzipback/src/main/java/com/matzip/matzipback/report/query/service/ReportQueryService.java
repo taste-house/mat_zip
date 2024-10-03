@@ -1,13 +1,17 @@
 package com.matzip.matzipback.report.query.service;
 
+import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.report.query.dto.ReportDTO;
 import com.matzip.matzipback.report.query.dto.ReportListResponse;
+import com.matzip.matzipback.report.query.dto.ReportDetailResponse;
 import com.matzip.matzipback.report.query.mapper.ReportMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.matzip.matzipback.exception.ErrorCode.NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +37,18 @@ public class ReportQueryService {
                 .totalPages((int) Math.ceil((double) totalItems / size))
                 .totalItems(totalItems)
                 .build();
+    }
+
+    // 신고 상세 조회
+    public ReportDetailResponse getReport(Long reportSeq) {
+        ReportDTO report = reportMapper.selectReportBySeq(reportSeq);
+
+        if (report == null) {
+            throw new RestApiException(NOT_FOUND);
+        } else {
+            report.setReasons(reportMapper.selectReportReasons(report.getReportSeq()));
+        }
+
+        return new ReportDetailResponse(report);
     }
 }
