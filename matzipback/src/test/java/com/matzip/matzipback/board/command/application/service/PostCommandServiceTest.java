@@ -23,8 +23,6 @@ class PostCommandServiceTest {
 
     @Autowired
     private PostCommandService postCommandService;
-    @Autowired
-    private PostRepository postRepository;
 
     // 게시글 등록 테스트 데이터 제공 메소드
     private static Stream<Arguments> newPost() {
