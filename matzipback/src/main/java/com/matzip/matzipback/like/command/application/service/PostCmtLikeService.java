@@ -1,7 +1,5 @@
 package com.matzip.matzipback.like.command.application.service;
 
-import com.matzip.matzipback.exception.ErrorCode;
-import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.like.command.application.dto.PostCmtLikeReqDTO;
 import com.matzip.matzipback.like.command.domain.aggregate.Like;
 import com.matzip.matzipback.like.command.domain.service.PostCmtLikeDomainService;
