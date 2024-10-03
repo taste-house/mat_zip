@@ -27,9 +27,7 @@ public class ListCmtCommandService {
     @Transactional
     public Long createListCmt(CreateListCmtRequest listCmtRequest) {
         // 로그인한 사람의 유저 시퀀스를 가져오는 기능(권한이 들어있는 유저 시퀀스)
-//        Long listCommentUserSeq = CustomUserUtils.getCurrentUserSeq();
-
-        long listCommentUserSeq = 1L;
+        Long listCommentUserSeq = CustomUserUtils.getCurrentUserSeq();
 
         MyListComment newMyListMatzipCmt = ListCmtMapper.toEntity(listCmtRequest, listCommentUserSeq);
 
@@ -55,10 +53,9 @@ public class ListCmtCommandService {
     // 리스트 댓글 수정
     public Long updateListCmt(@Valid UpdateListCmtRequest updateListCmtRequest) {
         //로그인한 사람의 유저 시퀀스를 가져오는 기능(권한이 들어있는 유저 시퀀스)
-//        Long listUserSeq = CustomUserUtils.getCurrentUserSeq();
+        Long listCmtUserSeq = CustomUserUtils.getCurrentUserSeq();
 
-        // 테스트용 코드 생성
-        long listCmtUserSeq = 4L;
+
 
         return domainListCmtUpdateService.updateListCmt(updateListCmtRequest, listCmtUserSeq);
     }
