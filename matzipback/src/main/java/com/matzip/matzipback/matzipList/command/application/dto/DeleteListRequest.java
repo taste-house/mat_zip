@@ -8,6 +8,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DeleteListRequest {
 
-    @NotNull
+    @NotNull(message = "리스트 고유번호가 Null이면 안됩니다.")
     private Long listSeq;
 }
