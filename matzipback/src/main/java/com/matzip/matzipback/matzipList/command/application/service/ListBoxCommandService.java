@@ -25,10 +25,8 @@ public class ListBoxCommandService {
         int inputListBoxLevel = listBoxUpdateRequest.getListLevel();
         Long inputListSeq = listBoxUpdateRequest.getListSeq();
 
-        // 토근 유저 시퀀스
-//        Long ListUserSeq = CustomUserUtils.getCurrentUserSeq();
 
-        long ListUserSeq = 2L;
+        Long ListUserSeq = CustomUserUtils.getCurrentUserSeq();
 
         // 전체 리스트 불러오기
         List<MyList> allLists = listDomainRepository.findByListUserSeq(ListUserSeq);
