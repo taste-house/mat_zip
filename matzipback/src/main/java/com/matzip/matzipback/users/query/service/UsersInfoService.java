@@ -1,5 +1,6 @@
 package com.matzip.matzipback.users.query.service;
 
+import com.matzip.matzipback.common.util.CustomUserUtils;
 import com.matzip.matzipback.exception.ErrorCode;
 import com.matzip.matzipback.exception.NotFoundException;
 import com.matzip.matzipback.exception.RestApiException;
@@ -22,11 +23,18 @@ public class UsersInfoService {
 
     private final UsersInfoMapper usersInfoMapper;
 
+    // 1차 수정 완료 - 가람
+    // 관리자의 전체조회
     public AllUserInfoResponseDTO getAllUserList(String socialYn, String socialSite, String businessVerifiedYn,
                                                  String influencerYn, String userStatus, String orderBy,   // 필터링 조건, 정렬
                                                  Integer page, Integer size) {   // 페이징
         log.info("getAllUserList() 호출 - 필터링 조건: socialYn={}, businessVerifiedYn={}, influencerYn={}, userStatus={}, orderBy={}",
                 socialYn, businessVerifiedYn, influencerYn, userStatus, orderBy);
+
+        String userAuth = CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority();
+        if(userAuth.equals("user")) {   // 일반회원
+            throw new RestApiException(ErrorCode.FORBIDDEN_ACCESS);
+        }
 
         // 페이지 번호에 따른 offset 계산(offset : 데이터를 건너뛰는 개수)
         int offset = (page -1) * size;
@@ -52,7 +60,7 @@ public class UsersInfoService {
                 .build();
     }
 
-
+    // 관리자와 회원의 검색 조회
     public AllUserInfoResponseDTO getSearchUserList(String searchType, String searchWord,   // 검색조건
                                                     String socialYn, String socialSite, String businessVerifiedYn,
                                                     String influencerYn, String userStatus,  String userAuth, String orderBy,   // 필터링 조건, 정렬
