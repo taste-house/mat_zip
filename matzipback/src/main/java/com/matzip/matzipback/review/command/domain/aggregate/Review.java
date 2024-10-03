@@ -54,4 +54,8 @@ public class Review {
         this.reviewContent = reviewContent;
         this.reviewStar = reviewStar;
     }
+
+    public void updateReviewStatus(String status) {
+        this.reviewStatus = status;
+    }
 }

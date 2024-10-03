@@ -38,7 +38,7 @@ public class PostCommandController {
         Long postSeq = postCommandService.createPost(newPost);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .location(URI.create("/api/v1/post/" + postSeq))    // 리소스가 생성된 위치
+                .location(URI.create("/api/v1/posts/" + postSeq))    // 리소스가 생성된 위치
                 .build();
 
     }
