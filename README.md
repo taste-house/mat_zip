@@ -131,6 +131,15 @@ MAT.zip은 요즘 아주 핫한 NETFLIX 예능! 요리 계급 전쟁 '흑백 요
 </div>
 </details>
 
+<details>
+<summary> 조회 </summary>
+<div markdown="1">
+
+![본인이 작성한 게시물 댓글 조회](assets/images/test/postcomment/postCmtRead.jpeg)
+
+</div>
+</details>
+
 
 ### 3-7. MSA 아키텍처 구조도
 
