@@ -16,7 +16,7 @@ import java.net.URI;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-@Tag(name = "List Comment", description = "리스트 댓글")
+@Tag(name = "List", description = "리스트")
 public class ListCmtCommandController {
 
     private final ListCmtCommandService listCmtCommandService;
