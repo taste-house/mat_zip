@@ -109,33 +109,52 @@ MAT.zip은 요즘 아주 핫한 NETFLIX 예능! 요리 계급 전쟁 '흑백 요
 ### 3-5. REST API 설계 문서(Swagger 등)
 
 ### 3-6. 테스트 결과 보고서
-
 <details>
-<summary> 게시물 댓글 </summary>
+<summary>게시글</summary>
 <div markdown="1">
 
-![게시물 댓글](assets/images/test/postcomment/postCmtCreate.png)
-![게시물 댓글](assets/images/test/postcomment/postCmtUpdate.jpeg)
-![게시물 댓글](assets/images/test/postcomment/postCmtDelete.jpeg)
+![게시글](assets/images/test/post/registPost.jpeg)
+![게시글](assets/images/test/post/updatePost.jpeg)
+![게시글](assets/images/test/post/deletePost.jpeg)
+![게시글](assets/images/test/post/searchPost.jpeg)
+![게시글](assets/images/test/post/postListByCategory.jpeg)
+![게시글](assets/images/test/post/getPostDetail.jpeg)
+![게시글](assets/images/test/post/getPopularTagByCategory.jpeg)
+![게시글](assets/images/test/post/getTagKeywords.jpeg)
 
-<div>
+</div>
+</details>
+
+<details>
+<summary> 게시글 댓글 </summary>
+<div markdown="1">
+
+![게시글 댓글](assets/images/test/postcomment/postCmtCreate.png)
+![게시글 댓글](assets/images/test/postcomment/postCmtUpdate.jpeg)
+![게시글 댓글](assets/images/test/postcomment/postCmtDelete.jpeg)
+![본인이 작성한 게시물 댓글 조회](assets/images/test/postcomment/postCmtRead.jpeg)
+
+
+</div>
 </details>
 
 <details>
 <summary> 좋아요 </summary>
 <div markdown="1">
 
-![게시물 댓글 좋아요](assets/images/test/postcomment/postCmtLike.jpeg)
-![게시물 댓글 좋아요 취소](assets/images/test/postcomment/postCmtNotLike.jpeg)
+![게시글 댓글 좋아요](assets/images/test/postcomment/postCmtLike.jpeg)
+![게시글 댓글 좋아요 취소](assets/images/test/postcomment/postCmtNotLike.jpeg)
 
 </div>
 </details>
 
 <details>
-<summary> 조회 </summary>
+<summary> 패널티 </summary>
 <div markdown="1">
 
-![본인이 작성한 게시물 댓글 조회](assets/images/test/postcomment/postCmtRead.jpeg)
+![패널티](assets/images/test/penalty/registPenalty.jpeg)
+![패널티](assets/images/test/penalty/updatePenalty.jpeg)
+![패널티](assets/images/test/penalty/deletePenalty.jpeg)
 
 </div>
 </details>
