@@ -4,13 +4,19 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
 
 @Getter
+@Setter
 @RequiredArgsConstructor
-public class CreateMatzipRequest {
+public class UpdateListRequest {
     @NotNull(message = "리스트 고유번호가 Null이면 안됩니다.")
-    private final Long listSeq;
-    @NotNull(message = "음식점 고유번호가 Null이면 안됩니다.")
-    private final Long restaurantSeq;
-    private final String listMatzipComment;
+    private Long listSeq;
+    @NotBlank(message = "리스트 제목이 Blank이면 안됩니다.")
+    private String listTitle;
+    @NotBlank(message = "리스트 내용이 Blank이면 안됩니다.")
+    private String listContent;
+
+
 }
