@@ -58,4 +58,25 @@ public class ReviewQueryService {
 
         return reviewMapper.selectRestaurantStarAverage(restaurantSeq);
     }
+
+    // 음식점 별 리뷰 조회
+    @Transactional(readOnly = true)
+    public ReviewByRestaurantResponse getReviewsByRestaurant(
+            Integer page,
+            Integer size,
+            Long restaurantSeq) {
+
+        int offset = (page - 1) * size;
+
+        List<ReviewByRestaurantDTO> reviews = reviewMapper.selectReviewsByRestaurant(offset, size, restaurantSeq);
+
+        long totalItems = reviewMapper.countReviewsByRestaurant(restaurantSeq);
+
+        return ReviewByRestaurantResponse.builder()
+                .reviews(reviews)
+                .currentPage(page)
+                .totalPages((int) Math.ceil((double) totalItems / size))
+                .totalItems(totalItems)
+                .build();
+    }
 }

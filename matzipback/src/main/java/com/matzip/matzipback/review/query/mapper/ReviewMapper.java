@@ -2,6 +2,7 @@ package com.matzip.matzipback.review.query.mapper;
 
 import com.matzip.matzipback.review.query.dto.ReviewDetailResponse;
 import com.matzip.matzipback.review.query.dto.ReviewListDto;
+import com.matzip.matzipback.review.query.dto.ReviewByRestaurantDTO;
 import com.matzip.matzipback.review.query.dto.ReviewImageDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -31,5 +32,13 @@ public interface ReviewMapper {
             @Param("reviewSeq") Long reviewSeq);
 
     BigDecimal selectRestaurantStarAverage(
+            @Param("restaurantSeq") Long restaurantSeq);
+
+    List<ReviewByRestaurantDTO> selectReviewsByRestaurant(
+            @Param("offset") int offset,
+            @Param("limit") int limit,
+            @Param("restaurantSeq") Long restaurantSeq);
+
+    long countReviewsByRestaurant(
             @Param("restaurantSeq") Long restaurantSeq);
 }
