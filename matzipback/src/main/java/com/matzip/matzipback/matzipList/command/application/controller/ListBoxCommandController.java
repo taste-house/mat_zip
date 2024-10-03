@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-@Tag(name = "ListBoxUpdate", description = "리스트 서랍 수정")
+@Tag(name = "List", description = "리스트")
 public class ListBoxCommandController {
 
     private final ListBoxCommandService listBoxCommandService;

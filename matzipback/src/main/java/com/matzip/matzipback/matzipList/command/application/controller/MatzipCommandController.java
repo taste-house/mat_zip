@@ -19,7 +19,7 @@ import java.net.URI;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/")
-@Tag(name = "ListMatzip", description = "리스트 맛집")
+@Tag(name = "List", description = "리스트")
 public class MatzipCommandController {
 
     private final MatzipCommandService matzipCommandService;

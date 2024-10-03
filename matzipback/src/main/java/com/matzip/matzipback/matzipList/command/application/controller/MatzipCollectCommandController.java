@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-@Tag(name = "ListMatzipCollect", description = "리스트 맛집 가져오기")
+@Tag(name = "List", description = "리스트")
 public class MatzipCollectCommandController {
 
     private final MatzipCollectService matzipCollectService;
