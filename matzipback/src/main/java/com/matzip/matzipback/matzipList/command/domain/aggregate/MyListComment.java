@@ -31,6 +31,13 @@ public class MyListComment {
     private LocalDateTime listCommentUpdatedTime;
     private LocalDateTime listCommentDeletedTime;
 
+    public MyListComment(long listCommentSeq, long listSeq, String listCommentContent, long listCommentUserSeq) {
+        this.listCommentSeq = listCommentSeq;
+        this.listSeq = listSeq;
+        this.listCommentUserSeq = listCommentUserSeq;
+        this.listCommentContent = listCommentContent;
+    }
+
     @PrePersist
     public void prePersist() {
         if (listCommentStatus == null) listCommentStatus = "active";
