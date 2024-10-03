@@ -1,17 +1,20 @@
 package com.matzip.matzipback.users.query.controller;
 
 import com.matzip.matzipback.common.util.CustomUserUtils;
+import com.matzip.matzipback.exception.ErrorCode;
 import com.matzip.matzipback.users.command.domain.aggregate.Users;
 import com.matzip.matzipback.users.query.dto.userInfo.AllUserInfoResponseDTO;
+import com.matzip.matzipback.users.query.dto.userInfo.OtherUserInfoDto;
+import com.matzip.matzipback.users.query.dto.userInfo.UserDetailInfoDTO;
 import com.matzip.matzipback.users.query.service.UsersInfoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @Slf4j
+@Tag(name = "Users", description = "회원관리")
 public class UsersQueryController {
 
     private final UsersInfoService usersInfoService;
@@ -41,6 +45,7 @@ public class UsersQueryController {
 //    }
 
     @GetMapping("/users/list")
+    @Operation(summary = "회원 전체조회", description = "관리자가 회원을 전체 조회한다.")
     public ResponseEntity<AllUserInfoResponseDTO> getAllUserList(@RequestParam(value = "socialYn", required = false) String socialYn,
                                                                  @RequestParam(value = "socialSite", required = false) String socialSite,
                                                                  @RequestParam(value = "businessVerifiedYn", required = false) String businessVerifiedYn,
@@ -59,6 +64,7 @@ public class UsersQueryController {
     }
 
     @GetMapping("/users/search")
+    @Operation(summary = "회원 검색", description = "관리자 또는 회원이 회원을 검색한다.")
     public ResponseEntity<AllUserInfoResponseDTO> getSearchUserList(
             @RequestParam(value = "searchType", required = false) String searchType,
             @RequestParam(value = "searchWord", required = false) String searchWord,
@@ -90,6 +96,42 @@ public class UsersQueryController {
 
         return ResponseEntity.ok(users);    // 결과 DTO를 ResponseEntity에 반환
     }
+
+    @GetMapping("/users/list/{userSeq}")
+    @Operation(summary = "회원 상세조회", description = "관리자 또는 회원이 회원정보를 상세조회한다.")
+    public ResponseEntity<?> DetailUserInfo(@PathVariable Long userSeq
+//                                            ,@AuthenticationPrincipal Users users    // 로그인한 사용자의 정보
+    ) {
+        String userAuth = CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority();
+        Long currentUserSeq = CustomUserUtils.getCurrentUserSeq();
+//        String userAuth = "admin";
+//        Long currentUserSeq = 1L;
+
+//        if(users.getUserAuth().equals("admin")) {
+//            // 관리자
+//            UserDetailInfoDTO userInfo = usersInfoService.getDetailUserInfo(userSeq, users.getUserAuth());
+        if(userAuth.equals("admin")) {
+            // 관리자
+            UserDetailInfoDTO userInfo = usersInfoService.getDetailUserInfo(userSeq, userAuth);
+            return ResponseEntity.ok(userInfo);
+//        } else if(users.getUserSeq() == (userSeq)) {
+//            // 일반 회원이 자신의 정보를 조회하는 경우
+//            UserDetailInfoDTO userInfo = usersInfoService.getDetailUserInfo(userSeq, users.getUserAuth());
+        } else if(currentUserSeq.equals(userSeq)) {
+            // 일반 회원이 자신의 정보를 조회하는 경우
+            UserDetailInfoDTO userInfo = usersInfoService.getDetailUserInfo(userSeq, userAuth);
+            return ResponseEntity.ok(userInfo);
+        } else {
+            // 다른 회원 정보를 조회하는 경우
+            OtherUserInfoDto otherUserInfo = usersInfoService.getOthersInfo(userSeq);
+            return ResponseEntity.ok(otherUserInfo);
+        }
+
+        // 권한이 없는 경우
+//        return ResponseEntity.status(ErrorCode.FORBIDDEN_ACCESS.getHttpStatus())
+//                .body(ErrorCode.FORBIDDEN_ACCESS.getMessage());
+    }
+
 
 
 }

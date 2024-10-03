@@ -5,6 +5,8 @@ import com.matzip.matzipback.users.command.application.service.UsersCommandServi
 import com.matzip.matzipback.users.command.dto.CreateUserRequest;
 import com.matzip.matzipback.users.command.dto.DeleteUserRequest;
 import com.matzip.matzipback.users.command.dto.UpdateUserRequest;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +18,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @Slf4j
+@Tag(name = "Users", description = "회원관리")
 public class UsersCommandController {
 
     private final UsersCommandService usersCommandService;
 
     /* 회원가입 기능 */
     @PostMapping("/auth/register")
+    @Operation(summary = "회원가입", description = "이메일, 비밀번호와 이름, 휴대폰번호를 입력 후 회원가입이 가능하다.")
     public ResponseEntity<String> createUser(@Valid @RequestBody CreateUserRequest newUser) {
         log.info("회원가입 요청 createUser: {}", newUser);
         usersCommandService.createUser(newUser);
@@ -31,6 +35,7 @@ public class UsersCommandController {
 
     /* 회원정보 수정 */
     @PutMapping("/users/list/{userSeq}/edit")
+    @Operation(summary = "회원정보 수정", description = "비밀번호와 휴대폰번호, 닉네임을 수정 가능하다.")
     public ResponseEntity<UpdateUserRequest> updateUser(
             @PathVariable long userSeq,
             @Valid @RequestBody UpdateUserRequest updateUserInfo) {
@@ -57,6 +62,7 @@ public class UsersCommandController {
 
     /* 회원탈퇴 */
     @DeleteMapping("/users/list/{userSeq}/delete")
+    @Operation(summary = "회원탈퇴", description = "비밀번호 검증 후 탈퇴를 할 수 있다.")
     public ResponseEntity<String> deleteUser(@PathVariable long userSeq, @RequestBody DeleteUserRequest deleteUserInfo) {
         log.info("회원탈퇴 deleteUserInfo: {}", deleteUserInfo);
         // 테스트용 임시 userSeq 설정
@@ -79,6 +85,11 @@ public class UsersCommandController {
         usersCommandService.deleteUser(deleteUserInfo);
         return ResponseEntity.status(HttpStatus.OK).body("탈퇴가 성공적으로 처리되었습니다.");
     }
+
+//    @PostMapping("/auth/find_email")
+//    public  ResponseEntity<String> findEmail(@Valid @RequestBody FindEmailRequest findEmailRequest) {
+//
+//    }
 
 
 }
