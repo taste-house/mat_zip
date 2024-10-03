@@ -21,7 +21,7 @@ public class MatzipCommandController {
 
     // 맛집 등록
     @PostMapping("/list/matzip/")
-    public ResponseEntity<Void> createMatzip(@RequestBody CreateMatzipRequest matzipRequest) {
+    public ResponseEntity<Void> createMatzip(@Valid @RequestBody CreateMatzipRequest matzipRequest) {
 
         Long listMatzipSeq = matzipCommandService.createMatzip(matzipRequest);
 
