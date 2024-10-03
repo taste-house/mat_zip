@@ -47,8 +47,16 @@ public class ReviewCommandController {
 
         reviewCommandService.updateReview(reviewSeq, reviewRequest);
 
-        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_UPDATE_SUCCESS));
     }
 
+    @DeleteMapping(value = "/review/{reviewSeq}")
+    @Operation(summary = "리뷰 삭제", description = "리뷰를 삭제한다.")
+    public ResponseEntity<SuccessResMessage> deleteReview(
+            @PathVariable Long reviewSeq) {
 
+        reviewCommandService.deleteReview(reviewSeq);
+
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_DELETE_SUCCESS));
+    }
 }

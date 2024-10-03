@@ -103,4 +103,27 @@ public class ReviewCommandService {
 
         return review.getReviewSeq();
     }
+
+    @Transactional
+    public void deleteReview(Long reviewSeq) {
+
+        // 원본 리뷰 가져오기
+        Review review = reviewRepository.findById(reviewSeq)
+                .orElseThrow(() -> new RestApiException(UNPROCESSABLE_ENTITY));
+
+        // 삭제 권한 검증
+        if (CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority().equals("user")) {
+            if (!CustomUserUtils.getCurrentUserSeq().equals(review.getReviewUserSeq())) {
+                throw new RestApiException(FORBIDDEN_ACCESS);
+            }
+        }
+
+        // 리뷰 삭제
+        reviewRepository.deleteById(reviewSeq);
+
+        // 음식점 별점 수정
+        restaurantCommandService.updateRestaurantStar(
+                review.getRestaurantSeq(),
+                reviewQueryService.getRestaurantStarAverage(review.getRestaurantSeq()));
+    }
 }
