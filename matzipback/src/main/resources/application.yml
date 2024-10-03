@@ -58,4 +58,4 @@ springdoc:
 
 token:
   expiration_time: 7200000
-  secret: VUL1ABAutdAPsFQZdECFdVanctypBD3FeR0NzQnxTSKy53dRH9f8T4oB36CmexlMSOkPRsRpX9+GnggEvXDxug==
+  secret: ${SECRET_KEY}
