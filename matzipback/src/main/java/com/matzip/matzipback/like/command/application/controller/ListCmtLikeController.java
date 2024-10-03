@@ -1,5 +1,7 @@
 package com.matzip.matzipback.like.command.application.controller;
 
+import com.matzip.matzipback.common.util.CustomUserUtils;
+import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.like.command.application.dto.ListCmtLikeReqDTO;
 import com.matzip.matzipback.like.command.application.service.ListCmtLikeService;
 import com.matzip.matzipback.responsemessage.SuccessCode;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.matzip.matzipback.exception.ErrorCode.FORBIDDEN_ACCESS;
+import static com.matzip.matzipback.exception.ErrorCode.UNAUTHORIZED_REQUEST;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
@@ -26,15 +31,20 @@ public class ListCmtLikeController {
     @Operation(summary = "리스트 댓글 좋아요", description = "리스트의 댓글에 좋아요 등록 또는 취소한다.")
     @PostMapping("/listCmt/like")
     public ResponseEntity<SuccessResMessage> saveListCmtLike(@Valid @RequestBody ListCmtLikeReqDTO listCmtLikeRequest){
-        boolean resultLike = listCmtLikeService.saveAndDeleteListCmtLike(listCmtLikeRequest);
 
-        // 좋아요 등록
-        if (resultLike) {
-            return ResponseEntity.ok(new SuccessResMessage(SuccessCode.LIKE_SUCCESS));
-        }
+        try { if (CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority().equals("user")) {
 
-        // 좋아요 취소
-        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.LIKE_DELETE_SUCCESS));
+            boolean resultLike = listCmtLikeService.saveAndDeleteListCmtLike(listCmtLikeRequest);
+            // 좋아요 등록
+            if (resultLike) {
+                return ResponseEntity.ok(new SuccessResMessage(SuccessCode.LIKE_SUCCESS));
+            }
+
+            // 좋아요 취소
+            return ResponseEntity.ok(new SuccessResMessage(SuccessCode.LIKE_DELETE_SUCCESS));
+        } else { throw new RestApiException(FORBIDDEN_ACCESS); }
+
+        } catch (NullPointerException e) { throw new RestApiException(UNAUTHORIZED_REQUEST); }
     }
 
 }

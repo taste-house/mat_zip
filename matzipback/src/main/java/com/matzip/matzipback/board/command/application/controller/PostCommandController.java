@@ -2,6 +2,8 @@ package com.matzip.matzipback.board.command.application.controller;
 
 import com.matzip.matzipback.board.command.application.dto.PostAndTagRequestDTO;
 import com.matzip.matzipback.board.command.application.service.PostCommandService;
+import com.matzip.matzipback.common.util.CustomUserUtils;
+import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.responsemessage.SuccessResMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
+import static com.matzip.matzipback.exception.ErrorCode.FORBIDDEN_ACCESS;
+import static com.matzip.matzipback.exception.ErrorCode.UNAUTHORIZED_REQUEST;
 import static com.matzip.matzipback.responsemessage.SuccessCode.BASIC_DELETE_SUCCESS;
 import static com.matzip.matzipback.responsemessage.SuccessCode.BASIC_UPDATE_SUCCESS;
 
@@ -34,13 +38,19 @@ public class PostCommandController {
             @Valid @RequestBody PostAndTagRequestDTO newPost    // 게시글 정보 + 태그 정보
     ){
 
-        // 게시글 등록
-        Long postSeq = postCommandService.createPost(newPost);
+        try{
+            if (CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority().equals("user")) {
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .location(URI.create("/api/v1/posts/" + postSeq))    // 리소스가 생성된 위치
-                .build();
+                // 게시글 등록
+                Long postSeq = postCommandService.createPost(newPost);
 
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .location(URI.create("/api/v1/posts/" + postSeq))    // 리소스가 생성된 위치
+                        .build();
+            } else {
+                throw new RestApiException(FORBIDDEN_ACCESS);
+            }
+        } catch (NullPointerException e) { throw new RestApiException(UNAUTHORIZED_REQUEST); }
     }
 
     /*
@@ -91,10 +101,17 @@ public class PostCommandController {
             @Valid @RequestBody PostAndTagRequestDTO updatedPost
     ) {
 
-        // 게시글 수정
-        postCommandService.updatePost(postSeq, updatedPost);
+        try{
+            if (CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority().equals("user")) {
 
-        return ResponseEntity.ok(new SuccessResMessage(BASIC_UPDATE_SUCCESS));
+                // 게시글 수정
+                postCommandService.updatePost(postSeq, updatedPost);
+
+                return ResponseEntity.ok(new SuccessResMessage(BASIC_UPDATE_SUCCESS));
+            } else {
+                throw new RestApiException(FORBIDDEN_ACCESS);
+            }
+        } catch (NullPointerException e) { throw new RestApiException(UNAUTHORIZED_REQUEST); }
     }
 
     /* 3. 게시글 삭제 */
@@ -102,10 +119,17 @@ public class PostCommandController {
     @Operation(summary = "게시글 삭제", description = "게시글을 삭제한다.")
     public ResponseEntity<SuccessResMessage> deletePost(@PathVariable Long postSeq) {
 
-        // 게시글 삭제
-        postCommandService.deletePost(postSeq);
+        try{
+            if (CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority().equals("user")) {
 
-        return ResponseEntity.ok(new SuccessResMessage(BASIC_DELETE_SUCCESS));
+                // 게시글 삭제
+                postCommandService.deletePost(postSeq);
+
+                return ResponseEntity.ok(new SuccessResMessage(BASIC_DELETE_SUCCESS));
+            } else {
+                throw new RestApiException(FORBIDDEN_ACCESS);
+            }
+        } catch (NullPointerException e) { throw new RestApiException(UNAUTHORIZED_REQUEST); }
     }
 
 }

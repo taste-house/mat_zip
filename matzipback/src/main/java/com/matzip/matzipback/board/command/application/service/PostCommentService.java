@@ -4,6 +4,7 @@ import com.matzip.matzipback.board.command.application.dto.ReqPostCmtCreateDTO;
 import com.matzip.matzipback.board.command.application.dto.ReqPostCmtUpdateDTO;
 import com.matzip.matzipback.board.command.domain.repository.PostCommentRepository;
 import com.matzip.matzipback.board.command.domain.service.PostCommentDomainService;
+import com.matzip.matzipback.common.util.CustomUserUtils;
 import com.matzip.matzipback.exception.ErrorCode;
 import com.matzip.matzipback.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class PostCommentService {
     public void updatePostComment(ReqPostCmtUpdateDTO reqPostCmtUpdateDTO) {
 
         // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
-        Long userSeq = /*CustomUserUtils.getCurrentUserSeq();*/ 1L;
+        Long userSeq = CustomUserUtils.getCurrentUserSeq();
 
         Long resultPostCmtUserSeq
                 = postCommentDomainService.findUserSeqByPostCmtSeq(reqPostCmtUpdateDTO.getPostCommentSeq());
@@ -42,7 +43,7 @@ public class PostCommentService {
     @Transactional
     public void deletePostComment(Long postCommentSeq) {
         // 나중에 Authorization 에서 빼와야한다. JwtUtil 에서의 메서드 활용할 것임
-        Long userSeq = /*CustomUserUtils.getCurrentUserSeq();*/ 1L;
+        Long userSeq = CustomUserUtils.getCurrentUserSeq();
 
         Long resultPostCmtUserSeq
                 = postCommentDomainService.findUserSeqByPostCmtSeq(postCommentSeq);
