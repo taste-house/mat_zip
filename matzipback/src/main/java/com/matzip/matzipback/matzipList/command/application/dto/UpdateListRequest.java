@@ -19,4 +19,9 @@ public class UpdateListRequest {
     private String listContent;
 
 
+    public UpdateListRequest(long listSeq, String listTitle, String listContent) {
+        this.listSeq = listSeq;
+        this.listTitle = listTitle;
+        this.listContent = listContent;
+    }
 }
