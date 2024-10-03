@@ -6,7 +6,6 @@ import com.matzip.matzipback.users.command.application.service.UsersCommandServi
 import com.matzip.matzipback.users.command.dto.CreateUserRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +25,7 @@ public class UsersAuthController {
     private final UsersCommandService usersCommandService;
 
     @PostMapping("/logout")
+    @Operation(summary = "로그아웃 요청", description = "클라이언트에게 토큰삭제를 요청한다.")
     public ResponseEntity<String> logout() {
         // 클라이언트에게 토큰 삭제 요청 안내
         log.info("POST /api/vi/auth/logout - 로그아웃 요청");
@@ -36,12 +36,10 @@ public class UsersAuthController {
     /* 회원가입 기능 */
     @PostMapping("/register")
     @Operation(summary = "회원가입", description = "이메일, 비밀번호와 이름, 휴대폰번호를 입력 후 회원가입이 가능하다.")
-//    public ResponseEntity<String> createUser(@Valid @RequestBody CreateUserRequest newUser) {
     public ResponseEntity<SuccessResMessage> createUser(@Valid @RequestBody CreateUserRequest newUser) {
         log.info("GET /api/v1/auth/register - 회원가입 요청 createUser: {}", newUser);
         usersCommandService.createUser(newUser);
 
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
         return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
     }
 }
