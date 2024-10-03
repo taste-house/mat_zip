@@ -12,20 +12,5 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DomainListCmtUpdateService {
 
-    private final ListCmtDomainRepository listCmtDomainRepository;
-    private final ModelMapper modelMapper;
 
-    public Long updateListCmt(@Valid UpdateListCmtRequest updateListCmtRequest, long listCmtUserSeq) {
-
-        Long listCmtSeq = updateListCmtRequest.getListCommentSeq();
-
-        MyListComment existListCmt = listCmtDomainRepository.findById(listCmtSeq).orElseThrow();
-
-        modelMapper.map(updateListCmtRequest, existListCmt);
-        existListCmt.updateListCommentContent(existListCmt.getListCommentContent());
-
-        listCmtDomainRepository.save(existListCmt);
-        return listCmtSeq;
-
-    }
 }

@@ -1,18 +1,17 @@
 package com.matzip.matzipback.matzipList.command.domain.repository;
 
-import com.matzip.matzipback.matzipList.command.application.dto.DeleteListCmtRequset;
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyListComment;
-import jakarta.validation.constraints.NotBlank;
 
 import java.util.Optional;
 
 public interface ListCmtDomainRepository {
 
-
+    // 1차 수정 완료 - 창윤
     MyListComment save(MyListComment newMyListMatzipCmt);
 
+    // 1차 수정 완료 - 창윤
+    void deleteById(Long listCommentSeq);
 
-    void deleteById(@NotBlank Long listCommentSeq);
-
+    // 1차 수정 완료 - 창윤
     Optional<MyListComment> findById(Long listCmtSeq);
 }
