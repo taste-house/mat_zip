@@ -4,6 +4,8 @@ import com.matzip.matzipback.responsemessage.ResponseMessage;
 import com.matzip.matzipback.users.command.application.service.UsersFollowService;
 import com.matzip.matzipback.users.command.dto.FollowResMessageDTO;
 import com.matzip.matzipback.users.command.dto.FollowDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/follow")
+@Tag(name = "Follow", description = "팔로우")
 public class UsersFollowController {
 
     private final UsersFollowService usersFollowService;
@@ -22,6 +25,7 @@ public class UsersFollowController {
     // 팔로우 버튼을 누르는 기능
     // 팔로우가 되어 있으면 팔로우 취소됨
     @PostMapping
+    @Operation(summary = "팔로우 신청/취소", description = "팔로우를 신청 혹은 취소한다.")
     public ResponseEntity<FollowResMessageDTO> doFollow(@RequestBody FollowDTO followDTO) {
         int result = usersFollowService.doFollow(followDTO);
 

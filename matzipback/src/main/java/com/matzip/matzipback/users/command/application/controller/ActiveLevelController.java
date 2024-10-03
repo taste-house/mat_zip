@@ -5,6 +5,8 @@ import com.matzip.matzipback.users.command.application.service.ActiveLevelServic
 import com.matzip.matzipback.users.command.dto.ActiveLevelResDTO;
 import com.matzip.matzipback.users.command.dto.CreateActiveLevelRequestDTO;
 import com.matzip.matzipback.users.command.dto.CreateActiveLevelResMessageDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +20,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Tag(name = "User Activity", description = "회원 활동")
 public class ActiveLevelController {
 
     private final ActiveLevelService activeLevelService;
 
     // active-level 저장
     @PostMapping("/active-level")
+    @Operation(summary = "회원 활동 등급 등록", description = "회원 활동 등급을 등록한다.")
     public ResponseEntity<CreateActiveLevelResMessageDTO> saveActiveLevel(@RequestBody CreateActiveLevelRequestDTO createActiveLevelRequestDTO) {
         ActiveLevelResDTO savedActiveLevel = activeLevelService.saveActiveLevel(createActiveLevelRequestDTO);
 

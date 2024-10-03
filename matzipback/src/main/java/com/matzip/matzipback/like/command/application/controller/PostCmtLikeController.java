@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/post")
-@Tag(name = "PostCommentLike", description = "게시글 댓글 좋아요")
+@Tag(name = "Like", description = "좋아요")
 public class PostCmtLikeController {
 
     private final PostCmtLikeService postCmtLikeService;
 
     // 게시글 댓글 좋아요
     @PostMapping("/{postSeq}/postcomment/{postCommentSeq}/like")
-    @Operation(summary = "게시글 댓글 좋아요/좋아요 취소", description = "게시글에 댓글에 좋아요를 표시/취소한다.")
+    @Operation(summary = "게시글 댓글 좋아요", description = "게시글의 댓글에 좋아요 등록 또는 취소한다.")
     public ResponseEntity<SuccessResMessage> savePostCmtLike(
             @PathVariable Long postCommentSeq) {
          PostCmtLikeReqDTO postCmtLikeReqDTO = new PostCmtLikeReqDTO();

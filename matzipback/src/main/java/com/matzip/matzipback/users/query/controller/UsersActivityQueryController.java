@@ -4,6 +4,8 @@ import com.matzip.matzipback.responsemessage.ResponseMessage;
 import com.matzip.matzipback.users.query.dto.UsersActivityDTO;
 import com.matzip.matzipback.users.query.dto.UsersActivityQueryResMessageDTO;
 import com.matzip.matzipback.users.query.service.UsersActivityQueryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +19,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Tag(name = "User Activity", description = "회원 활동")
 public class UsersActivityQueryController {
 
     private final UsersActivityQueryService usersActivityQueryService;
 
     // 전체 회원 활동 등급 조회 (관리자)
     @GetMapping("/users/activity")
+    @Operation(summary = "전체 회원 활동 등급 조회", description = "전체 회원의 활동 등급을 조회한다.")
     public ResponseEntity<UsersActivityQueryResMessageDTO> searchAllUsersActivity(@RequestParam("page") int page, @RequestParam("active") String active) {
 
         List<UsersActivityDTO> usersActivityList = usersActivityQueryService.searchAllUsersActivity(page, active);
