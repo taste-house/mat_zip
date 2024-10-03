@@ -21,7 +21,7 @@ public class ListCommandController {
 
     // 리스트 등록
     @PostMapping("/list")
-    public ResponseEntity<SuccessResMessage> createList(@RequestBody CreateListRequest listRequest){
+    public ResponseEntity<SuccessResMessage> createList(@Valid @RequestBody CreateListRequest listRequest){
 
         Long listSeq = listCommandService.createList(listRequest);
 
