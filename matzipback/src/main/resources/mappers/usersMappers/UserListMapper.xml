@@ -129,7 +129,7 @@
             <if test="socialYn != null and socialYn != ''">
                 AND u.user_social_yn = #{socialYn}
                 <!-- 소셜회원인 경우에는 socialSite 보이게 조건 추가 -->
-                <if test="socialYn.equals('Y') and socialSite != null and socialSite != ''">
+                <if test="socialYn != null and socialYn != '' and socialYn == 'Y'">
                     AND u.user_social_site = #{socialSite}
                 </if>
             </if>
@@ -167,10 +167,10 @@
                 , u.user_nickname DESC
             </when>
 
-            <when test="orderBy == 'regDateDesc'">
+            <when test="orderBy == 'regDateDESC'">
                 , u.user_reg_date DESC
             </when>
-            <when test="orderBy == 'regDateAsc'">
+            <when test="orderBy == 'regDateASC'">
                 , u.user_reg_date ASC
             </when>
         </choose>
@@ -189,7 +189,7 @@
 
             <if test="socialYn != null and socialYn != ''">
                 AND u.user_social_yn = #{socialYn}
-                <if test="socialYn.equals('Y') and socialSite != null and socialSite != ''">
+                <if test="socialYn != null and socialYn != '' and socialYn == 'Y'">
                     AND u.user_social_site = #{socialSite}
                 </if>
             </if>
@@ -282,7 +282,7 @@
             <if test="userAuth == 'admin'">
                 <!-- 관리자일 때만 탈퇴 회원도 조회, 필터링은 관리자만 가능 -->
                 <!-- 소셜회원 여부 필터링 -->
-                <if test="socialYn.equals('Y') and socialYn != null and socialYn != ''">
+                <if test="socialYn != null and socialYn != '' and socialYn == 'Y'">
                     AND u.user_social_yn = #{socialYn}
                     <!-- 소셜회원인 경우에는 socialSite 보이게 조건 추가 -->
                     <if test="socialSite != null and socialSite != ''">
@@ -325,10 +325,10 @@
             </when>
 
             <!-- 관리자만 가입일 순 정렬 가능 -->
-            <when test="userAuth == 'admin' and orderBy == 'regDateDesc'">
+            <when test="userAuth == 'admin' and orderBy == 'regDateDESC'">
                 , u.user_reg_date DESC
             </when>
-            <when test="userAuth == 'admin' and orderBy == 'regDateAsc'">
+            <when test="userAuth == 'admin' and orderBy == 'regDateASC'">
                 , u.user_reg_date ASC
             </when>
         </choose>
@@ -376,7 +376,7 @@
             <if test="userAuth == 'admin'">
                 <!-- 관리자일 때만 탈퇴 회원도 조회, 필터링은 관리자만 가능 -->
                 <!-- 소셜회원 여부 필터링 -->
-                <if test="socialYn.equals('Y') and socialYn != null and socialYn != ''">
+                <if test="socialYn != null and socialYn != '' and socialYn == 'Y'">
                     AND u.user_social_yn = #{socialYn}
                     <!-- 소셜회원인 경우에는 socialSite 보이게 조건 추가 -->
                     <if test="socialSite != null and socialSite != ''">
