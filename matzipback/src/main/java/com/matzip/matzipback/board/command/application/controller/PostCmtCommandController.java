@@ -16,7 +16,7 @@ import static com.matzip.matzipback.responsemessage.SuccessCode.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-@Tag(name = "PostComment", description = "게시글 댓글")
+@Tag(name = "Post Comment", description = "게시글 댓글")
 public class PostCmtCommandController {
 
     private final PostCommentService postCommentService;
