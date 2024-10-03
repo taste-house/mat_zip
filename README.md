@@ -67,19 +67,31 @@ MAT.zip은 요즘 아주 핫한 NETFLIX 예능! 요리 계급 전쟁 '흑백 요
 
 ### 2-4. 회원가입
 
-### 2-5. 신고, 패널티 부가 기능
+- 이메일, 비밀번호, 이름, 휴대폰번호를 필수로 입력한 후 회원가입을 할 수 있다.
+- 이미 가입된 이메일로는 가입할 수 없다.
+- 가입을 위해서는 이메일 인증을 해야 한다.
+- 비밀번호는 영문, 숫자, 특수문자가 섞인 8자리 이상만 가능하다.
+- 가입 완료 후 임의의 닉네임이 자동 생성된다.
+- 로그인을 할 수 있다.
+- 로그아웃을 할 수 있다.
 
-### 2-6. 인기 회원 선정, 활동 등급 부여
+### 2-5. 회원 정보
 
-- 맛집 리스트를 만들 수 있다
-- 나의 맛집 리스트를 게시판에 공유할 수 있다.
-- 나의 맛집 리스트를 다른 유저가 볼 수 있게 한다.
-- 나의 맛집 리스트를 친구가 추가할 수 있다.
-- 친구의 맛집 리스트를 조회하고 추가할 수 있다.
-- 관심있는 게시판을 메인 홈 화면에서 볼 수 있게 설정할 수 있다.(게시판 즐겨찾기)
-- 맛집을 지도에 핀 할 수 있다.
-- 맛집 리스트를 조회하면 지도에 해당 리스트의 맛집들이 핀이 되어 조회가 된다.
-- 소셜 로그인으로 로그인을 구현한다.
+- 관리자는 회원 정보를 전체조회할 수 있다.
+- 전체조회 시 필터링처리를 할 수 있고 정렬을 할 수 있다.
+- 다른 회원을 검색할 수 있으며, 이 때 보이는 정보는 다르다.
+- 관리자는 회원의 상세정보롤 조회할 수 있다.
+- 회원은 자신과 다른 회원의 상세정보를 조회할 수 있으며, 이 때 보이는 정보는 서로 다르다.
+- 비밀번호, 닉네임, 휴대폰번호의 회원정보를 수정할 수 있다.
+- 이미 사용중인 닉네임으로는 수정할 수 없다.
+- 같은 비밀번호와 닉네임으로는 수정할 수 없다.
+- 회원 탈퇴를 할 수 있다.
+
+### 2-6. 신고, 패널티 부가 기능
+
+### 2-7. 인기 회원 선정, 활동 등급 부여
+
+
 
 ## 3. 산출물
 
@@ -119,6 +131,8 @@ MAT.zip은 요즘 아주 핫한 NETFLIX 예능! 요리 계급 전쟁 '흑백 요
 - [matzip_ddl.sql](assets%2Fimages%2Fddl%2Fmatzip_ddl.sql)
 
 ### 3-5. REST API 설계 문서(Swagger 등)
+
+[api-docs.json](assets/api-docs/api-docs.json)
 
 ### 3-6. 테스트 결과 보고서
 
@@ -221,6 +235,111 @@ MAT.zip은 요즘 아주 핫한 NETFLIX 예능! 요리 계급 전쟁 '흑백 요
 
 </div>
 </details>
+
+<details>
+  <summary>회원관리</summary>
+  <div>
+    <details>
+      <summary>1. 회원가입(비회원)</summary>
+      <ul>
+        <li>실패(이메일 인증부터 해야함)</li>
+
+![회원관리](assets/images/test/users/createUser_Fail_emailVerifiedFirst.jpeg)
+<li>이메일 중복체크</li>
+
+![회원관리](assets/images/test/users/createUser_chkDuplicateEmail.jpeg)
+<li>이메일발송</li>
+
+![회원관리](assets/images/test/users/createUser_SendEmail.jpeg)
+<li>이메일인증</li>
+
+![회원관리](assets/images/test/users/createUser_VerifiedEmail.jpeg)
+<li>회원가입완료</li>
+
+![회원관리](assets/images/test/users/createUser_Success.jpeg)
+</ul>
+</details>
+<details>
+<summary>2. 로그인/로그아웃</summary>
+<ul>
+<li>로그인</li>
+
+![회원관리](assets/images/test/users/loginUser.jpeg)
+<li>로그아웃</li>
+
+![회원관리](assets/images/test/users/logout.jpeg)
+</ul>
+</details>
+<details>
+<summary>3. 회원정보수정(회원)</summary>
+<ul>
+<li>닉네임 중복체크</li>
+
+![회원관리](assets/images/test/users/updateUser_Fail_chkDuplicateNickname.jpeg)
+<li>같은 비밀번호로 수정안됨</li>
+
+![회원관리](assets/images/test/users/updateUser_Fail_NotOldPw.jpeg)
+<li>수정완료</li>
+
+![회원관리](assets/images/test/users/updateUser_Success.jpeg)
+</ul>
+</details>
+<details>
+<summary>4. 회원전체조회(관리자만 가능)</summary>
+<ul>
+<li>실패(회원)</li>
+
+![회원관리](assets/images/test/users/userList_Fail_User.jpeg)
+<li>관리자</li>
+
+![회원관리](assets/images/test/users/userListForAdmin.jpeg)
+<li>관리자+필터링, 정렬</li>
+
+![회원관리](assets/images/test/users/userListForAdmin_FilteringnSort.jpeg)
+</ul>
+</details>
+<details>
+<summary>5. 회원검색(관리자, 회원)</summary>
+<ul>
+<li>회원</li>
+
+![회원관리](assets/images/test/users/searchUserForUser.jpeg)
+<li>회원+정렬</li>
+
+![회원관리](assets/images/test/users/searchUserForUser_Sort.jpeg)
+<li>관리자</li>
+
+![회원관리](assets/images/test/users/searchUserForAdmin.jpeg)
+</ul>
+</details>
+<details>
+<summary>6. 회원상세조회(관리자, 회원자신, 다른회원)</summary>
+<ul>
+<li>회원자신(이름과 번호 보임)</li>
+
+![회원관리](assets/images/test/users/userDetailForSelf.jpeg)
+<li>다른 회원(닉네임, 등급, 인기회원 여부, 팔로잉/팔로워 수)</li>
+
+![회원관리](assets/images/test/users/userDetailForOther.jpeg)
+<li>관리자</li>
+
+![회원관리](assets/images/test/users/userDetailForAdmin.jpeg)
+</ul>
+</details>
+<details>
+<summary>7. 회원탈퇴</summary>
+<ul>
+<li>실패(비밀번호 불일치)</li>
+
+![회원관리](assets/images/test/users/userDetailForAdmin.jpeg)
+<li>성공</li>
+
+![회원관리](assets/images/test/users/deleteUser_success.jpeg)
+</ul>
+</details>
+  </div>
+</details>
+
 
 
 ### 3-7. MSA 아키텍처 구조도
