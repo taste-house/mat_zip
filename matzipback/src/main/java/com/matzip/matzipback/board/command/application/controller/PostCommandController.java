@@ -2,8 +2,10 @@ package com.matzip.matzipback.board.command.application.controller;
 
 import com.matzip.matzipback.board.command.application.dto.PostAndTagRequestDTO;
 import com.matzip.matzipback.board.command.application.service.PostCommandService;
+import com.matzip.matzipback.responsemessage.SuccessResMessage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 //import com.google.gson.JsonObject;
 //import org.apache.commons.io.FileUtils;
@@ -12,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+
+import static com.matzip.matzipback.responsemessage.SuccessCode.BASIC_DELETE_SUCCESS;
+import static com.matzip.matzipback.responsemessage.SuccessCode.BASIC_UPDATE_SUCCESS;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +31,7 @@ public class PostCommandController {
     @PostMapping("/posts")
     @Operation(summary = "게시글 등록", description = "게시글을 등록한다.")
     public ResponseEntity<Void> registPost(
-            @RequestBody PostAndTagRequestDTO newPost    // 게시글 정보 + 태그 정보
+            @Valid @RequestBody PostAndTagRequestDTO newPost    // 게시글 정보 + 태그 정보
     ){
 
         // 게시글 등록
@@ -81,26 +86,26 @@ public class PostCommandController {
     /* 2. 게시글 수정 */
     @PutMapping("/posts/{postSeq}")
     @Operation(summary = "게시글 수정", description = "게시글을 수정한다.")
-    public ResponseEntity<Void> updatePost(
+    public ResponseEntity<SuccessResMessage> updatePost(
             @PathVariable Long postSeq,
-            @RequestBody PostAndTagRequestDTO updatedPost
+            @Valid @RequestBody PostAndTagRequestDTO updatedPost
     ) {
 
         // 게시글 수정
         postCommandService.updatePost(postSeq, updatedPost);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok(new SuccessResMessage(BASIC_UPDATE_SUCCESS));
     }
 
     /* 3. 게시글 삭제 */
     @DeleteMapping("/posts/{postSeq}")
     @Operation(summary = "게시글 삭제", description = "게시글을 삭제한다.")
-    public ResponseEntity<Void> deletePost(@PathVariable Long postSeq) {
+    public ResponseEntity<SuccessResMessage> deletePost(@PathVariable Long postSeq) {
 
         // 게시글 삭제
         postCommandService.deletePost(postSeq);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok(new SuccessResMessage(BASIC_DELETE_SUCCESS));
     }
 
 }
