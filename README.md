@@ -49,6 +49,18 @@ MAT.zip은 요즘 아주 핫한 NETFLIX 예능! 요리 계급 전쟁 '흑백 요
 ## 2. 프로젝트 주요 기능
 ### 2-1. 맛집 리스트 생성 및 맛집(음식점) 저장
 
+- 맛집 리스트 목록을 조회할 수 있다.
+- 맛집 리스트 목록의 리스트 순서를 수정할 수 있다.
+- 맛집 리스트를 상세조회 할 수 있다.
+- 맛집 리스트를 등록할 수 있다.
+- 맛집 리스트를 수정할 수 있다.
+- 맛집 리스트를 삭제할 수 있다.
+- 리스트에 댓글을 추가할 수 있다.
+- 리스트에 단 댓글을 수정할 수 있다.
+- 리스트에 단 댓글을 삭제할 수 있다.
+- 리스트에 맛집과 맛집에 대한 코멘트를 추가할 수 있다.
+- 리스트에 등록된 맛집 코멘트를 수정할 수 있다.
+- 리스트에 등록된 맛집을 삭제할 수 있다.
 ### 2-2. 맛집 리뷰 등록
 
 ### 2-3. 게시판 
@@ -59,8 +71,8 @@ MAT.zip은 요즘 아주 핫한 NETFLIX 예능! 요리 계급 전쟁 '흑백 요
 
 ### 2-6. 인기 회원 선정, 활동 등급 부여
 
-- 맛집 리스트를 만들 수 있음
-- 나의 맛집 리스트를 게시판에 공유할 수 있음
+- 맛집 리스트를 만들 수 있다
+- 나의 맛집 리스트를 게시판에 공유할 수 있다.
 - 나의 맛집 리스트를 다른 유저가 볼 수 있게 한다.
 - 나의 맛집 리스트를 친구가 추가할 수 있다.
 - 친구의 맛집 리스트를 조회하고 추가할 수 있다.
@@ -109,6 +121,57 @@ MAT.zip은 요즘 아주 핫한 NETFLIX 예능! 요리 계급 전쟁 '흑백 요
 ### 3-5. REST API 설계 문서(Swagger 등)
 
 ### 3-6. 테스트 결과 보고서
+
+<details>
+<summary>리스트 서랍</summary>
+<div markdown="1">
+
+![리스트 서랍](assets/images/test/listBox/findMyListBox.png)
+![리스트 서랍](assets/images/test/listBox/findOtherListBox.png)
+![리스트 서랍](assets/images/test/listBox/updateListBox.png)
+
+</div>
+</details>
+
+<details>
+<summary>리스트</summary>
+<div markdown="1">
+
+![리스트](assets/images/test/list/registList.png)
+![리스트](assets/images/test/list/updateList.png)
+![리스트](assets/images/test/list/deleteList.png)
+![리스트](assets/images/test/list/findListDetail.png)
+![리스트](assets/images/test/list/registListLike.png)
+
+</div>
+</details>
+
+<details>
+<summary>리스트 댓글</summary>
+<div markdown="1">
+
+![리스트 댓글](assets/images/test/listComment/registListComment.png)
+![리스트 댓글](assets/images/test/listComment/updateListComment.png)
+![리스트 댓글](assets/images/test/listComment/deleteListComment.png)
+![리스트 댓글](assets/images/test/listComment/registListCommentLike.png)
+
+
+</div>
+</details>
+
+<details>
+<summary>맛집</summary>
+<div markdown="1">
+
+![맛집](assets/images/test/matzip/registMatzip.png)
+![맛집](assets/images/test/matzip/updateMatzip.png)
+![맛집](assets/images/test/matzip/deleteMatzip.png)
+![맛집](assets/images/test/matzip/findMatzip.png)
+![맛집](assets/images/test/matzip/collectMatzip.png)
+
+</div>
+</details>
+
 <details>
 <summary>게시글</summary>
 <div markdown="1">
@@ -119,7 +182,7 @@ MAT.zip은 요즘 아주 핫한 NETFLIX 예능! 요리 계급 전쟁 '흑백 요
 ![게시글](assets/images/test/post/searchPost.jpeg)
 ![게시글](assets/images/test/post/postListByCategory.jpeg)
 ![게시글](assets/images/test/post/getPostDetail.jpeg)
-![게시글](assets/images/test/post/getPopularTagByCategory.jpeg)
+![게시글](assets/images/test/post/getPopularTagsByCategory.jpeg)
 ![게시글](assets/images/test/post/getTagKeywords.jpeg)
 
 </div>
