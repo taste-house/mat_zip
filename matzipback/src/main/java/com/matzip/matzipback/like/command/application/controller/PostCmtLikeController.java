@@ -21,10 +21,8 @@ public class PostCmtLikeController {
     // 게시글 댓글 좋아요
     @PostMapping("/{postSeq}/postcomment/{postCommentSeq}/like")
     public ResponseEntity<SuccessResMessage> savePostCmtLike(
-            @PathVariable Long postSeq,
             @PathVariable Long postCommentSeq) {
          PostCmtLikeReqDTO postCmtLikeReqDTO = new PostCmtLikeReqDTO();
-         postCmtLikeReqDTO.setPostSeq(postSeq);
          postCmtLikeReqDTO.setPostCommentSeq(postCommentSeq);
 
          boolean savedPostCmtLike = postCmtLikeService.savePostCmtLike(postCmtLikeReqDTO);
