@@ -1,5 +1,6 @@
 package com.matzip.matzipback.matzipList.command.application.service;
 
+import com.matzip.matzipback.common.util.CustomUserUtils;
 import com.matzip.matzipback.exception.ErrorCode;
 import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.matzipList.command.application.dto.DeleteListRequest;
@@ -27,10 +28,8 @@ public class ListCommandService {
     public Long createList(CreateListRequest listRequest) {
 
         // 로그인한 사람의 유저 시퀀스를 가져오는 기능(권한이 들어있는 유저 시퀀스)
-//        Long listUserSeq = CustomUserUtils.getCurrentUserSeq();
+        Long listUserSeq = CustomUserUtils.getCurrentUserSeq();
 
-        // 테스트용 코드 생성 (권한이 없는 유저 시퀀스)
-        long listUserSeq = 4L;
         // 특정 유저의 리스트 서랍에 있는 리스트 카운트
         long countListLevel = listDomainRepository.countByListUserSeq(listUserSeq);
 
@@ -64,10 +63,7 @@ public class ListCommandService {
     public Long updateList(UpdateListRequest updateListRequest) {
 
         //로그인한 사람의 유저 시퀀스를 가져오는 기능(권한이 들어있는 유저 시퀀스)
-//        Long listUserSeq = CustomUserUtils.getCurrentUserSeq();
-
-        // 테스트용 코드 생성
-        long listUserSeq = 4L;
+        Long listUserSeq = CustomUserUtils.getCurrentUserSeq();
 
         return domainListUpdateService.updateList(updateListRequest, listUserSeq);
 
