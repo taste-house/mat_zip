@@ -93,5 +93,7 @@
         FROM review
         WHERE
             restaurant_seq = #{restaurantSeq}
+        AND
+            review_status = "active"
     </select>
 </mapper>
