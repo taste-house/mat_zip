@@ -28,7 +28,7 @@ public class ListCommandController {
     @Operation(summary = "리스트 등록", description = "리스트를 등록한다.")
     public ResponseEntity<SuccessResMessage> createList(@Valid @RequestBody CreateListRequest listRequest){
 
-        Long listSeq = listCommandService.createList(listRequest);
+        listCommandService.createList(listRequest);
 
         return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
     }
@@ -48,7 +48,7 @@ public class ListCommandController {
     @Operation(summary = "리스트 수정", description = "리스트를 수정한다.")
     public ResponseEntity<SuccessResMessage> updateList(@Valid @RequestBody UpdateListRequest updateListRequest){
 
-        Long listSeq = listCommandService.updateList(updateListRequest);
+        listCommandService.updateList(updateListRequest);
 
         return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_UPDATE_SUCCESS));
     }
