@@ -1,15 +1,13 @@
 package com.matzip.matzipback.matzipList.command.application.dto;
 
-
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class DeleteListCmtRequset {
+public class DeleteListRequest {
+
+    @NotNull(message = "리스트 고유번호가 Null이면 안됩니다.")
     private Long listSeq;
-    @NotNull
-    private Long listCommentSeq;
-    private Long listCommentUserSeq;
 }

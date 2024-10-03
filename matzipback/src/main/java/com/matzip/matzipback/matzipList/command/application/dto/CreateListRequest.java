@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CreateListRequest {
 
-    @NotBlank
+    @NotBlank(message = "리스트 제목이 Blank이면 안됩니다.")
     private final String listTitle;
-    @NotBlank
+    @NotBlank(message = "리스트 내용이 Blank이면 안됩니다.")
     private final String listContent;
 
 }

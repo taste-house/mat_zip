@@ -2,45 +2,55 @@ package com.matzip.matzipback.matzipList.command.application.controller;
 
 
 import com.matzip.matzipback.matzipList.command.application.dto.CreateListRequest;
-import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequset;
+import com.matzip.matzipback.matzipList.command.application.dto.DeleteListRequest;
+import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequest;
 import com.matzip.matzipback.matzipList.command.application.service.ListCommandService;
+import com.matzip.matzipback.responsemessage.SuccessCode;
+import com.matzip.matzipback.responsemessage.SuccessResMessage;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Tag(name = "List", description = "리스트")
 public class ListCommandController {
 
     private final ListCommandService listCommandService;
 
     // 리스트 등록
+    // whoo 1차 수정
     @PostMapping("/list")
-    public ResponseEntity<Void> createList(@RequestBody CreateListRequest listRequest){
+    @Operation(summary = "리스트 등록", description = "리스트를 등록한다.")
+    public ResponseEntity<SuccessResMessage> createList(@Valid @RequestBody CreateListRequest listRequest){
 
-        Long listSeq = listCommandService.createList(listRequest);
+        listCommandService.createList(listRequest);
 
-        return ResponseEntity.created(URI.create("/api/v1/list" + listSeq)).build();
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
     }
+
     // 리스트 삭제
-    @DeleteMapping("/list/{listSeq}")
-    public ResponseEntity<Void> deleteList(@PathVariable Long listSeq){
-        listCommandService.deleteList(listSeq);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/list")
+    @Operation(summary = "리스트 삭제", description = "리스트를 삭제한다.")
+    public ResponseEntity<SuccessResMessage> deleteList(@Valid @RequestBody DeleteListRequest deleteListRequest){
+
+        listCommandService.deleteList(deleteListRequest);
+
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_DELETE_SUCCESS));
     }
 
     // 리스트 수정
     @PutMapping("/list")
-    public ResponseEntity<Void> updateList(@Valid @RequestBody UpdateListRequset updateListRequset){
+    @Operation(summary = "리스트 수정", description = "리스트를 수정한다.")
+    public ResponseEntity<SuccessResMessage> updateList(@Valid @RequestBody UpdateListRequest updateListRequest){
 
-        Long listSeq = listCommandService.updateList(updateListRequset);
+        listCommandService.updateList(updateListRequest);
 
-        return ResponseEntity.ok().location(URI.create("/api/v1/list" + listSeq)).build();
-
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_UPDATE_SUCCESS));
     }
 
 }

@@ -1,6 +1,6 @@
 package com.matzip.matzipback.matzipList.command.domain.service;
 
-import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequset;
+import com.matzip.matzipback.matzipList.command.application.dto.UpdateListRequest;
 import com.matzip.matzipback.matzipList.command.domain.aggregate.MyList;
 import com.matzip.matzipback.matzipList.command.domain.repository.ListDomainRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,16 +15,16 @@ public class DomainListUpdateService {
     private final ListDomainRepository listDomainRepository;
 
 
-    public long updateList(UpdateListRequset updateListRequset, long listUserSeq) {
+    public long updateList(UpdateListRequest updateListRequest, long listUserSeq) {
 
-        Long listSeq = updateListRequset.getListSeq();
+        Long listSeq = updateListRequest.getListSeq();
 
         MyList existList = listDomainRepository.findById(listSeq)
                 .orElseThrow();
 
-        modelMapper.map(updateListRequset, existList);
-        existList.updateListTitle(updateListRequset.getListTitle());
-        existList.updateListContent(updateListRequset.getListContent());
+        modelMapper.map(updateListRequest, existList);
+        existList.updateListTitle(updateListRequest.getListTitle());
+        existList.updateListContent(updateListRequest.getListContent());
 
 
         listDomainRepository.save(existList);

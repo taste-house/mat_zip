@@ -8,4 +8,6 @@ public interface ReviewRepository {
     Review save(Review review);
 
     Optional<Review> findById(Long reviewSeq);
+
+    void deleteById(Long reviewSeq);
 }

@@ -61,15 +61,6 @@ public class Report {
         this.reportContent = listCmtReportReqDTO.getReportContent();
     }
 
-
-
-    public static Report getReportSeq(Long reporterUserSeq, Long reportedUserSeq, PostReportReqDTO postReportReqDTO) {
-        return new Report(reporterUserSeq, reportedUserSeq, postReportReqDTO);
-    }
-
-
-
-
     public static Report getListReportSeq(Long reporterUserSeq, Long reportedUserSeq, ListReportReqDTO listReportReqDTO) {
         return new Report(reporterUserSeq, reportedUserSeq, listReportReqDTO);
     }

@@ -1,6 +1,7 @@
 package com.matzip.matzipback.matzipList.command.domain.aggregate;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -63,4 +64,7 @@ public class MyList {
     }
 
 
+    public void updateListLevel(int listLevel) {
+        this.listLevel = listLevel;
+    }
 }
