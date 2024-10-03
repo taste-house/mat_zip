@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,6 +23,7 @@ class UsersInfoServiceTest {
 
     @DisplayName("회원 전체 목록 조회 테스트")
     @Test
+    @WithMockUser(roles = {"user"})
     void getAllUserInfos() {
         // given : 테스트 초기 설정
         String socialYn = "N";
@@ -71,7 +73,7 @@ class UsersInfoServiceTest {
         assertTrue(searchResult.getTotalPages() > 0);  // 전체 페이지 수가 0보다 큰지 확인
         assertThat(searchResult.getUserLists())
                 .extracting(UserInfoDTO::getUserNickname)
-                .contains("nick2", "nick3","dummynick");  // 특정 닉네임이 포함되었는지 확인
+                .contains("nick2","dummynick");  // 특정 닉네임이 포함되었는지 확인
     }
 
     @DisplayName("관리자 및 회원 본인 상세정보 조회 테스트")

@@ -148,6 +148,7 @@ public class UsersCommandService {
         }
 
         usersDomainRepository.delete(user);
+        log.info("회원 상태가 inactive로 변경되었습니다.");
 
     }
 
