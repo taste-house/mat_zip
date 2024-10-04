@@ -70,4 +70,7 @@ public class Users {
         this.businessVerifiedYn = isVerified ? "Y" : "N";
     }
 
+    public void updateUserStatus(UserStatus status) {
+        this.userStatus = status;
+    }
 }

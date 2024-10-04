@@ -67,4 +67,8 @@ public class MyList {
     public void updateListLevel(int listLevel) {
         this.listLevel = listLevel;
     }
+
+    public void updateListStatus(String status) {
+        this.listStatus = status;
+    }
 }
