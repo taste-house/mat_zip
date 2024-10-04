@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/back/api/vi")
 public class LikeController {
 
     private final LikeQueryService likeQueryService;

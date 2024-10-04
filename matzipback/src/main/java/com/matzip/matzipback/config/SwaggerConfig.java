@@ -79,7 +79,7 @@ public class SwaggerConfig {
                     operation.setSummary("로그인");
                     operation.setDescription("로그인 기능");
                     PathItem pathItem = new PathItem().post(operation);
-                    openAPI.getPaths().addPathItem("/api/v1/auth/login", pathItem);
+                    openAPI.getPaths().addPathItem("/back/api/vi/auth/login", pathItem);
                 }
             }
         };

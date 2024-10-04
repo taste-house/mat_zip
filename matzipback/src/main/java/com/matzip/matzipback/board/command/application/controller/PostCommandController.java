@@ -20,7 +20,7 @@ import static com.matzip.matzipback.responsemessage.SuccessCode.BASIC_UPDATE_SUC
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/back/api/vi")
 @Tag(name = "Post", description = "게시글")
 public class PostCommandController {
 
@@ -38,7 +38,7 @@ public class PostCommandController {
         Long postSeq = postCommandService.createPost(newPost);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .location(URI.create("/api/v1/post/" + postSeq))    // 리소스가 생성된 위치
+                .location(URI.create("/back/api/vi/post/" + postSeq))    // 리소스가 생성된 위치
                 .build();
 
     }

@@ -1,0 +1,10 @@
+# Eureka Server 에서 일반적으로 사용하는 port
+server:
+  port: 8761
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka

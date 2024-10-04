@@ -1,0 +1,46 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matzip.matzipuser.users.query.mapper.UsersFollowMapper">
+
+    <select id="searchFollowUsersByUserSeqAndPage" resultType="com.matzip.matzipuser.users.query.dto.FollowingUsersDTO">
+        SELECT u.user_seq
+             , u.user_nickname
+          FROM users u
+          JOIN follow f ON u.user_seq = f.followed_user_seq
+         WHERE f.following_user_seq = #{followingUserSeq}
+           AND u.user_status = 'active'
+         ORDER BY u.user_nickname
+         LIMIT #{offset}, #{size};
+    </select>
+
+    <select id="countFollowing" resultType="long">
+        SELECT COUNT(*)
+          FROM users u
+          JOIN follow f ON u.user_seq = f.followed_user_seq
+         WHERE f.following_user_seq = #{followingUserSeq}
+           AND u.user_status = 'active'
+    </select>
+
+    <select id="searchFollowerUsersByUserSeqAndPage" resultType="com.matzip.matzipuser.users.query.dto.FollowingUsersDTO">
+        SELECT u.user_seq
+             , u.user_nickname
+          FROM users u
+                 JOIN follow f ON u.user_seq = f.following_user_seq
+         WHERE f.followed_user_seq = #{followedUserSeq}
+           AND u.user_status = 'active'
+         ORDER BY u.user_nickname
+         LIMIT #{offset}, #{size};
+    </select>
+
+    <select id="countFollower" resultType="long">
+        SELECT COUNT(*)
+          FROM users u
+          JOIN follow f ON u.user_seq = f.following_user_seq
+         WHERE f.followed_user_seq = #{followedUserSeq}
+           AND u.user_status = 'active'
+    </select>
+
+
+</mapper>

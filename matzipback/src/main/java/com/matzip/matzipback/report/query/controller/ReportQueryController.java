@@ -16,7 +16,7 @@ import static com.matzip.matzipback.exception.ErrorCode.UNAUTHORIZED_REQUEST;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/back/api/vi")
 @Tag(name = "Report", description = "신고")
 public class ReportQueryController {
 

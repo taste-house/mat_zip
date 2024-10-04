@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/back/api/vi")
 public class ActiveLevelQueryController {
 
     private final ActiveLevelQueryService activeLevelQueryService;

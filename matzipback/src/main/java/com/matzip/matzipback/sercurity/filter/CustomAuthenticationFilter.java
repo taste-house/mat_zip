@@ -18,7 +18,7 @@ public class CustomAuthenticationFilter extends AbstractAuthenticationProcessing
 
     // "api/v1/auth/login, "POST" 을 가로챌거임
     public CustomAuthenticationFilter() {
-        super(new AntPathRequestMatcher("/api/v1/auth/login", "POST"));
+        super(new AntPathRequestMatcher("/back/api/vi/auth/login", "POST"));
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/back/api/vi")
 public class ListCmtCommandController {
 
     private final ListCmtCommandService listCmtCommandService;
@@ -24,7 +24,7 @@ public class ListCmtCommandController {
 
         Long listCmtSeq = listCmtCommandService.createListCmt(listCmtRequest);
 
-        return ResponseEntity.created(URI.create("/api/v1/list/comment" + listCmtSeq)).build();
+        return ResponseEntity.created(URI.create("/back/api/vi/list/comment" + listCmtSeq)).build();
     }
 
     // 리스트 댓글 삭제
@@ -41,6 +41,6 @@ public class ListCmtCommandController {
     public ResponseEntity<Void> updateListCmt(@Valid @RequestBody UpdateListCmtRequest updateListCmtRequest){
         Long listCmtSeq = listCmtCommandService.updateListCmt(updateListCmtRequest);
 
-        return ResponseEntity.created(URI.create("/api/v1/list/comment" + listCmtSeq)).build();
+        return ResponseEntity.created(URI.create("/back/api/vi/list/comment" + listCmtSeq)).build();
     }
 }

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.matzip.matzipuser.report.query.mapper.ReportMapper">
+
+    <!-- 신고 검색 및 조회 -->
+    <select id="selectReports" resultType="com.matzip.matzipuser.report.query.dto.ReportDTO">
+        SELECT
+            report_seq,
+            category,
+            seq,
+            reporter_user_seq,
+            usersA.user_nickname AS reporter_user_name,
+            reported_user_seq,
+            usersB.user_nickname AS reported_user_name,
+            LEFT(report_content, 20) AS report_content,
+            penalty_seq,
+            report_status,
+            report_time,
+            report_finished_time
+        FROM report_view
+        JOIN users usersA ON (report_view.reporter_user_seq = usersA.user_seq)
+        JOIN users usersB ON (report_view.reported_user_seq = usersB.user_seq)
+        WHERE TRUE
+        <if test="reporterUserSeq != null">
+            AND reporter_user_seq = #{reporterUserSeq}
+        </if>
+        <if test="reportedUserSeq != null">
+            AND reported_user_seq = #{reportedUserSeq}
+        </if>
+        <if test="reportStatus != null">
+            AND report_status = #{reportStatus}
+        </if>
+        <if test="category != null">
+            AND category = #{category}
+        </if>
+        <if test="sequence != null">
+            AND seq = #{sequence}
+        </if>
+        ORDER BY report_seq DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <!-- 신고 사유 조회 -->
+    <select id="selectReportReasons" resultType="com.matzip.matzipuser.report.query.dto.ReasonDTO">
+        SELECT
+            reason_seq,
+            reason_name
+        FROM report_reason
+        JOIN reasons USING (reason_seq)
+        WHERE report_reason.report_seq = #{reportSeq}
+    </select>
+
+    <!-- 신고 검색 및 조회의 페이징을 위한 쿼리 -->
+    <select id="countReports" resultType="long">
+        SELECT
+            COUNT(*)
+        FROM report_view
+        WHERE TRUE
+        <if test="reporterUserSeq != null">
+            AND reporter_user_seq = #{reporterUserSeq}
+        </if>
+        <if test="reportedUserSeq != null">
+            AND reported_user_seq = #{reportedUserSeq}
+        </if>
+        <if test="reportStatus != null">
+            AND report_status = #{reportStatus}
+        </if>
+        <if test="category != null">
+            AND category = #{category}
+        </if>
+        <if test="sequence != null">
+            AND seq = #{sequence}
+        </if>
+    </select>
+
+    <!-- 신고 상세 조회 -->
+    <select id="selectReportBySeq" resultType="com.matzip.matzipuser.report.query.dto.ReportDTO">
+        SELECT
+            report_seq,
+            category,
+            seq,
+            reporter_user_seq,
+            usersA.user_nickname AS reporter_user_name,
+            reported_user_seq,
+            usersB.user_nickname AS reported_user_name,
+            report_content,
+            penalty_seq,
+            report_status,
+            report_time,
+            report_finished_time
+        FROM report_view
+        JOIN users usersA ON (report_view.reporter_user_seq = usersA.user_seq)
+        JOIN users usersB ON (report_view.reported_user_seq = usersB.user_seq)
+        WHERE report_seq = #{reportSeq}
+    </select>
+
+</mapper>

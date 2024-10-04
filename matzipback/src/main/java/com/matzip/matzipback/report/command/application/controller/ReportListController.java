@@ -19,7 +19,7 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/back/api/vi")
 public class ReportListController {
 
     private final ReportListService reportListService;
@@ -30,7 +30,7 @@ public class ReportListController {
 
         Report saveListReport = reportListService.saveListReport(listReportReqDTO);
 
-        String redirectURI = "/api/v1/list/report" + saveListReport.getListSeq();
+        String redirectURI = "/back/api/vi/list/report" + saveListReport.getListSeq();
 
         if(saveListReport != null){
             return ResponseEntity.status(HttpStatus.CREATED).location(URI.create(redirectURI)).build();
@@ -45,7 +45,7 @@ public class ReportListController {
 
         Report saveListCmtReport = reportListService.saveListCmtReport(listCmtReportReqDTO);
 
-        String redirectURI = "/api/v1/listCmt/report" + saveListCmtReport.getListCommentSeq();
+        String redirectURI = "/back/api/vi/listCmt/report" + saveListCmtReport.getListCommentSeq();
 
         if(saveListCmtReport != null){
             return ResponseEntity.status(HttpStatus.CREATED).location(URI.create(redirectURI)).build();

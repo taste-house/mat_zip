@@ -18,6 +18,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -41,9 +42,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auths -> {
                     // 회원가입 Post 는 인증 필요 없음
                     auths.requestMatchers(
-                            new AntPathRequestMatcher("/api/v1/auth/register"),
-                            new AntPathRequestMatcher("/api/v1/**"),
-                            new AntPathRequestMatcher("/"),
+                            new AntPathRequestMatcher("/back/api/vi/auth/register"),
+                            new AntPathRequestMatcher("/back/api/vi/**"),
+                            new AntPathRequestMatcher("/**"),
                             new AntPathRequestMatcher("/swagger-ui/index.html"),
                             new AntPathRequestMatcher("/swagger-ui/**"),
                             new AntPathRequestMatcher("/v3/api-docs/**")
@@ -71,7 +72,7 @@ public class SecurityConfig {
                 }
         );
 
-
+        http.cors(AbstractHttpConfigurer::disable);
 
         return http.build();
 

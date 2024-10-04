@@ -1,6 +1,6 @@
 # 서버 포트 번호
 server:
-  port: 8085
+  port: 0
 
 # mybatis, jpa
 spring:
@@ -8,6 +8,10 @@ spring:
     name: matzipback
   config:
     import: optional:file:.env[.properties]
+
+  cloud:
+    config:
+      enabled: false
   datasource:
     url: jdbc:mariadb://${MARIADB_HOST}:${MARIADB_PORT}/${MARIADB_DATABASE}
     username: ${MARIADB_USER}
@@ -46,16 +50,28 @@ spring:
         dialect: org.hibernate.dialect.MariaDBDialect
         format_sql: true
 
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
 mybatis:
   mapper-locations: classpath:mappers/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
 
 springdoc:
+  api-docs:
+    path: /back/v3/api-docs
   swagger-ui:
-    path: /  # swagger-ui 접근 경로에 대한 별칭, 해당 주소로 접속해도 http://localhost:8080/swagger-ui/index.html로 리다이렉션 됨.
+    path: /back/  # swagger-ui 접근 경로에 대한 별칭, 해당 주소로 접속해도 http://localhost:8080/swagger-ui/index.html로 리다이렉션 됨.
     operations-sorter: method
     doc-expansion: none
+
 
 token:
   expiration_time: 7200000

@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matzip.matzipuser.like.query.mapper.LikeQueryMapper">
+
+    <select id="findLikeByUserSeqAndPostCommentSeq" resultType="long">
+        SELECT like_seq
+          FROM `like`
+         WHERE post_comment_seq = #{postCommentSeq}
+           AND like_user_seq = #{likeUserSeq}
+
+    </select>
+
+    <select id="findMyLikedPost" resultType="com.matzip.matzipuser.like.query.dto.LikedPostDTO">
+        SELECT post_title
+             , user_nickname
+             , post_updated_time
+          FROM (SELECT p.post_title
+                     , p.post_user_seq
+                     , l.like_user_seq
+                     , IFNULL(p.post_created_time, post_updated_time) post_updated_time
+                 FROM post p
+                 JOIN `like` l ON p.post_seq = l.post_seq
+                WHERE p.post_status = 'active') k
+          JOIN users u ON k.post_user_seq = u.user_seq
+         WHERE k.like_user_seq = #{userSeq}
+    </select>
+
+</mapper>

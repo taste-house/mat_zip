@@ -1,0 +1,27 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matzip.matzipuser.board.query.mapper.PostCmtMapper">
+
+    <select id="getPostCmtsByUserSeq" resultType="com.matzip.matzipuser.board.query.dto.PostCommentDTO">
+        SELECT
+            p.post_seq
+          , p.post_title
+          , c.post_comment_content
+          , u.user_nickname
+          , IFNULL(c.post_comment_updated_time, c.post_comment_created_time) as lastUpdateTime
+          FROM post_comment c
+          JOIN users u ON c.post_comment_user_seq = u.user_seq
+          JOIN post p ON c.post_seq = p.post_seq
+         WHERE u.user_seq = #{userSeq}
+         LIMIT #{offset}, #{size}
+    </select>
+
+    <select id="countPostCmtsByUserSeq" parameterType="Long" resultType="long">
+        SELECT COUNT(*) AS totalCount
+        FROM post_comment
+        WHERE post_comment_user_seq = #{userSeq};
+    </select>
+
+</mapper>

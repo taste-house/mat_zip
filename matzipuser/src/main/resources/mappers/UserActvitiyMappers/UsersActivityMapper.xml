@@ -1,0 +1,43 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matzip.matzipuser.users.query.mapper.UsersActivityMapper">
+
+    <select id="countAllUsersActivity" resultType="long">
+        SELECT COUNT(*)
+          FROM user_activity ua
+          JOIN users u ON ua.activity_user_seq = u.user_seq
+        <where>
+            <if test="active == 'active'">
+                AND u.user_status = 'active'
+            </if>
+            <if test="active == 'inactive'">
+                AND u.user_status = 'inactive'
+            </if>
+        </where>
+    </select>
+
+    <select id="searchAllUsersActivity" resultType="com.matzip.matzipuser.users.query.dto.UsersActivityDTO">
+        SELECT user_seq
+             , ua.active_level_seq
+             , active_level_name
+             , activity_point
+             , user_email
+             , user_name
+             , user_nickname
+          FROM users u
+          JOIN user_activity ua ON u.user_seq = ua.activity_user_seq
+          JOIN active_level al ON ua.active_level_seq = al.active_level_seq
+        <where>
+            <if test="active == 'active'">
+                AND u.user_status = 'active'
+            </if>
+            <if test="active == 'inactive'">
+                AND u.user_status = 'inactive'
+            </if>
+        </where>
+        LIMIT #{offset}, #{size}
+    </select>
+
+</mapper>

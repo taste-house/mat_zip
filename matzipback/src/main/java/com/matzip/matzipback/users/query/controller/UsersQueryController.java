@@ -24,7 +24,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/back/api/vi")
 @Slf4j
 @Tag(name = "Users", description = "회원관리")
 public class UsersQueryController {
@@ -60,7 +60,7 @@ public class UsersQueryController {
                                                                   @RequestParam(value = "page", defaultValue = "1") Integer page,
                                                                   @RequestParam(value = "size", defaultValue = "10") Integer size) {
                                                                 //defaultValue : 기본값 설정, required = false : 파라미터 선택적(필수아님)
-        log.info("GET /api/v1/users/list - 전체 회원 정보 조회 요청");
+        log.info("GET /back/api/vi/users/list - 전체 회원 정보 조회 요청");
         AllUserInfoResponseDTO users = usersInfoService.getAllUserList(socialYn, socialSite, businessVerifiedYn, influencerYn, userStatus, orderBy, page, size);
         log.info("전체 회원 정보 조회 완료. 현재 페이지: {}, 전체 페이지 수: {}, 총 유저 수: {}",
                 users.getCurrentPage(), users.getTotalPages(), users.getTotalUsers());
@@ -86,7 +86,7 @@ public class UsersQueryController {
             @RequestParam(value = "size", defaultValue = "10") Integer size
     ) {
         //defaultValue : 기본값 설정, required = false : 파라미터 선택적(필수아님)
-        log.info("GET /api/v1/users/search - 회원 검색 조회 요청");
+        log.info("GET /back/api/vi/users/search - 회원 검색 조회 요청");
         
         String userAuth = CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority();
         AllUserInfoResponseDTO users;
@@ -108,7 +108,7 @@ public class UsersQueryController {
     @Operation(summary = "회원 상세조회", description = "관리자 또는 회원이 회원정보를 상세조회한다.")
     public ResponseEntity<?> DetailUserInfo(@PathVariable Long userSeq
     ) {
-        log.info("GET /api/v1/list/{userSeq} - 회원 상세 조회 요청 : {}", userSeq);
+        log.info("GET /back/api/vi/list/{userSeq} - 회원 상세 조회 요청 : {}", userSeq);
         String userAuth = CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority();
         Long currentUserSeq = CustomUserUtils.getCurrentUserSeq();
 //        String userAuth = "admin";

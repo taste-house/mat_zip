@@ -1,0 +1,48 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: '*'
+            allow-credentials: false
+      routes:
+        - id: MATZIPBACK
+          uri: lb://MATZIPBACK
+          predicates:
+            - Path=/back/**
+          filters:
+            - RewritePath=/(?<segment>.*), /$\{segment}
+        - id: MATZIPUSER
+          uri: lb://MATZIPUSER
+          predicates:
+            - Path=/user/**
+          filters:
+            - RewritePath=/(?<segment>.*), /$\{segment}
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
+token:
+  expiration_time: 43200000
+  secret: ${SECRET_KEY}
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+    urls:
+      - name: MatzipBack
+        url: http://localhost:8000/back/v3/api-docs
+      - name: MatzipUser
+        url: http://localhost:8000/user/v3/api-docs
+    operations-sorter: method
+    doc-expansion: none

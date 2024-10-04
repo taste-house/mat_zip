@@ -13,7 +13,7 @@ import static com.matzip.matzipback.responsemessage.SuccessCode.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/back/api/vi")
 public class PostCmtCommandController {
 
     private final PostCommentService postCommentService;
