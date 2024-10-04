@@ -132,7 +132,7 @@ MAT.zip은 요즘 아주 핫한 NETFLIX 예능! 요리 계급 전쟁 '흑백 요
 [api-docs.json](assets/api-docs/api-docs.json)
 
 <details>
-<summary>리스트 서랍</summary>
+<summary>REST API 설계 문서</summary>
 <div markdown="1">
 
 ![REST API 설계 문서](assets/images/API/API.png)
