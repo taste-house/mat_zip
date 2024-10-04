@@ -72,8 +72,6 @@ public class SecurityConfig {
                 }
         );
 
-        http.cors(AbstractHttpConfigurer::disable);
-
         return http.build();
 
     }

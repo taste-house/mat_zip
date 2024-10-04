@@ -1,5 +1,6 @@
 package com.matzip.matzipuser.matzipList.command.domain.repository;
 
+import com.matzip.matzipuser.matzipList.command.application.dto.DeleteListCmtRequset;
 import com.matzip.matzipuser.matzipList.command.domain.aggregate.MyListComment;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

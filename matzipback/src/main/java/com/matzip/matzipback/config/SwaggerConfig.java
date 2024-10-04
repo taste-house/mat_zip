@@ -47,8 +47,8 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-                .title("MatZip API TEST") // API의 제목
-                .description("API Swagger 테스트") // API에 대한 설명
+                .title("MatZip Back API") // API의 제목
+                .description("맛집 백엔드 API") // API에 대한 설명
                 .version("1.0.0"); // API의 버전
     }
 

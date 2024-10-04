@@ -3,12 +3,17 @@ package com.matzip.matzipuser.matzipList.command.application.service;
 import com.matzip.matzipuser.exception.ErrorCode;
 import com.matzip.matzipuser.exception.RestApiException;
 import com.matzip.matzipuser.matzipList.command.application.dto.MatzipCollectReq;
+import com.matzip.matzipuser.matzipList.command.domain.aggregate.MyList;
 import com.matzip.matzipuser.matzipList.command.domain.aggregate.MyListMatzip;
+import com.matzip.matzipuser.matzipList.command.domain.repository.ListDomainRepository;
 import com.matzip.matzipuser.matzipList.command.domain.repository.MatzipCollectDomainRepository;
 import com.matzip.matzipuser.matzipList.command.domain.repository.MatzipDomainRepository;
+import io.jsonwebtoken.IncorrectClaimException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.jdbc.IncorrectResultSetColumnCountException;
 import org.springframework.stereotype.Service;
 
 @Service

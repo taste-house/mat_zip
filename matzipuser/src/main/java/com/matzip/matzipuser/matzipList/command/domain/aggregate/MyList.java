@@ -1,8 +1,10 @@
 package com.matzip.matzipuser.matzipList.command.domain.aggregate;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -64,5 +66,9 @@ public class MyList {
 
     public void updateListLevel(int listLevel) {
         this.listLevel = listLevel;
+    }
+
+    public void updateListStatus(String status) {
+        this.listStatus = status;
     }
 }

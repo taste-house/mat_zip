@@ -57,6 +57,10 @@ public class MyListComment {
     public void updateListCommentContent(String listCommentContent) {
         this.listCommentContent = listCommentContent;
     }
+
+    public void updateListCmtStatus(String status) {
+        this.listCommentStatus = status;
+    }
 }
 
 

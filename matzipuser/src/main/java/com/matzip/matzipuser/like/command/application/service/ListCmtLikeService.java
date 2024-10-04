@@ -1,9 +1,13 @@
 package com.matzip.matzipuser.like.command.application.service;
 
 import com.matzip.matzipuser.like.command.application.dto.ListCmtLikeReqDTO;
+import com.matzip.matzipuser.like.command.domain.aggregate.Like;
 import com.matzip.matzipuser.like.command.domain.service.ListCmtLikeDomainService;
+import com.matzip.matzipuser.like.command.domain.service.ListLikeDomainService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service

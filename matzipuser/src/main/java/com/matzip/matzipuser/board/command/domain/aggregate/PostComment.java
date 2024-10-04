@@ -57,4 +57,7 @@ public class PostComment {
         this.postCommentContent = reqPostCmtUpdateDTO.getPostCommentContent();
     }
 
+    public void updatepostCmtStatus(String status) {
+        this.postCommentStatus = status;
+    }
 }

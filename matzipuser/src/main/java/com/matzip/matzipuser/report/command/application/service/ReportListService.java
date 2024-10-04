@@ -1,16 +1,20 @@
 package com.matzip.matzipuser.report.command.application.service;
 
+import com.matzip.matzipuser.board.command.domain.service.PostDomainService;
 import com.matzip.matzipuser.matzipList.command.domain.aggregate.MyList;
 import com.matzip.matzipuser.matzipList.command.domain.aggregate.MyListComment;
 import com.matzip.matzipuser.matzipList.command.domain.service.DomainListCmtService;
 import com.matzip.matzipuser.matzipList.command.domain.service.DomainListService;
 import com.matzip.matzipuser.report.command.domain.aggregate.Report;
+import com.matzip.matzipuser.report.command.domain.repository.ListDomainRepository;
 import com.matzip.matzipuser.report.command.domain.service.ListDomainService;
 import com.matzip.matzipuser.report.command.domain.service.ReportDomainService;
 import com.matzip.matzipuser.report.command.dto.ListCmtReportReqDTO;
 import com.matzip.matzipuser.report.command.dto.ListReportReqDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

@@ -8,6 +8,5 @@ import lombok.Setter;
 public class PostCmtLikeReqDTO {
 
     private Long likeUserSeq;
-    private Long postSeq;
     private Long postCommentSeq;
 }

@@ -1,6 +1,7 @@
 package com.matzip.matzipuser.like.command.application.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,5 +1,6 @@
 package com.matzip.matzipuser.responsemessage;
 
+import com.matzip.matzipuser.exception.ErrorCode;
 import lombok.Getter;
 import lombok.Setter;
 

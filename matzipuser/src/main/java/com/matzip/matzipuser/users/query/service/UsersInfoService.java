@@ -2,6 +2,7 @@ package com.matzip.matzipuser.users.query.service;
 
 import com.matzip.matzipuser.common.util.CustomUserUtils;
 import com.matzip.matzipuser.exception.ErrorCode;
+import com.matzip.matzipuser.exception.NotFoundException;
 import com.matzip.matzipuser.exception.RestApiException;
 import com.matzip.matzipuser.users.query.dto.userInfo.AllUserInfoResponseDTO;
 import com.matzip.matzipuser.users.query.dto.userInfo.OtherUserInfoDto;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

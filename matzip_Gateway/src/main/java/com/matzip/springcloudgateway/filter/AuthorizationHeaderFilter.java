@@ -17,7 +17,6 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 
-/* API 게이트웨이의 요청을 처리하기 전에 JWT 검증 역할 수행 필터(커스텀 필터) */
 @Component
 public class AuthorizationHeaderFilter
         extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
@@ -29,7 +28,6 @@ public class AuthorizationHeaderFilter
         this.environment = environment;
     }
 
-    /* Gateway Filter를 반환하며 exchange와 chain 객체를 사용하여 요청과 응답 처리 및 다음 필터 실행 */
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {   // exchange는 request와 response가 캡슐화 된 하나의 객체
@@ -76,15 +74,10 @@ public class AuthorizationHeaderFilter
         return valid;
     }
 
-    /* Mono는 0 or 1의 객체를 비동기적으로 처리할 때 사용 (비동기 작업의 성공 or 실패를 나타내기 위한 반환 타입) */
     private Mono<Void> onError(ServerWebExchange exchange, String errorMessage) {
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.UNAUTHORIZED);
 
-        /* 상태 코드만 설정해서 에러 발생 시 바로 응답 처리 할 경우 */
-//        return response.setComplete();
-
-        /* 에러 메세지도 담아서 응답 처리 할 경우 */
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         String responseBody = "{\"error\":\"" + errorMessage + "\"}";
 

@@ -10,10 +10,11 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class PostCommentDTO {
-    private Long postCommentSeq;
-    private String userNickname;
+    private Long postSeq;
+    private String postTitle;
     private String postCommentContent;
-    private LocalDateTime createdTime;
-    private LocalDateTime lastUpdateTime;
+    private String userNickname;
+    private LocalDateTime postCommentCreatedTime;
+    private LocalDateTime postCommentUpdatedTime;
 
 }

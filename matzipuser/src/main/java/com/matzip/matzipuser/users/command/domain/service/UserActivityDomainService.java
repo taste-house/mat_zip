@@ -1,5 +1,6 @@
 package com.matzip.matzipuser.users.command.domain.service;
 
+import com.matzip.matzipuser.common.util.CustomUserUtils;
 import com.matzip.matzipuser.users.command.domain.aggregate.ActiveLevel;
 import com.matzip.matzipuser.users.command.domain.aggregate.UserActivity;
 import com.matzip.matzipuser.users.command.domain.repository.UserActivityRepository;

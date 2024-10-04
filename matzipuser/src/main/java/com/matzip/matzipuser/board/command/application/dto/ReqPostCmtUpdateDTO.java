@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 public class ReqPostCmtUpdateDTO {
 
-    private Long postSeq;
     private Long postCommentSeq;
     @NotBlank
     private String postCommentContent;

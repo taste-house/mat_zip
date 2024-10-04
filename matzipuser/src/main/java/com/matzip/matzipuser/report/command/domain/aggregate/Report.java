@@ -69,6 +69,12 @@ public class Report {
         return new Report(reporterUserSeq, reportedUserSeq, listCmtReportReqDTO);
     }
 
+    public void updateReportDetails(Long penaltySeq) {
+        this.penaltySeq = penaltySeq;
+        this.reportFinishedTime = LocalDateTime.now();
+        this.reportStatus = "penalty";
+    }
+
     /*@ManyToOne
     @JoinColumn(name = "post_seq")
     private Post postSeq; // 게시글과의 관계

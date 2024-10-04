@@ -58,4 +58,9 @@ public class Post {
         this.listSeq = listSeq;
         this.restaurantSeq = restaurantSeq;
     }
+
+    public void updatePostStatus(String status) {
+        this.postStatus = status;
+    }
+
 }

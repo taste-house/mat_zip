@@ -6,6 +6,7 @@ import com.matzip.matzipuser.restaurant.command.application.dto.RestaurantCreate
 import com.matzip.matzipuser.restaurant.command.application.dto.RestaurantUpdateRequest;
 import com.matzip.matzipuser.restaurant.command.domain.aggregate.Restaurant;
 import com.matzip.matzipuser.restaurant.command.domain.repository.RestaurantRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,6 @@
 package com.matzip.matzipuser.like.command.application.service;
 
+import com.matzip.matzipuser.common.util.CustomUserUtils;
 import com.matzip.matzipuser.like.command.application.dto.PostLikeReqDTO;
 import com.matzip.matzipuser.like.command.domain.service.PostLikeDomainService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,7 @@ public class PostLikeService {
     @Transactional
     public boolean savePostLike(PostLikeReqDTO postLikeReqDTO) {
 
-//        Long likeUserSeq = CustomUserUtils.getCurrentUserSeq();
-        long likeUserSeq = 2L;
+        Long likeUserSeq = CustomUserUtils.getCurrentUserSeq();
         postLikeReqDTO.setLikeUserSeq(likeUserSeq);
 
         // 존재하는지 검사

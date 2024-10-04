@@ -1,5 +1,7 @@
 package com.matzip.matzipuser.like.command.domain.service;
 
+import com.matzip.matzipuser.exception.ErrorCode;
+import com.matzip.matzipuser.exception.RestApiException;
 import com.matzip.matzipuser.like.command.domain.aggregate.Like;
 import com.matzip.matzipuser.like.command.domain.repository.PostCmtLikeRepository;
 import lombok.RequiredArgsConstructor;

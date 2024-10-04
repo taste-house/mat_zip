@@ -7,6 +7,7 @@ import com.matzip.matzipuser.matzipList.command.application.dto.UpdateListCmtReq
 import com.matzip.matzipuser.matzipList.command.domain.aggregate.MyListComment;
 import com.matzip.matzipuser.matzipList.command.domain.repository.ListCmtDomainRepository;
 import com.matzip.matzipuser.matzipList.command.domain.service.DomainListCmtUpdateService;
+import com.matzip.matzipuser.matzipList.command.domain.service.DomainListUpdateService;
 import com.matzip.matzipuser.matzipList.command.mapper.ListCmtMapper;
 import com.matzip.matzipuser.users.command.domain.service.UserActivityDomainService;
 import jakarta.transaction.Transactional;

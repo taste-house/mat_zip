@@ -19,6 +19,10 @@ public class EmailService {
     private final Map<String, String> verificationCodes = new HashMap<>();  // 인증 코드 저장
     private final Map<String, Boolean> emailVerifiedMap = new HashMap<>(); // 인증 성공 상태 저장
 
+    public String getVerificationCode(String email) {   // 테스트를 위해 필요
+        return verificationCodes.get(email);
+    }
+
     // 회원가입 인증코드 보내기
     public void sendSignUpEmail(String email, String name){
         String subject = "[맛zip]회원가입 인증코드입니다.";

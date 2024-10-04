@@ -1,5 +1,6 @@
 package com.matzip.matzipuser.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

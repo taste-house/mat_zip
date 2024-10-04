@@ -1,5 +1,7 @@
 package com.matzip.matzipuser.users.query.mapper;
 
+import com.matzip.matzipuser.report.query.dto.PenaltyDTO;
+import com.matzip.matzipuser.users.query.dto.userInfo.BusinessLicenseDTO;
 import com.matzip.matzipuser.users.query.dto.userInfo.OtherUserInfoDto;
 import com.matzip.matzipuser.users.query.dto.userInfo.UserDetailInfoDTO;
 import com.matzip.matzipuser.users.query.dto.userInfo.UserInfoDTO;

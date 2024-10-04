@@ -1,6 +1,7 @@
 package com.matzip.matzipuser.matzipList.command.domain.service;
 
 import com.matzip.matzipuser.matzipList.command.application.dto.UpdateMatzipRequest;
+import com.matzip.matzipuser.matzipList.command.domain.aggregate.MyList;
 import com.matzip.matzipuser.matzipList.command.domain.aggregate.MyListMatzip;
 import com.matzip.matzipuser.matzipList.command.domain.repository.ListDomainRepository;
 import com.matzip.matzipuser.matzipList.command.domain.repository.MatzipDomainRepository;

@@ -17,12 +17,14 @@ public class ReportDomainService {
     private final ModelMapper modelMapper;
 
     // 같은 유저가 똑같은 신고를 하지 못하도록 같은 신고가 있는지를 체크
-    public PtAndCmtReportReqDTO checkReportExists(PtAndCmtReportReqDTO ptAndCmtReportReqDTO) {
-         Report isExistReport = reportDomainRepository.existsByReporterUserSeqAndPostSeq(
+    public boolean checkReportExists(PtAndCmtReportReqDTO ptAndCmtReportReqDTO) {
+         boolean isExistReport = reportDomainRepository.existsByReporterUserSeqAndPostSeq(
                          ptAndCmtReportReqDTO.getReporterUserSeq(),
-                         ptAndCmtReportReqDTO.getPostSeq())
-                 .orElseThrow(() -> new RestApiException(ErrorCode.BAD_REQUEST));
-         return modelMapper.map(isExistReport, PtAndCmtReportReqDTO.class);
+                         ptAndCmtReportReqDTO.getPostSeq());
+
+         if (isExistReport) throw new RestApiException(ErrorCode.BAD_REQUEST);
+
+         return false;
     }
 
     public void saveReport(PtAndCmtReportReqDTO postCmtReportReqDTO) {
