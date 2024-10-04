@@ -28,7 +28,7 @@ CREATE TABLE `active_level` (
   `active_level_standard` int(11) NOT NULL COMMENT '활동등급기준',
   PRIMARY KEY (`active_level_seq`),
   UNIQUE KEY `active_level_UK` (`active_level_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='활동등급';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='활동등급';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `business_license` (
   PRIMARY KEY (`business_seq`) USING BTREE,
   KEY `buisiness_license_users_FK` (`user_seq`),
   CONSTRAINT `buisiness_license_users_FK` FOREIGN KEY (`user_seq`) REFERENCES `users` (`user_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='사업자등록증';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='사업자등록증';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,7 +82,7 @@ CREATE TABLE `favorite_board` (
   KEY `favorite_board_users_FK` (`user_seq`),
   CONSTRAINT `favorite_board_board_category_FK` FOREIGN KEY (`board_category_seq`) REFERENCES `board_category` (`board_category_seq`),
   CONSTRAINT `favorite_board_users_FK` FOREIGN KEY (`user_seq`) REFERENCES `users` (`user_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='즐겨찾기게시판';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='즐겨찾기게시판';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +130,7 @@ CREATE TABLE `like` (
   CONSTRAINT `like_post_comment_FK` FOREIGN KEY (`post_comment_seq`) REFERENCES `post_comment` (`post_comment_seq`),
   CONSTRAINT `like_review_FK` FOREIGN KEY (`review_seq`) REFERENCES `review` (`review_seq`),
   CONSTRAINT `like_users_FK` FOREIGN KEY (`like_user_seq`) REFERENCES `users` (`user_seq`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='좋아요';
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='좋아요';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +154,7 @@ CREATE TABLE `list_comment` (
   KEY `list_comment_users_FK` (`list_comment_user_seq`),
   CONSTRAINT `list_comment_lists_FK` FOREIGN KEY (`list_seq`) REFERENCES `lists` (`list_seq`),
   CONSTRAINT `list_comment_users_FK` FOREIGN KEY (`list_comment_user_seq`) REFERENCES `users` (`user_seq`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='리스트댓글';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='리스트댓글';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +174,7 @@ CREATE TABLE `list_matzip` (
   KEY `list_matzip_restaurant_FK` (`restaurant_seq`),
   CONSTRAINT `list_matzip_lists_FK` FOREIGN KEY (`list_seq`) REFERENCES `lists` (`list_seq`),
   CONSTRAINT `list_matzip_restaurant_FK` FOREIGN KEY (`restaurant_seq`) REFERENCES `restaurant` (`restaurant_seq`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='리스트맛집';
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='리스트맛집';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,7 +197,7 @@ CREATE TABLE `lists` (
   PRIMARY KEY (`list_seq`),
   KEY `lists_users_FK` (`list_user_seq`),
   CONSTRAINT `lists_users_FK` FOREIGN KEY (`list_user_seq`) REFERENCES `users` (`user_seq`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='리스트';
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='리스트';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,7 +264,7 @@ CREATE TABLE `penalty` (
   KEY `penalty_users_FK` (`penalty_user_seq`),
   CONSTRAINT `penalty_users_FK` FOREIGN KEY (`penalty_user_seq`) REFERENCES `users` (`user_seq`),
   CONSTRAINT `penalty_CK` CHECK (`penalty_type` in ('ban','permanent'))
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='패널티';
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='패널티';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -295,7 +295,7 @@ CREATE TABLE `post` (
   CONSTRAINT `post_board_category_FK` FOREIGN KEY (`board_category_seq`) REFERENCES `board_category` (`board_category_seq`),
   CONSTRAINT `post_lists_FK` FOREIGN KEY (`list_seq`) REFERENCES `lists` (`list_seq`),
   CONSTRAINT `post_users_FK` FOREIGN KEY (`post_user_seq`) REFERENCES `users` (`user_seq`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='게시글';
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='게시글';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,7 +319,7 @@ CREATE TABLE `post_comment` (
   KEY `post_comment_post_FK` (`post_seq`),
   CONSTRAINT `post_comment_post_FK` FOREIGN KEY (`post_seq`) REFERENCES `post` (`post_seq`),
   CONSTRAINT `post_comment_users_FK` FOREIGN KEY (`post_comment_user_seq`) REFERENCES `users` (`user_seq`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='게시글댓글';
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='게시글댓글';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -360,7 +360,7 @@ CREATE TABLE `post_tag` (
   KEY `post_tag_tags_FK` (`tag_seq`),
   CONSTRAINT `post_tag_post_FK` FOREIGN KEY (`post_seq`) REFERENCES `post` (`post_seq`),
   CONSTRAINT `post_tag_tags_FK` FOREIGN KEY (`tag_seq`) REFERENCES `tags` (`tag_seq`)
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='게시글태그';
+) ENGINE=InnoDB AUTO_INCREMENT=160 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='게시글태그';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -374,7 +374,7 @@ CREATE TABLE `reasons` (
   `reason_seq` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '신고사유코드',
   `reason_name` varchar(100) NOT NULL COMMENT '신고사유',
   PRIMARY KEY (`reason_seq`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='신고사유';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='신고사유';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -419,7 +419,7 @@ CREATE TABLE `report` (
   CONSTRAINT `report_users_FK` FOREIGN KEY (`reporter_user_seq`) REFERENCES `users` (`user_seq`),
   CONSTRAINT `report_users_FK_1` FOREIGN KEY (`reported_user_seq`) REFERENCES `users` (`user_seq`),
   CONSTRAINT `report_CK1` CHECK (`report_status` in ('wait','none','penalty'))
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='신고';
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='신고';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -440,6 +440,27 @@ CREATE TABLE `report_reason` (
   CONSTRAINT `report_reason_report_FK` FOREIGN KEY (`report_seq`) REFERENCES `report` (`report_seq`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='사유별신고';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary table structure for view `report_view`
+--
+
+DROP TABLE IF EXISTS `report_view`;
+/*!50001 DROP VIEW IF EXISTS `report_view`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `report_view` AS SELECT
+ 1 AS `report_seq`,
+  1 AS `category`,
+  1 AS `seq`,
+  1 AS `reporter_user_seq`,
+  1 AS `reported_user_seq`,
+  1 AS `report_content`,
+  1 AS `penalty_seq`,
+  1 AS `report_status`,
+  1 AS `report_time`,
+  1 AS `report_finished_time` */;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `restaurant`
@@ -480,7 +501,7 @@ CREATE TABLE `review` (
   KEY `review_users_FK` (`review_user_seq`),
   CONSTRAINT `review_restaurant_FK` FOREIGN KEY (`restaurant_seq`) REFERENCES `restaurant` (`restaurant_seq`),
   CONSTRAINT `review_users_FK` FOREIGN KEY (`review_user_seq`) REFERENCES `users` (`user_seq`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='맛집리뷰';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='맛집리뷰';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -497,7 +518,7 @@ CREATE TABLE `review_image` (
   PRIMARY KEY (`review_image_seq`),
   KEY `review_image_review_FK` (`review_seq`),
   CONSTRAINT `review_image_review_FK` FOREIGN KEY (`review_seq`) REFERENCES `review` (`review_seq`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='맛집 리뷰 이미지';
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='맛집 리뷰 이미지';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -512,7 +533,7 @@ CREATE TABLE `tags` (
   `tag_name` varchar(100) NOT NULL COMMENT '태그명',
   PRIMARY KEY (`tag_seq`),
   UNIQUE KEY `tag_UK` (`tag_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='태그';
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='태그';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -568,8 +589,26 @@ CREATE TABLE `users` (
   CONSTRAINT `user_CK3` CHECK (`user_auth` in ('user','admin')),
   CONSTRAINT `user_CK4` CHECK (`user_status` in ('active','inactive')),
   CONSTRAINT `user_CK5` CHECK (`penalty_yn` in ('Y','N'))
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='회원';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='회원';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Final view structure for view `report_view`
+--
+
+/*!50001 DROP VIEW IF EXISTS `report_view`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `report_view` AS select `report`.`report_seq` AS `report_seq`,'post' AS `category`,`report`.`post_seq` AS `seq`,`report`.`reporter_user_seq` AS `reporter_user_seq`,`report`.`reported_user_seq` AS `reported_user_seq`,`report`.`report_content` AS `report_content`,`report`.`penalty_seq` AS `penalty_seq`,`report`.`report_status` AS `report_status`,`report`.`report_time` AS `report_time`,`report`.`report_finished_time` AS `report_finished_time` from `report` where `report`.`post_seq` is not null union all select `report`.`report_seq` AS `report_seq`,'post_comment' AS `category`,`report`.`post_comment_seq` AS `seq`,`report`.`reporter_user_seq` AS `reporter_user_seq`,`report`.`reported_user_seq` AS `reported_user_seq`,`report`.`report_content` AS `report_content`,`report`.`penalty_seq` AS `penalty_seq`,`report`.`report_status` AS `report_status`,`report`.`report_time` AS `report_time`,`report`.`report_finished_time` AS `report_finished_time` from `report` where `report`.`post_comment_seq` is not null union all select `report`.`report_seq` AS `report_seq`,'list' AS `category`,`report`.`list_seq` AS `seq`,`report`.`reporter_user_seq` AS `reporter_user_seq`,`report`.`reported_user_seq` AS `reported_user_seq`,`report`.`report_content` AS `report_content`,`report`.`penalty_seq` AS `penalty_seq`,`report`.`report_status` AS `report_status`,`report`.`report_time` AS `report_time`,`report`.`report_finished_time` AS `report_finished_time` from `report` where `report`.`list_seq` is not null union all select `report`.`report_seq` AS `report_seq`,'list_comment' AS `category`,`report`.`list_comment_seq` AS `seq`,`report`.`reporter_user_seq` AS `reporter_user_seq`,`report`.`reported_user_seq` AS `reported_user_seq`,`report`.`report_content` AS `report_content`,`report`.`penalty_seq` AS `penalty_seq`,`report`.`report_status` AS `report_status`,`report`.`report_time` AS `report_time`,`report`.`report_finished_time` AS `report_finished_time` from `report` where `report`.`list_comment_seq` is not null union all select `report`.`report_seq` AS `report_seq`,'review' AS `category`,`report`.`review_seq` AS `seq`,`report`.`reporter_user_seq` AS `reporter_user_seq`,`report`.`reported_user_seq` AS `reported_user_seq`,`report`.`report_content` AS `report_content`,`report`.`penalty_seq` AS `penalty_seq`,`report`.`report_status` AS `report_status`,`report`.`report_time` AS `report_time`,`report`.`report_finished_time` AS `report_finished_time` from `report` where `report`.`review_seq` is not null union all select `report`.`report_seq` AS `report_seq`,'message' AS `category`,`report`.`message_seq` AS `seq`,`report`.`reporter_user_seq` AS `reporter_user_seq`,`report`.`reported_user_seq` AS `reported_user_seq`,`report`.`report_content` AS `report_content`,`report`.`penalty_seq` AS `penalty_seq`,`report`.`report_status` AS `report_status`,`report`.`report_time` AS `report_time`,`report`.`report_finished_time` AS `report_finished_time` from `report` where `report`.`message_seq` is not null order by `report_time` desc */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -580,4 +619,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-02 11:14:34
+-- Dump completed on 2024-10-04  9:30:29
