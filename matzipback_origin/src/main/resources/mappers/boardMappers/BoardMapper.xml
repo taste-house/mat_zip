@@ -1,0 +1,20 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matzip.matzipback.board.query.mapper.BoardMapper">
+
+    <select id="getBoardCategories" resultType="com.matzip.matzipback.board.query.dto.BoardCategoryDTO">
+        SELECT board_category_name
+          FROM board_category
+    </select>
+
+    <select id="getBoardFavorCategories" resultType="com.matzip.matzipback.board.query.dto.BoardCategoryDTO">
+        SELECT board_category_name
+          FROM board_category
+         WHERE board_category_seq IN (SELECT board_category_seq
+                                        FROM favorite_board
+                                       WHERE user_seq = #{userSeq})
+    </select>
+
+</mapper>

@@ -1,0 +1,62 @@
+# 서버 포트 번호
+server:
+  port: 8085
+
+# mybatis, jpa
+spring:
+  application:
+    name: matzipback
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:mariadb://${MARIADB_HOST}:${MARIADB_PORT}/${MARIADB_DATABASE}
+    username: ${MARIADB_USER}
+    password: ${MARIADB_PASSWORD}
+    driver-class-name: ${DRIVER_CLASS_NAME}
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+  mail:
+    host: ${SMTP_HOST}
+    port: ${SMTP_PORT}
+    username: ${SMTP_USERNAME}
+    password: ${SMTP_PASSWORD}
+    protocol: ${SMTP_PROTOCOL}
+    properties:
+      mail:
+        smtp:
+          # 사용자 인증 시도 여부
+          auth: true
+          # starttls 활성화 여부
+          starttls:
+            enable: true
+          # 서버 연결 타임아웃 10초
+          connectiontimeout: 10000
+          debug: true
+
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+        format_sql: true
+
+mybatis:
+  mapper-locations: classpath:mappers/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+springdoc:
+  swagger-ui:
+    path: /  # swagger-ui 접근 경로에 대한 별칭, 해당 주소로 접속해도 http://localhost:8080/swagger-ui/index.html로 리다이렉션 됨.
+    operations-sorter: method
+    doc-expansion: none
+
+token:
+  expiration_time: 7200000
+  secret: ${SECRET_KEY}
