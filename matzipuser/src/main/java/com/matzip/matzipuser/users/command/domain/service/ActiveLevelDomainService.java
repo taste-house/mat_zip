@@ -2,8 +2,8 @@ package com.matzip.matzipuser.users.command.domain.service;
 
 import com.matzip.matzipuser.users.command.domain.aggregate.ActiveLevel;
 import com.matzip.matzipuser.users.command.domain.repository.UserActiveLevelRepository;
-import com.matzip.matzipuser.users.command.dto.ActiveLevelResDTO;
-import com.matzip.matzipuser.users.command.dto.CreateActiveLevelRequestDTO;
+import com.matzip.matzipuser.users.command.application.dto.ActiveLevelResDTO;
+import com.matzip.matzipuser.users.command.application.dto.CreateActiveLevelRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

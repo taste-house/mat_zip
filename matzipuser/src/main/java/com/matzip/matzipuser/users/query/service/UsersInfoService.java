@@ -4,10 +4,7 @@ import com.matzip.matzipuser.common.util.CustomUserUtils;
 import com.matzip.matzipuser.exception.ErrorCode;
 import com.matzip.matzipuser.exception.NotFoundException;
 import com.matzip.matzipuser.exception.RestApiException;
-import com.matzip.matzipuser.users.query.dto.userInfo.AllUserInfoResponseDTO;
-import com.matzip.matzipuser.users.query.dto.userInfo.OtherUserInfoDto;
-import com.matzip.matzipuser.users.query.dto.userInfo.UserDetailInfoDTO;
-import com.matzip.matzipuser.users.query.dto.userInfo.UserInfoDTO;
+import com.matzip.matzipuser.users.query.dto.userInfo.*;
 import com.matzip.matzipuser.users.query.mapper.UsersInfoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -117,4 +114,15 @@ public class UsersInfoService {
         return userInfo;
     }
 
+    // email로 인증을 위한 정보 찾기
+    public UserTokenDTO getUserByEmail(String email) {
+
+        return usersInfoMapper.getUserByEmail(email);
+    }
+
+    // userSeq로 인증을 위한 정보 찾기
+    public UserTokenDTO getUserByUserSeq(Long userSeq) {
+
+        return usersInfoMapper.getUserByUserSeq(userSeq);
+    }
 }

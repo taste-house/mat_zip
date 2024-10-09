@@ -3,7 +3,7 @@ package com.matzip.matzipuser.users.command.application.controller;
 import com.matzip.matzipuser.responsemessage.SuccessCode;
 import com.matzip.matzipuser.responsemessage.SuccessResMessage;
 import com.matzip.matzipuser.users.command.application.service.UsersCommandService;
-import com.matzip.matzipuser.users.command.dto.CreateUserRequest;
+import com.matzip.matzipuser.users.command.application.dto.CreateUserRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

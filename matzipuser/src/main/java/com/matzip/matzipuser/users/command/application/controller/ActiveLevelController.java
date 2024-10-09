@@ -1,19 +1,17 @@
 package com.matzip.matzipuser.users.command.application.controller;
 
 import com.matzip.matzipuser.responsemessage.ResponseMessage;
+import com.matzip.matzipuser.users.command.application.dto.ActiveLevelResDTO;
+import com.matzip.matzipuser.users.command.application.dto.CreateActiveLevelRequestDTO;
+import com.matzip.matzipuser.users.command.application.dto.CreateActiveLevelResMessageDTO;
+import com.matzip.matzipuser.users.command.application.dto.UpdateUserActivityPointDTO;
 import com.matzip.matzipuser.users.command.application.service.ActiveLevelService;
-import com.matzip.matzipuser.users.command.dto.ActiveLevelResDTO;
-import com.matzip.matzipuser.users.command.dto.CreateActiveLevelRequestDTO;
-import com.matzip.matzipuser.users.command.dto.CreateActiveLevelResMessageDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,5 +36,15 @@ public class ActiveLevelController {
 
         // 저장 성공
         return ResponseEntity.ok(new CreateActiveLevelResMessageDTO(HttpStatus.OK.value(), ResponseMessage.SAVE_SUCCESS.getMessage(), List.of(savedActiveLevel)));
+    }
+
+    // userActivity point 업데이트
+    @PutMapping("/user-activity/point")
+    @Operation(summary = "회원 활동 포인트 업데이트", description = "회원 활동 포인트를 업데이트한다.")
+    public ResponseEntity<Void> updateUserActivityPoint(
+            @RequestBody UpdateUserActivityPointDTO updateUserActivityPointDTO) {
+
+        activeLevelService.updateUserPoint(updateUserActivityPointDTO);
+        return ResponseEntity.ok().build();
     }
 }

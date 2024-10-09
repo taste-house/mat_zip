@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.matzip.matzipuser.users.query.mapper.UsersInfoMapper">
     <resultMap id="UsersResultMap" type="com.matzip.matzipuser.users.query.dto.userInfo.UserInfoDTO">
         <id property="userSeq" column="user_seq"/>
@@ -59,7 +59,7 @@
         <result property="influencerYn" column="influencer_yn"/>
     </resultMap>
 
-    <resultMap id="PenaltyResultMap" type="com.matzip.matzipuser.report.query.dto.PenaltyDTO">
+    <resultMap id="PenaltyResultMap" type="com.matzip.matzipuser.users.query.dto.PenaltyDTO">
         <id property="penaltySeq" column="penalty_seq"/>
         <result property="userSeq" column="penalty_user_seq"/>
         <result property="startDate" column="penalty_start_date"/>
@@ -487,7 +487,7 @@
         , u.user_nickname
         , ua.activity_point
         , al.active_level_name
-        <!--             , al.active_level_standard-->
+<!--    , al.active_level_standard-->
         , ua.influencer_yn
         , (SELECT COUNT(*) FROM lists  WHERE list_user_seq = u.user_seq) AS listCount
         , (SELECT COUNT(*) FROM review WHERE review_user_seq = u.user_seq) AS reviewCount
@@ -500,7 +500,21 @@
         u.user_seq = #{userSeq}
     </select>
 
+    <select id="getUserByUserSeq" resultType="com.matzip.matzipuser.users.query.dto.userInfo.UserTokenDTO">
+        SELECT user_seq
+             , user_password
+             , user_auth
+          FROM users
+         WHERE user_seq = #{userSeq}
+    </select>
 
+    <select id="getUserByEmail" resultType="com.matzip.matzipuser.users.query.dto.userInfo.UserTokenDTO">
+        SELECT user_seq
+             , user_password
+             , user_auth
+          FROM users
+         WHERE user_email = #{email}
+    </select>
 
 
 </mapper>

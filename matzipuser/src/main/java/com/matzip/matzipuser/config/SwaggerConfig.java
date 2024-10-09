@@ -1,6 +1,6 @@
 package com.matzip.matzipuser.config;
 
-import com.matzip.matzipuser.sercurity.filter.CustomAuthenticationFilter;
+import com.matzip.matzipuser.security.filter.CustomAuthenticationFilter;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
