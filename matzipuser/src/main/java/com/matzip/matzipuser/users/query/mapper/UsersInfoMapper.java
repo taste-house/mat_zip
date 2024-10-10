@@ -1,10 +1,9 @@
 package com.matzip.matzipuser.users.query.mapper;
 
-import com.matzip.matzipuser.report.query.dto.PenaltyDTO;
-import com.matzip.matzipuser.users.query.dto.userInfo.BusinessLicenseDTO;
 import com.matzip.matzipuser.users.query.dto.userInfo.OtherUserInfoDto;
 import com.matzip.matzipuser.users.query.dto.userInfo.UserDetailInfoDTO;
 import com.matzip.matzipuser.users.query.dto.userInfo.UserInfoDTO;
+import com.matzip.matzipuser.users.query.dto.userInfo.UserTokenDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -59,5 +58,11 @@ public interface UsersInfoMapper {
 
     // 다른회원의 상세정보 조회
     OtherUserInfoDto getOtherUserInfoDto(@Param("userSeq") Long userSeq);
+
+    // userSeq로 인증을 위한 정보 찾기
+    UserTokenDTO getUserByUserSeq(Long userSeq);
+
+    // email로 인증을 위한 정보 찾기
+    UserTokenDTO getUserByEmail(String email);
 
 }

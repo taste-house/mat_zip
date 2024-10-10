@@ -1,6 +1,8 @@
 package com.matzip.matzipback.matzipList.command.application.service;
 
 import com.matzip.matzipback.common.util.CustomUserUtils;
+import com.matzip.matzipback.common.util.UserActivityFeignClient;
+import com.matzip.matzipback.common.util.dto.UpdateUserActivityPointDTO;
 import com.matzip.matzipback.exception.ErrorCode;
 import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.matzipList.command.application.dto.DeleteListRequest;
@@ -10,7 +12,6 @@ import com.matzip.matzipback.matzipList.command.application.dto.CreateListReques
 import com.matzip.matzipback.matzipList.command.domain.repository.ListDomainRepository;
 import com.matzip.matzipback.matzipList.command.domain.service.DomainListUpdateService;
 import com.matzip.matzipback.matzipList.command.mapper.ListMapper;
-import com.matzip.matzipback.users.command.domain.service.UserActivityDomainService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class ListCommandService {
 
         private final ListDomainRepository listDomainRepository;
         private final DomainListUpdateService domainListUpdateService;
-        private final UserActivityDomainService userActivityDomainService;
+        private final UserActivityFeignClient userActivityFeignClient;
 
     // 리스트 등록
     @Transactional
@@ -41,7 +42,8 @@ public class ListCommandService {
         MyList myList = listDomainRepository.save(newList);
 
         // 리스트 등록 시 점수 획득(3점)
-        userActivityDomainService.updateUserActivityPoint(listUserSeq, 3);
+        userActivityFeignClient.updateUserActivityPoint(
+                new UpdateUserActivityPointDTO(listUserSeq, 3));
 
         return myList.getListSeq();
     }
@@ -54,7 +56,8 @@ public class ListCommandService {
         // 리스트 삭제 시 점수 삭제(-3점)
         MyList listUser = listDomainRepository
                 .findByListSeq(deleteListRequest.getListSeq()).orElseThrow(() -> new RestApiException(ErrorCode.NOT_FOUND));
-        userActivityDomainService.updateUserActivityPoint(listUser.getListUserSeq(), -3);
+        userActivityFeignClient.updateUserActivityPoint(
+                new UpdateUserActivityPointDTO(listUser.getListUserSeq(), -3));
     }
 
 

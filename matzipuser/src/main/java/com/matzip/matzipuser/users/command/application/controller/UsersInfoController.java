@@ -6,8 +6,9 @@ import com.matzip.matzipuser.exception.RestApiException;
 import com.matzip.matzipuser.responsemessage.SuccessCode;
 import com.matzip.matzipuser.responsemessage.SuccessResMessage;
 import com.matzip.matzipuser.users.command.application.service.UsersCommandService;
-import com.matzip.matzipuser.users.command.dto.DeleteUserRequest;
-import com.matzip.matzipuser.users.command.dto.UpdateUserRequest;
+import com.matzip.matzipuser.users.command.application.dto.DeleteUserRequest;
+import com.matzip.matzipuser.users.command.application.dto.UpdateUserRequest;
+import com.matzip.matzipuser.users.command.application.dto.UpdateUserStatusDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -67,6 +68,17 @@ public class UsersInfoController {
         usersCommandService.deleteUser(deleteUserInfo);
         return ResponseEntity.ok(new SuccessResMessage(SuccessCode.USER_DELETION_SUCCESS));
 //        return ResponseEntity.status(HttpStatus.OK).body("탈퇴가 성공적으로 처리되었습니다.");
+    }
+
+
+    // 회원 상태 변경
+    @PutMapping("/userStatus")
+    @Operation(summary = "회원 상태 변경", description = "회원의 상태를 변경한다.")
+    public ResponseEntity<Void> updateUserStatus(@RequestBody UpdateUserStatusDTO updateUserStatusDTO) {
+
+        usersCommandService.updateUserStatus(updateUserStatusDTO);
+
+        return ResponseEntity.ok().build();
     }
 
 

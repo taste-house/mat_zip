@@ -2,8 +2,8 @@ package com.matzip.matzipuser.users.command.application.controller;
 
 import com.matzip.matzipuser.responsemessage.ResponseMessage;
 import com.matzip.matzipuser.users.command.application.service.UsersFollowService;
-import com.matzip.matzipuser.users.command.dto.FollowResMessageDTO;
-import com.matzip.matzipuser.users.command.dto.FollowDTO;
+import com.matzip.matzipuser.users.command.application.dto.FollowResMessageDTO;
+import com.matzip.matzipuser.users.command.application.dto.FollowDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

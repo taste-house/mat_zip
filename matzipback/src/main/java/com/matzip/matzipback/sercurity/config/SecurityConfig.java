@@ -1,26 +1,15 @@
 package com.matzip.matzipback.sercurity.config;
 
-import com.matzip.matzipback.sercurity.filter.CustomAuthenticationFilter;
 import com.matzip.matzipback.sercurity.filter.JwtFilter;
 import com.matzip.matzipback.sercurity.handler.JwtAccessDeniedHandler;
 import com.matzip.matzipback.sercurity.handler.JwtAuthenticationEntryPoint;
-import com.matzip.matzipback.sercurity.handler.LoginFailureHandler;
-import com.matzip.matzipback.sercurity.handler.LoginSuccessHandler;
-import com.matzip.matzipback.sercurity.util.CustomUserDetailService;
 import com.matzip.matzipback.sercurity.util.JwtUtil;
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -30,9 +19,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final BCryptPasswordEncoder passwordEncoder;
-    private final CustomUserDetailService userDetailService;
-    private final Environment env;
     private final JwtUtil jwtUtil;
 
     @Bean
@@ -61,9 +47,6 @@ public class SecurityConfig {
         /* 커스텀 로그인 필터 이전에 JWT 토큰 확인 필터를 설정 */
         http.addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
-        /* 커스텀 로그인 필터 추가 */
-        http.addFilterBefore(getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
         /* 인증, 인가 실패 핸들러 설정 */
         http.exceptionHandling(
                 exceptionHandling -> {
@@ -74,22 +57,5 @@ public class SecurityConfig {
 
         return http.build();
 
-    }
-
-    private Filter getAuthenticationFilter() {
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
-        customAuthenticationFilter.setAuthenticationManager(getAuthenticationManager());
-        customAuthenticationFilter.setAuthenticationSuccessHandler(new LoginSuccessHandler(env));
-        customAuthenticationFilter.setAuthenticationFailureHandler(new LoginFailureHandler());
-
-        return customAuthenticationFilter;
-
-    }
-
-    private AuthenticationManager getAuthenticationManager() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoder);
-        provider.setUserDetailsService(userDetailService);
-        return new ProviderManager(provider);
     }
 }

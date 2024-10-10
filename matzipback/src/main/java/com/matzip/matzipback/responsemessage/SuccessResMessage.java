@@ -12,6 +12,8 @@ public class SuccessResMessage {
     private String success;
     private String message;
 
+    public SuccessResMessage() {}
+
     public SuccessResMessage(SuccessCode successCode) {
         this.statusCode = successCode.getHttpStatus().value();
         this.success = successCode.getHttpStatus().name();

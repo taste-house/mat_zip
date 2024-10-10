@@ -1,6 +1,6 @@
 package com.matzip.matzipuser.users.query.dto.userInfo;
 
-import com.matzip.matzipuser.report.query.dto.PenaltyDTO;
+import com.matzip.matzipuser.users.query.dto.PenaltyDTO;
 import lombok.Getter;
 import lombok.Setter;
 
