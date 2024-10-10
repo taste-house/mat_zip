@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/back/api/vi")
+@RequestMapping("/back/api/v1")
 @Tag(name = "Report", description = "신고")
 public class ReportPostCmtController {
 

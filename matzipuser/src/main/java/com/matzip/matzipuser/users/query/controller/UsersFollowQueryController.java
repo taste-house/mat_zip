@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/back/api/vi")
+@RequestMapping("/user/api/v1")
 @Tag(name = "Follow", description = "팔로우")
 public class UsersFollowQueryController {
 
