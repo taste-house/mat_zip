@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/back/api/vi")
+@RequestMapping("/user/api/v1")
 @Tag(name = "User Activity", description = "회원 활동")
 public class UsersActivityQueryController {
 
