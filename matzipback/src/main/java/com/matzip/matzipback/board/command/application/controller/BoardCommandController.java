@@ -16,7 +16,7 @@ import static com.matzip.matzipback.exception.ErrorCode.UNAUTHORIZED_REQUEST;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/back/api/v1")
 @Tag(name = "Board", description = "게시판")
 public class BoardCommandController {
 
