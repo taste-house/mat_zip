@@ -1,12 +1,10 @@
-package com.matzip.matzipuser.users.query.dto.userInfo;
+package com.matzip.matzipback.sercurity.dto;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class UserTokenDTO {
 
     private Long userSeq;

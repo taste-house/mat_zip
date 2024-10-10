@@ -1,6 +1,7 @@
 package com.matzip.matzipback.sercurity.util;
 
 import com.matzip.matzipback.responsemessage.SuccessSearchResMessage;
+import com.matzip.matzipback.sercurity.dto.UserTokenDTO;
 import com.matzip.matzipback.sercurity.dto.UsersDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ public class CustomUserDetailService implements UserDetailsService {
         // 임시로 try - catch로 해결하고 추후에 깔끔하게 해결 필요
         UsersDTO loginUser;
         try {
-            SuccessSearchResMessage<?> response = userFeignClient.getUserByEmail(userEmail);
+            SuccessSearchResMessage<UserTokenDTO> response = userFeignClient.getUserByEmail(userEmail);
 
             if (response.getData2() == null) throw new UsernameNotFoundException("해당 유저가 존재하지 않습니다.");
 
@@ -39,7 +40,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
         } catch (Exception e) {
             log.info("이미 로그인 된 유저, seq(" + e.getMessage() + ")로 검색");
-            SuccessSearchResMessage<?> response= userFeignClient.getUserByUserSeq(Long.parseLong(userEmail));
+            SuccessSearchResMessage<UserTokenDTO> response= userFeignClient.getUserByUserSeq(Long.parseLong(userEmail));
             if (response.getData2() == null) throw new UsernameNotFoundException("해당 유저가 존재하지 않습니다.");
 
             loginUser = modelMapper.map(response.getData2(), UsersDTO.class);
