@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/back/api/vi")
+@RequestMapping("/back/api/v1")
 @Tag(name = "Post", description = "게시글")
 public class PostQueryController {
 

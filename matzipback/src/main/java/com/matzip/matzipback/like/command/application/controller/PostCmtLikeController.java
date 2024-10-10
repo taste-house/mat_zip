@@ -20,7 +20,7 @@ import static com.matzip.matzipback.exception.ErrorCode.UNAUTHORIZED_REQUEST;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/back/api/vi/post")
+@RequestMapping("/back/api/v1/post")
 @Tag(name = "Like", description = "좋아요")
 public class PostCmtLikeController {
 

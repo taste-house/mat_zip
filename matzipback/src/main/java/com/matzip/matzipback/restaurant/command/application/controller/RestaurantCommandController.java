@@ -14,7 +14,7 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/back/api/vi")
+@RequestMapping("/back/api/v1")
 @Tag(name = "Restaurant", description = "음식점")
 public class RestaurantCommandController {
 
