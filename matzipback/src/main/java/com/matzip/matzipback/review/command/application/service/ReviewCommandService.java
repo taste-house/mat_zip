@@ -2,6 +2,8 @@ package com.matzip.matzipback.review.command.application.service;
 
 import com.matzip.matzipback.common.util.CustomUserUtils;
 import com.matzip.matzipback.common.util.FileUploadUtils;
+import com.matzip.matzipback.common.util.UserActivityFeignClient;
+import com.matzip.matzipback.common.util.dto.UpdateUserActivityPointDTO;
 import com.matzip.matzipback.exception.RestApiException;
 import com.matzip.matzipback.restaurant.command.application.service.RestaurantCommandService;
 import com.matzip.matzipback.review.command.application.dto.ReviewCreateRequest;
@@ -13,7 +15,6 @@ import com.matzip.matzipback.review.command.domain.repository.ReviewImageReposit
 import com.matzip.matzipback.review.command.domain.repository.ReviewRepository;
 import com.matzip.matzipback.review.command.mapper.ReviewMapper;
 import com.matzip.matzipback.review.query.service.ReviewQueryService;
-import com.matzip.matzipback.users.command.domain.service.UserActivityDomainService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,9 +39,9 @@ public class ReviewCommandService {
     private final ReviewRepository reviewRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final ModelMapper modelMapper;
-    private final UserActivityDomainService userActivityDomainService;
     private final ReviewQueryService reviewQueryService;
     private final RestaurantCommandService restaurantCommandService;
+    private final UserActivityFeignClient userActivityFeignClient;
 
     @Transactional
     public Long createReview(Long authUserSeq, ReviewCreateRequest reviewRequest, List<MultipartFile> reviewImages) {
@@ -62,7 +63,7 @@ public class ReviewCommandService {
                 reviewQueryService.getRestaurantStarAverage(newReview.getRestaurantSeq()));
 
         // 회원 포인트 변경
-        userActivityDomainService.updateUserActivityPoint(authUserSeq, 4);
+        userActivityFeignClient.updateUserActivityPoint(new UpdateUserActivityPointDTO(authUserSeq, 4));
 
         return newReview.getReviewSeq();
     }

@@ -1,30 +1,23 @@
 package com.matzip.matzipuser.users.query.controller;
 
 import com.matzip.matzipuser.common.util.CustomUserUtils;
-import com.matzip.matzipuser.exception.ErrorCode;
 import com.matzip.matzipuser.responsemessage.SuccessCode;
-import com.matzip.matzipuser.responsemessage.SuccessResMessage;
 import com.matzip.matzipuser.responsemessage.SuccessSearchResMessage;
-import com.matzip.matzipuser.users.command.domain.aggregate.Users;
 import com.matzip.matzipuser.users.query.dto.userInfo.AllUserInfoResponseDTO;
 import com.matzip.matzipuser.users.query.dto.userInfo.OtherUserInfoDto;
 import com.matzip.matzipuser.users.query.dto.userInfo.UserDetailInfoDTO;
+import com.matzip.matzipuser.users.query.dto.userInfo.UserTokenDTO;
 import com.matzip.matzipuser.users.query.service.UsersInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/back/api/vi")
+@RequestMapping("/user/api/vi")
 @Slf4j
 @Tag(name = "Users", description = "회원관리")
 public class UsersQueryController {
@@ -133,6 +126,24 @@ public class UsersQueryController {
 //                .body(ErrorCode.FORBIDDEN_ACCESS.getMessage());
     }
 
+
+    @GetMapping("/users/email")
+    public ResponseEntity<SuccessSearchResMessage<?>> getUserByEmail(@RequestParam("email") String email) {
+
+        UserTokenDTO userTokenDTO = usersInfoService.getUserByEmail(email);
+
+        return ResponseEntity.ok(
+                new SuccessSearchResMessage<>(SuccessCode.BASIC_GET_SUCCESS, userTokenDTO));
+    }
+
+    @GetMapping("/users/userseq")
+    public ResponseEntity<SuccessSearchResMessage<?>> getUserByUserSeq(@RequestParam("userSeq") Long userSeq) {
+
+        UserTokenDTO userTokenDTO = usersInfoService.getUserByUserSeq(userSeq);
+
+        return ResponseEntity.ok(
+                new SuccessSearchResMessage<>(SuccessCode.BASIC_GET_SUCCESS, userTokenDTO));
+    }
 
 
 }

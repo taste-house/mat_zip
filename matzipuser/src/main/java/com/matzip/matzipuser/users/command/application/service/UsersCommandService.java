@@ -1,13 +1,15 @@
 package com.matzip.matzipuser.users.command.application.service;
 
+import com.matzip.matzipuser.users.command.application.dto.UpdateUserActivityPointDTO;
 import com.matzip.matzipuser.users.command.application.utility.UUIDGenerator;
-import com.matzip.matzipuser.users.command.domain.aggregate.UserActivity;
 import com.matzip.matzipuser.users.command.domain.aggregate.Users;
 import com.matzip.matzipuser.users.command.domain.repository.UsersDomainRepository;
 import com.matzip.matzipuser.users.command.domain.service.UserActivityDomainService;
-import com.matzip.matzipuser.users.command.dto.CreateUserRequest;
-import com.matzip.matzipuser.users.command.dto.DeleteUserRequest;
-import com.matzip.matzipuser.users.command.dto.UpdateUserRequest;
+import com.matzip.matzipuser.users.command.application.dto.CreateUserRequest;
+import com.matzip.matzipuser.users.command.application.dto.DeleteUserRequest;
+import com.matzip.matzipuser.users.command.application.dto.UpdateUserRequest;
+import com.matzip.matzipuser.users.command.domain.service.UsersDomainService;
+import com.matzip.matzipuser.users.command.application.dto.UpdateUserStatusDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -22,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UsersCommandService {
 
     private final UsersDomainRepository usersDomainRepository;
+    private final UsersDomainService usersDomainService;
     private final ModelMapper modelMapper;  // dto와 entity 변환
   
     private final BCryptPasswordEncoder passwordEncoder; // 비밀번호 암호화
@@ -66,14 +69,15 @@ public class UsersCommandService {
         users.updateNickname(nickName);
 
         // Users 엔티티를 데이터베이스에 저장
-        usersDomainRepository.save(users);
+        Users user = usersDomainRepository.save(users);
 
         log.info("========User 객체 저장 완료 - UserSeq: {}========", users.getUserSeq());
 
         // 유저 생성 완료 후 인증 상태 제거
         emailService.clearEmailVerificationStatus(newUser.getUserEmail());
 
-        userActivityDomainService.saveUserActivity(UserActivity.create(users.getUserSeq()));
+        UpdateUserActivityPointDTO updateUserActivityPointDTO = new UpdateUserActivityPointDTO(user.getUserSeq(), 0);
+        userActivityDomainService.saveUserActivity(updateUserActivityPointDTO);
     }
 
     /* 회원가입시 닉네임 임의자동생성을 위한 메소드 */
@@ -152,4 +156,10 @@ public class UsersCommandService {
 
     }
 
+    // 회원 상태 변경 로직
+    @Transactional
+    public void updateUserStatus(UpdateUserStatusDTO updateUserStatusDTO) {
+
+        usersDomainService.updateUserStatus(updateUserStatusDTO);
+    }
 }

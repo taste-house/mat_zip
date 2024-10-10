@@ -10,8 +10,9 @@ import com.matzip.matzipback.board.command.domain.repository.PostRepository;
 import com.matzip.matzipback.board.command.domain.repository.PostTagRepository;
 import com.matzip.matzipback.board.command.domain.repository.TagRepository;
 import com.matzip.matzipback.common.util.CustomUserUtils;
+import com.matzip.matzipback.common.util.UserActivityFeignClient;
+import com.matzip.matzipback.common.util.dto.UpdateUserActivityPointDTO;
 import com.matzip.matzipback.exception.RestApiException;
-import com.matzip.matzipback.users.command.domain.service.UserActivityDomainService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class PostCommandService {
     private final PostTagRepository postTagRepository;
     private final TagRepository tagRepository;
     private final ModelMapper modelMapper;
-    private final UserActivityDomainService userActivityDomainService;
+    private final UserActivityFeignClient userActivityFeignClient;
 
     /* 1. 게시글, 태그 등록 */
     @Transactional
@@ -53,7 +54,7 @@ public class PostCommandService {
         registerTagInfo(postSeq, newPost);
 
         // 회원 포인트 변경 (게시글 등록 시 5점 획득)
-        userActivityDomainService.updateUserActivityPoint(userSeq, 5);
+        userActivityFeignClient.updateUserActivityPoint(new UpdateUserActivityPointDTO(userSeq, 5));
 
         return postSeq;
     }
@@ -110,7 +111,7 @@ public class PostCommandService {
         postRepository.deleteById(postSeq);
 
         // 회원 포인트 변경 (게시글 삭제 시 5점 소멸)
-        userActivityDomainService.updateUserActivityPoint(post.getPostUserSeq(), -5);
+        userActivityFeignClient.updateUserActivityPoint(new UpdateUserActivityPointDTO(post.getPostUserSeq(), -5));
 
     }
 

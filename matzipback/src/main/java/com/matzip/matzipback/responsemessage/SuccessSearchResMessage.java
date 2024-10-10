@@ -1,7 +1,5 @@
 package com.matzip.matzipback.responsemessage;
 
-import com.matzip.matzipback.users.query.dto.userInfo.AllUserInfoResponseDTO;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

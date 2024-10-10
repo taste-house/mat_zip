@@ -3,7 +3,7 @@ package com.matzip.matzipuser.users.command.domain.service;
 import com.matzip.matzipuser.users.command.domain.aggregate.Follow;
 import com.matzip.matzipuser.users.command.domain.aggregate.FollowId;
 import com.matzip.matzipuser.users.command.domain.repository.UsersFollowRepository;
-import com.matzip.matzipuser.users.command.dto.FollowDTO;
+import com.matzip.matzipuser.users.command.application.dto.FollowDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
