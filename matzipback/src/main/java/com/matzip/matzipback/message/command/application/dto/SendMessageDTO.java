@@ -17,5 +17,5 @@ public class SendMessageDTO {
     private Long messageReceiveUserSeq;
     @NotNull(message = "쪽지 내용은 필수입니다.")
     @NotBlank(message = "쪽지 내용이 빈 값일 수 없습니다.")
-    private String message_content;
+    private String messageContent;
 }
