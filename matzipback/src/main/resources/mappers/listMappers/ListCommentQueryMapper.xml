@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matzip.matzipback.matzipList.query.mapper.ListCommentQueryMapper">
+
+    <select  id="getListComments" resultType="com.matzip.matzipback.matzipList.query.dto.ListCommentSearchDTO">
+        SELECT
+                u.user_nickname,
+                lc.list_comment_content,
+                lc.list_comment_updated_time,
+                (SELECT COUNT(*) FROM `like` k WHERE k.list_comment_seq = lc.list_comment_seq) AS like_count
+        FROM
+                list_comment lc
+        LEFT JOIN users u ON lc.list_comment_user_seq = u.user_seq
+        LEFT JOIN lists l ON lc.list_seq = l.list_seq
+        WHERE
+                l.list_seq = #{listSeq}
+                AND lc.list_comment_status = 'active'
+        ORDER BY
+                lc.list_comment_updated_time DESC;
+    </select>
+
+
+</mapper>
