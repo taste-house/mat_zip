@@ -27,4 +27,11 @@ public class Messages {
     private String messageRecipientReadYn;
     private String messageSenderDeletedYn;
     private String messageRecipientDeletedYn;
+
+    @PrePersist
+    protected void prePersist() {
+        this.messageRecipientReadYn = "N";
+        this.messageSenderDeletedYn = "N";
+        this.messageRecipientDeletedYn = "N";
+    }
 }
