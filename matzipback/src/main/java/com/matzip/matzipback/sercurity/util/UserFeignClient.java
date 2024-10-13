@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "matzip-user-token-service", url = "localhost:8000", configuration = FeignClientConfig.class)
 public interface UserFeignClient {
 
-    @GetMapping("/user/api/vi/users/email")
+    @GetMapping("/user/api/v1/users/email")
     SuccessSearchResMessage<UserTokenDTO> getUserByEmail(@RequestParam("email") String email);
 
-    @GetMapping("/user/api/vi/users/userseq")
+    @GetMapping("/user/api/v1/users/userseq")
     SuccessSearchResMessage<UserTokenDTO> getUserByUserSeq(@RequestParam("userSeq") Long userSeq);
 }
