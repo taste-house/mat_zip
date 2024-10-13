@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.matzip.matzipback.report.query.mapper.PenaltyMapper">
+
+    <!-- 패널티 검색 및 조회 -->
+    <select id="selectPenalties" resultType="com.matzip.matzipback.report.query.dto.PenaltyDTO">
+        SELECT
+                penalty_seq
+              , penalty_user_seq
+              , user.user_nickname
+              , penalty_start_date
+              , penalty_end_date
+              , penalty_type
+              , penalty_reason_content
+          FROM penalty
+          JOIN users user ON (penalty.penalty_user_seq = user.user_seq)
+         WHERE TRUE
+        <if test="penaltyUserSeq != null">
+             AND penalty_user_seq = #{penaltyUserSeq}
+        </if>
+        <if test="penaltyStatus != null">
+            <if test="penaltyStatus == 'ing'">
+                AND NOW() BETWEEN penalty_start_date AND penalty_end_date
+            </if>
+            <if test="penaltyStatus == 'done'">
+                AND NOW() > penalty_end_date
+            </if>
+        </if>
+        <if test="penaltyType != null">
+            AND penalty_type = #{penaltyType}
+        </if>
+        <if test="penaltyReasonContent != null">
+            AND penalty_reason_content LIKE CONCAT('%', #{penaltyReasonContent}, '%')
+        </if>
+    </select>
+
+    <!-- 패널티 검색 및 조회의 페이징을 위한 쿼리 -->
+    <select id="countPenalties" resultType="long">
+        SELECT
+               COUNT(*)
+          FROM penalty
+         WHERE TRUE
+        <if test="penaltyUserSeq != null">
+            AND penalty_user_seq = #{penaltyUserSeq}
+        </if>
+        <if test="penaltyStatus != null">
+            <if test="penaltyStatus == 'ing'">
+                AND NOW() BETWEEN penalty_start_date AND penalty_end_date
+            </if>
+            <if test="penaltyStatus == 'done'">
+                AND NOW() > penalty_end_date
+            </if>
+        </if>
+        <if test="penaltyType != null">
+            AND penalty_type = #{penaltyType}
+        </if>
+        <if test="penaltyReasonContent != null">
+            AND penalty_reason_content LIKE CONCAT('%', #{penaltyReasonContent}, '%')
+        </if>
+    </select>
+
+    <!-- 유저별 패널티 상세 조회 -->
+
+</mapper>
