@@ -1,0 +1,28 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matzip.matzipback.message.query.mapper.MessageMapper">
+    
+    <select id="getLastMessageList" resultType="com.matzip.matzipback.message.query.dto.MessageShortDTO">
+        SELECT
+            CASE
+                WHEN message_receive_user_seq = #{currentUserId} THEN message_send_user_seq
+                ELSE message_receive_user_seq
+                END AS message_receive_user_seq,
+            message_date,
+            message_content
+        FROM messages
+        WHERE message_seq IN (
+            SELECT MAX(message_seq)
+            FROM messages
+            WHERE message_send_user_seq = #{currentUserId} OR message_receive_user_seq = #{currentUserId}
+            GROUP BY CASE
+                         WHEN message_send_user_seq = #{currentUserId} THEN message_receive_user_seq
+                         ELSE message_send_user_seq
+                         END
+        )
+        ORDER BY message_date DESC
+    </select>
+    
+</mapper>
