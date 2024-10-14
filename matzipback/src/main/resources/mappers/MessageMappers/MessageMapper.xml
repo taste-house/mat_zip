@@ -30,7 +30,8 @@
     </select>
 
     <select id="getMessageList" resultType="com.matzip.matzipback.message.query.dto.MessageDetailDTO">
-        SELECT message_send_user_seq
+        SELECT message_seq
+             , message_send_user_seq
              , message_receive_user_seq
              , message_date
              , message_content
@@ -39,10 +40,10 @@
          WHERE message_seq IN (
                SELECT message_seq
                  FROM messages
-               WHERE (message_send_user_seq = #{userSeq} AND message_receive_user_seq = #{partner})
-                  OR (message_receive_user_seq = #{userSeq} AND message_send_user_seq = #{userSeq})
+               WHERE ((message_send_user_seq = #{userSeq} AND message_receive_user_seq = #{partner})
+                  OR (message_receive_user_seq = #{userSeq} AND message_send_user_seq = #{userSeq}))
                    AND CASE
-                           WHEN message_receive_user_seq = #{userSeq} THEN message_recipient_deleted_yn = 'N'
+                           WHEN message_receive_user_seq = #{userSeq} THEN (message_recipient_read_yn = 'Y' OR message_recipient_deleted_yn = 'N')
                            ELSE message_sender_deleted_yn = 'N'
                            END
              )

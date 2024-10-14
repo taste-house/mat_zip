@@ -34,4 +34,13 @@ public class Messages {
         this.messageSenderDeletedYn = "N";
         this.messageRecipientDeletedYn = "N";
     }
+
+    public void updateSenderDeletedYn() {
+        messageSenderDeletedYn = "Y";
+    }
+
+
+    public void updateRecipientDeletedYn() {
+        messageRecipientDeletedYn = "Y";
+    }
 }
