@@ -22,7 +22,7 @@ import static com.matzip.matzipback.exception.ErrorCode.UNAUTHORIZED_REQUEST;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("back/api/v1")
+@RequestMapping("/back/api/v1")
 @Tag(name = "Penalty", description = "패널티")
 public class PenaltyCommandController {
 
@@ -41,7 +41,7 @@ public class PenaltyCommandController {
                 Long penaltySeq = penaltyCommandService.createPenalty(newPenalty);
 
                 return ResponseEntity.status(HttpStatus.CREATED)
-                        .location(URI.create("/api/v1/penalty/" + penaltySeq))
+                        .location(URI.create("/back/api/v1/penalty/" + penaltySeq))
                         .build();
 
             } else {
@@ -66,7 +66,7 @@ public class PenaltyCommandController {
                 penaltyCommandService.updatePenalty(penaltySeq, updatePenalty);
 
                 return ResponseEntity.status(HttpStatus.CREATED)
-                        .location(URI.create("/api/v1/penalty/" + penaltySeq))
+                        .location(URI.create("/back/api/v1/penalty/" + penaltySeq))
                         .build();
 
             } else {

@@ -9,10 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,6 +26,18 @@ public class MessageController {
         messageService.sendMessage(sendMessageDTO);
         return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
     }
+
+    @DeleteMapping("/message")
+    @Operation(summary = "쪽지 삭제", description = "쪽지를 삭제한다.")
+    public ResponseEntity<SuccessResMessage> deleteMessage(@RequestParam("userseq") Long userSeq,
+                                                           @RequestParam("messageseq") Long messageSeq) {
+
+        messageService.deleteMessage(userSeq, messageSeq);
+
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.LIKE_DELETE_SUCCESS));
+    }
+
+
 
 
 }

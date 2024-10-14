@@ -1,0 +1,60 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.matzip.matzipback.message.query.mapper.MessageMapper">
+    
+    <select id="getLastMessageList" resultType="com.matzip.matzipback.message.query.dto.MessageShortDTO">
+        SELECT
+            CASE
+                WHEN message_receive_user_seq = #{currentUserId} THEN message_send_user_seq
+                ELSE message_receive_user_seq
+                END AS message_receive_user_seq,
+            message_date,
+            message_content
+        FROM messages
+        WHERE message_seq IN (
+            SELECT MAX(message_seq)
+            FROM messages
+            WHERE message_send_user_seq = #{userSeq} OR message_receive_user_seq = #{userSeq}
+              AND CASE
+                        WHEN message_receive_user_seq = #{userSeq} THEN message_recipient_deleted_yn = "N"
+                        ELSE message_sender_deleted_yn = 'N'
+                        END
+            GROUP BY CASE
+                         WHEN message_send_user_seq = #{userSeq} THEN message_receive_user_seq
+                         ELSE message_send_user_seq
+                         END
+        )
+        ORDER BY message_date DESC
+    </select>
+
+    <select id="getMessageList" resultType="com.matzip.matzipback.message.query.dto.MessageDetailDTO">
+        SELECT message_seq
+             , message_send_user_seq
+             , message_receive_user_seq
+             , message_date
+             , message_content
+             , message_recipient_read_yn
+          FROM messages
+         WHERE message_seq IN (
+               SELECT message_seq
+                 FROM messages
+               WHERE ((message_send_user_seq = #{userSeq} AND message_receive_user_seq = #{partner})
+                  OR (message_receive_user_seq = #{userSeq} AND message_send_user_seq = #{userSeq}))
+                   AND CASE
+                           WHEN message_receive_user_seq = #{userSeq} THEN (message_recipient_read_yn = 'Y' OR message_recipient_deleted_yn = 'N')
+                           ELSE message_sender_deleted_yn = 'N'
+                           END
+             )
+         ORDER BY message_date DESC
+    </select>
+
+    <update id="updateReadYn">
+        UPDATE messages
+           SET message_recipient_read_yn = 'Y'
+         WHERE message_receive_user_seq = #{userSeq}
+           AND message_send_user_seq = #{partner}
+    </update>
+    
+</mapper>

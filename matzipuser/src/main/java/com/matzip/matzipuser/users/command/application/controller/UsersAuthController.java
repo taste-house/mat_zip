@@ -28,7 +28,7 @@ public class UsersAuthController {
     @Operation(summary = "로그아웃 요청", description = "클라이언트에게 토큰삭제를 요청한다.")
     public ResponseEntity<String> logout() {
         // 클라이언트에게 토큰 삭제 요청 안내
-        log.info("POST /api/vi/auth/logout - 로그아웃 요청");
+        log.info("POST /api/v1/auth/logout - 로그아웃 요청");
         return ResponseEntity.ok("로그아웃되었습니다. 클라이언트는 토큰을 삭제해야 합니다.");
     }
 

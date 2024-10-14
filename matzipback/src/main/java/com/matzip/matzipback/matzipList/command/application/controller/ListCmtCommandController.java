@@ -22,7 +22,7 @@ import static com.matzip.matzipback.exception.ErrorCode.UNAUTHORIZED_REQUEST;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/back/api/vi")
+@RequestMapping("/back/api/v1")
 @Tag(name = "List", description = "리스트")
 public class ListCmtCommandController {
 
@@ -65,6 +65,6 @@ public class ListCmtCommandController {
     public ResponseEntity<Void> updateListCmt(@Valid @RequestBody UpdateListCmtRequest updateListCmtRequest){
         Long listCmtSeq = listCmtCommandService.updateListCmt(updateListCmtRequest);
 
-        return ResponseEntity.created(URI.create("/back/api/vi/list/comment" + listCmtSeq)).build();
+        return ResponseEntity.created(URI.create("/back/api/v1/list/comment" + listCmtSeq)).build();
     }
 }
