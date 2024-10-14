@@ -29,4 +29,16 @@ public class MessageService {
 
         messageDomainService.sendMessage(sendMessageDTO);
     }
+
+    @Transactional
+    public void deleteMessage(Long userSeq, Long messageSeq) {
+
+        Long loginUserSeq = CustomUserUtils.getCurrentUserSeq();
+
+        if (loginUserSeq != userSeq) {
+            throw new RestApiException(ErrorCode.UNAUTHORIZED_REQUEST);
+        }
+
+        messageDomainService.deleteMessage(userSeq, messageSeq);
+    }
 }
