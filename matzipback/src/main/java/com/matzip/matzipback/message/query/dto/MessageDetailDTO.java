@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MessageDetailDTO {
 
+    private Long messageSeq;
     private Long messageSendUserSeq;
     private Long messageReceiveUserSeq;
     private LocalDateTime messageDate;
