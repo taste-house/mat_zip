@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/back/api/vi")
+@RequestMapping("/back/api/v1")
 @Tag(name = "Review", description = "리뷰")
 public class ReviewCommandController {
 
@@ -35,7 +35,7 @@ public class ReviewCommandController {
         Long reviewSeq = reviewCommandService.createReview(authUserSeq, reviewRequest, reviewImages);
 
         return ResponseEntity
-                .created(URI.create("/back/api/vi/review/" + reviewSeq))
+                .created(URI.create("/back/api/v1/review/" + reviewSeq))
                 .build();
     }
 

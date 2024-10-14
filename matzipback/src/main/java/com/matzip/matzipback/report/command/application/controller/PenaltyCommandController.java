@@ -22,7 +22,7 @@ import static com.matzip.matzipback.exception.ErrorCode.UNAUTHORIZED_REQUEST;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/back/api/v1")
 @Tag(name = "Penalty", description = "패널티")
 public class PenaltyCommandController {
 
@@ -40,7 +40,7 @@ public class PenaltyCommandController {
         try {
             if (CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority().equals("admin")) {
                 return ResponseEntity.status(HttpStatus.CREATED)
-                        .location(URI.create("/api/v1/penalty/" + penaltySeq))
+                        .location(URI.create("/back/api/v1/penalty/" + penaltySeq))
                         .build();
             } else {
                 throw new RestApiException(FORBIDDEN_ACCESS);   // 권한 없음
@@ -63,7 +63,7 @@ public class PenaltyCommandController {
         try {
             if (CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority().equals("admin")) {
                 return ResponseEntity.status(HttpStatus.CREATED)
-                        .location(URI.create("/api/v1/penalty/" + penaltySeq))
+                        .location(URI.create("/back/api/v1/penalty/" + penaltySeq))
                         .build();
             } else {
                 throw new RestApiException(FORBIDDEN_ACCESS);   // 권한 없음

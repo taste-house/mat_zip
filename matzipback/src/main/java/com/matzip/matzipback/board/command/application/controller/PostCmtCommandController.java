@@ -20,7 +20,7 @@ import static com.matzip.matzipback.responsemessage.SuccessCode.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/back/api/vi")
+@RequestMapping("/back/api/v1")
 @Tag(name = "Post Comment", description = "게시글 댓글")
 public class PostCmtCommandController {
 

@@ -1,5 +1,6 @@
 package com.matzip.matzipback.message.query.service;
 
+import com.matzip.matzipback.message.query.dto.MessageDetailDTO;
 import com.matzip.matzipback.message.query.dto.MessageShortDTO;
 import com.matzip.matzipback.message.query.mapper.MessageMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,5 +20,12 @@ public class MessageQueryService {
     public List<MessageShortDTO> getMessageList(Long userSeq) {
 
         return messageMapper.getLastMessageList(userSeq);
+    }
+
+    public List<MessageDetailDTO> getMessageRoomDetail(Long userSeq, Long partner) {
+
+        messageMapper.updateReadYn(userSeq, partner);
+
+        return messageMapper.getMessageList(userSeq, partner);
     }
 }

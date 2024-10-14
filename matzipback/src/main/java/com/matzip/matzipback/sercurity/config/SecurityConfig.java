@@ -28,8 +28,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auths -> {
                     // 회원가입 Post 는 인증 필요 없음
                     auths.requestMatchers(
-                            new AntPathRequestMatcher("/back/api/vi/auth/register"),
-                            new AntPathRequestMatcher("/back/api/vi/**"),
+                            new AntPathRequestMatcher("/back/api/v1/auth/register"),
+                            new AntPathRequestMatcher("/back/api/v1/**"),
                             new AntPathRequestMatcher("/**"),
                             new AntPathRequestMatcher("/swagger-ui/index.html"),
                             new AntPathRequestMatcher("/swagger-ui/**"),
