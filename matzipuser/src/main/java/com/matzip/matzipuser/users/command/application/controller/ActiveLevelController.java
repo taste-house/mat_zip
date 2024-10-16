@@ -1,10 +1,11 @@
 package com.matzip.matzipuser.users.command.application.controller;
 
+import com.matzip.matzipuser.exception.ErrorCode;
+import com.matzip.matzipuser.exception.RestApiException;
 import com.matzip.matzipuser.responsemessage.ResponseMessage;
-import com.matzip.matzipuser.users.command.application.dto.ActiveLevelResDTO;
-import com.matzip.matzipuser.users.command.application.dto.CreateActiveLevelRequestDTO;
-import com.matzip.matzipuser.users.command.application.dto.CreateActiveLevelResMessageDTO;
-import com.matzip.matzipuser.users.command.application.dto.UpdateUserActivityPointDTO;
+import com.matzip.matzipuser.responsemessage.SuccessCode;
+import com.matzip.matzipuser.responsemessage.SuccessResMessage;
+import com.matzip.matzipuser.users.command.application.dto.*;
 import com.matzip.matzipuser.users.command.application.service.ActiveLevelService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,16 +27,34 @@ public class ActiveLevelController {
     // active-level 저장
     @PostMapping("/active-level")
     @Operation(summary = "회원 활동 등급 등록", description = "회원 활동 등급을 등록한다.")
-    public ResponseEntity<CreateActiveLevelResMessageDTO> saveActiveLevel(@RequestBody CreateActiveLevelRequestDTO createActiveLevelRequestDTO) {
-        ActiveLevelResDTO savedActiveLevel = activeLevelService.saveActiveLevel(createActiveLevelRequestDTO);
+    public ResponseEntity<SuccessResMessage> saveActiveLevel(@RequestBody CreateActiveLevelRequestDTO createActiveLevelRequestDTO) {
+        boolean result = activeLevelService.saveActiveLevel(createActiveLevelRequestDTO);
 
         // 저장 실패
-        if (savedActiveLevel == null) {
-            return ResponseEntity.ok(new CreateActiveLevelResMessageDTO(HttpStatus.OK.value(), ResponseMessage.SAVE_FAIL.getMessage(), null));
+        if (!result) {
+            throw new RestApiException(ErrorCode.NOT_SAVED);
         }
 
         // 저장 성공
-        return ResponseEntity.ok(new CreateActiveLevelResMessageDTO(HttpStatus.OK.value(), ResponseMessage.SAVE_SUCCESS.getMessage(), List.of(savedActiveLevel)));
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_SAVE_SUCCESS));
+    }
+
+    @PutMapping("/active-level")
+    @Operation(summary = "회원 활동 등급 수정", description = "회원 활동 등급을 수정한다.")
+    public ResponseEntity<SuccessResMessage> updateActiveLevel(
+            @RequestBody UpdateActiveLevelDTO updateActiveLevelDTO) {
+
+        activeLevelService.updateActiveLevel(updateActiveLevelDTO);
+
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_UPDATE_SUCCESS));
+    }
+
+    @DeleteMapping("/active-level/{activeLevelSeq}")
+    @Operation(summary = "회원 활동 등급을 삭제", description = "회원 활동 등급을 삭제한다.")
+    public ResponseEntity<SuccessResMessage> deleteActiveLevel(@PathVariable Long activeLevelSeq) {
+
+        activeLevelService.deleteActiveLevel(activeLevelSeq);
+        return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_DELETE_SUCCESS));
     }
 
     // userActivity point 업데이트
