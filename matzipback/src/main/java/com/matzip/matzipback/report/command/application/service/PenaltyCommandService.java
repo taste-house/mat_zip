@@ -12,7 +12,7 @@ import com.matzip.matzipback.report.command.domain.aggregate.Report;
 import com.matzip.matzipback.report.command.domain.aggregate.ReportView;
 import com.matzip.matzipback.matzipList.command.domain.repository.ListDomainRepository;
 import com.matzip.matzipback.report.command.domain.repository.PenaltyRepository;
-import com.matzip.matzipback.report.command.domain.repository.ReportDomainRepository;
+import com.matzip.matzipback.report.command.domain.repository.ReportRepository;
 import com.matzip.matzipback.report.command.domain.repository.ReportViewRepository;
 import com.matzip.matzipback.report.command.dto.PenaltyUpdateRequest;
 import com.matzip.matzipback.report.command.dto.ReportAndPenaltyDTO;
@@ -37,7 +37,7 @@ public class PenaltyCommandService {
     private final PenaltyRepository penaltyRepository;
     private final ModelMapper modelMapper;
     private final ReportViewRepository reportViewRepository;
-    private final ReportDomainRepository reportDomainRepository;
+    private final ReportRepository reportDomainRepository;
     private final PostRepository postRepository;
     private final PostCommentRepository postCommentRepository;
     private final ListDomainRepository listDomainRepository;
