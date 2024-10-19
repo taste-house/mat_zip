@@ -49,7 +49,10 @@ public enum ErrorCode {
     /*
      * 500 INTERNAL_SERVER_ERROR: 내부 서버 오류
      */
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Server error.");
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Server error."),
+
+    /* 신고 실패 */
+    REPORT_FAIL(HttpStatus.CONFLICT, "Report Fail");
 
 
     private final HttpStatus httpStatus;
