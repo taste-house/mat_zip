@@ -4,7 +4,7 @@ import com.matzip.matzipback.report.command.domain.aggregate.Report;
 
 import java.util.Optional;
 
-public interface ReportDomainRepository {
+public interface ReportRepository {
     Report save(Report newReport);
 
     boolean existsByReporterUserSeqAndPostSeq(Long reporterUserSeq, Long postSeq);
