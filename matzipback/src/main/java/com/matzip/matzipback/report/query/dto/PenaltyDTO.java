@@ -10,9 +10,10 @@ import java.time.LocalDateTime;
 public class PenaltyDTO {
 
     private long penaltySeq;
-    private long userSeq;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private long penaltyUserSeq;
+    private String userNickname;
+    private LocalDateTime penaltyStartDate;
+    private LocalDateTime penaltyEndDate;
     private String penaltyType;
     private String penaltyReasonContent;
 
