@@ -33,15 +33,17 @@ public class PenaltyCommandController {
     @Operation(summary = "패널티 등록", description = "관리자가 신고 받은 사용자에 대한 패널티를 등록한다.")
     public ResponseEntity<Void> registPenalty(@Valid @RequestBody ReportAndPenaltyDTO newPenalty) {
 
-        // 패널티 등록
-        Long penaltySeq = penaltyCommandService.createPenalty(newPenalty);
-
         // 관리자 여부 확인
         try {
             if (CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority().equals("admin")) {
+
+                // 패널티 등록
+                Long penaltySeq = penaltyCommandService.createPenalty(newPenalty);
+
                 return ResponseEntity.status(HttpStatus.CREATED)
                         .location(URI.create("/back/api/v1/penalty/" + penaltySeq))
                         .build();
+
             } else {
                 throw new RestApiException(FORBIDDEN_ACCESS);   // 권한 없음
             }
@@ -56,36 +58,36 @@ public class PenaltyCommandController {
     public ResponseEntity<SuccessResMessage> updatePenalty(
             @PathVariable Long penaltySeq, @RequestBody PenaltyUpdateRequest updatePenalty) {
 
-        // 패널티 내용 수정
-        penaltyCommandService.updatePenalty(penaltySeq, updatePenalty);
-
         // 관리자 여부 확인
         try {
             if (CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority().equals("admin")) {
+
+                // 패널티 내용 수정
+                penaltyCommandService.updatePenalty(penaltySeq, updatePenalty);
+
                 return ResponseEntity.status(HttpStatus.CREATED)
                         .location(URI.create("/back/api/v1/penalty/" + penaltySeq))
                         .build();
+
             } else {
                 throw new RestApiException(FORBIDDEN_ACCESS);   // 권한 없음
             }
         } catch (NullPointerException e) {
             throw new RestApiException(UNAUTHORIZED_REQUEST);   // 로그인, 인증 안 한 사람
         }
-
     }
-
 
     /* 3. 패널티 철회 */
     @DeleteMapping("/penalty/{penaltySeq}")
     @Operation(summary = "패널티 철회", description = "관리자가 패널티를 철회한다.")
     public ResponseEntity<SuccessResMessage> deletePenalty(@PathVariable Long penaltySeq) {
 
-        // 패널티 철회
-        penaltyCommandService.deletePenalty(penaltySeq);
-
         // 관리자 권한 확인
         try {
             if (CustomUserUtils.getCurrentUserAuthorities().iterator().next().getAuthority().equals("admin")) {
+                // 패널티 철회
+                penaltyCommandService.deletePenalty(penaltySeq);
+
                 return ResponseEntity.ok(new SuccessResMessage(SuccessCode.BASIC_DELETE_SUCCESS));
             } else {
                 throw new RestApiException(FORBIDDEN_ACCESS);   // 권한 없음
@@ -93,7 +95,6 @@ public class PenaltyCommandController {
         } catch (NullPointerException e) {
             throw new RestApiException(UNAUTHORIZED_REQUEST);   // 로그인, 인증 안 한 사람
         }
-
     }
 
 }
